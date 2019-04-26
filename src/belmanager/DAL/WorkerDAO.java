@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -54,11 +55,56 @@ public class WorkerDAO
                 String name = rs.getString("name");
                 
                 worker = new Worker(initials, name, salaryNumber);
-                
             }
+            st.close();
+        }
+        
+        if(worker == null)
+        {
+            System.out.println("The Worker does not exist or problems with internet");
         }
         
         return worker;
+    }
+    
+    public void deleteWorker(int salaryNumber) throws SQLException
+    {
+        String SQL = "DELETE FROM Worker WHERE salaryNumber = ?;";
+        
+        try(Connection con = DB.getConnection())
+        {
+            PreparedStatement st = con.prepareStatement(SQL);
+            st.setInt(1, salaryNumber);
+            st.executeUpdate();
+            st.close();
+        }
+    }
+    
+    public ArrayList<Worker> getAlllWorkers() throws SQLException
+    {
+        String SQL = "SELECT * FROM Worker;";
+        ArrayList<Worker> allWorkers = new ArrayList<>();
+        try(Connection con = DB.getConnection())
+        {
+            PreparedStatement st = con.prepareStatement(SQL);
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next())
+            {
+                String initials = rs.getString("initials");
+                String name = rs.getString("name");
+                int salaryNumber = rs.getInt("salaryNumber");
+                Worker wk = new Worker(initials, name, salaryNumber);
+                allWorkers.add(wk);
+            }
+        }
+        
+        if(allWorkers.isEmpty())
+        {
+            System.out.println("There are no Workers, or someting wrong, maybe with internet");
+        }
+        
+        return allWorkers;
     }
 
     

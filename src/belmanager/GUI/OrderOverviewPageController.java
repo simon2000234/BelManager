@@ -10,8 +10,6 @@ import belmanager.BE.Order;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,6 +48,7 @@ public class OrderOverviewPageController implements Initializable
         scrollPane.setFitToWidth(true);
         Accordion testacc = new Accordion();
         
+        // Temporary code for testing GUI and View stuff
         DepartmentTask dt1 = new DepartmentTask("Department_One", "30-04-2019", "26-04-2019", false);
         DepartmentTask dt2 = new DepartmentTask("Department_Two", "01-05-2019", "25-04-2019", false);
         DepartmentTask dt3 = new DepartmentTask("Department_Three", "29-04-2019", "23-04-2019", false);
@@ -74,8 +73,6 @@ public class OrderOverviewPageController implements Initializable
             testacc.getPanes().add(createTitledPane(order));
         }
         
-//        testacc.getPanes().addAll(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12);
-//        vboxScroll.setPrefSize(scrollPane.getWidth(), scrollPane.getHeight());
         vboxScroll.getChildren().add(testacc);
         System.out.println(vboxScroll.getPrefWidth());
     }

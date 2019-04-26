@@ -15,7 +15,7 @@ import javafx.fxml.Initializable;
  *
  * @author Melchertsen
  */
-public class FXMLDocumentController implements Initializable
+public class DepartmentOverviewController implements Initializable
 {
     
     @Override

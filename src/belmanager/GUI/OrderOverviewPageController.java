@@ -53,9 +53,9 @@ public class OrderOverviewPageController implements Initializable
         DepartmentTask dt2 = new DepartmentTask("Department_Two", "01-05-2019", "25-04-2019", false);
         DepartmentTask dt3 = new DepartmentTask("Department_Three", "29-04-2019", "23-04-2019", false);
         List<DepartmentTask> dtQueue = new ArrayList<>();
-        dtQueue.add(dt1);
-        dtQueue.add(dt2);
         dtQueue.add(dt3);
+        dtQueue.add(dt2);
+        dtQueue.add(dt1);
         
         
         Order o1 = new Order("123-456-78", "Customer_One", "Delivery_Time", dtQueue);
@@ -96,6 +96,10 @@ public class OrderOverviewPageController implements Initializable
         List<Label> labels = new ArrayList<>();
         Label OrderNumberLBL = new Label("Order Number: " + order.getOrderNumber());
         labels.add(OrderNumberLBL);
+        Label DeliveryDateLBL = new Label("Delivery Date: "+order.getDeliveryTime());
+        labels.add(DeliveryDateLBL);
+        Label DepartmentName = new Label("Department: "+order.getCurrentDepartment().getDepartmentName());
+        labels.add(DepartmentName);
         Label CustomerLBL = new Label(order.getCustomerName());
         labels.add(CustomerLBL);
         Label StartDateLBL = new Label(order.getCurrentDepartment().getStartDate());
@@ -114,7 +118,8 @@ public class OrderOverviewPageController implements Initializable
         realized.setLayoutY(Y*(labels.size()+5));
         realized.setPrefSize(300.00, 25.00);
         fixLabels(labels);
-        tempAnch.getChildren().addAll(OrderNumberLBL, CustomerLBL, StartDateLBL, EndDateLBL, btnFinishOrder, estimated, realized);
+        tempAnch.getChildren().addAll(labels);
+        tempAnch.getChildren().addAll(btnFinishOrder, estimated, realized);
 
         return temp;
 

@@ -5,6 +5,8 @@
  */
 package belmanager.BE;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -20,21 +22,21 @@ public class Order
 
     private String deliveryTime;
 
-    private Queue<DepartmentTask> departmentTasks;
+    private List<DepartmentTask> departmentTasks = new ArrayList<>();
 
-    public Order(String orderNumber, String customerName, String deliveryTime, Queue<DepartmentTask> departmentTasks) {
+    public Order(String orderNumber, String customerName, String deliveryTime, List<DepartmentTask> departmentTasks)
+    {
         this.orderNumber = orderNumber;
         this.customerName = customerName;
         this.deliveryTime = deliveryTime;
         this.departmentTasks = departmentTasks;
     }
 
-    
-    public Queue<DepartmentTask> getDepartmentTasks()
+    public List<DepartmentTask> getDepartmentTasks()
     {
         return departmentTasks;
     }
-    
+
     public String getOrderNumber()
     {
         return orderNumber;
@@ -65,10 +67,24 @@ public class Order
         this.deliveryTime = deliveryTime;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" + "orderNumber=" + orderNumber + ", customerName=" + customerName + ", deliveryTime=" + deliveryTime + ", departmentTasks=" + departmentTasks + '}';
+    public DepartmentTask getCurrentDepartment()
+    {
+        
+        DepartmentTask temp = null;
+        for (DepartmentTask departmentTask : departmentTasks)
+        {
+            if (departmentTask.isFinishedOrder() == false)
+            {
+                temp = new DepartmentTask(departmentTask.getDepartmentName(), departmentTask.getEndDate(), departmentTask.getStartDate(), false);
+            }
+        }
+        return temp;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Order{" + "orderNumber=" + orderNumber + ", customerName=" + customerName + ", deliveryTime=" + deliveryTime + ", departmentTasks=" + departmentTasks + '}';
+    }
 
 }

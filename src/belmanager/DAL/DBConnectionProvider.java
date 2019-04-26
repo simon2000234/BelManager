@@ -11,7 +11,7 @@ import java.sql.Connection;
 
 /**
  * we use this to log into the database server where we can add/delete from and more
- * @author kim jong un and putin 
+ * @author andre
  */
 public class DBConnectionProvider
 {

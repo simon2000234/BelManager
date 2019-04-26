@@ -18,6 +18,15 @@ public class Worker
 
     private int salaryNumber;
 
+    public Worker(String initials, String name, int salaryNumber)
+    {
+        this.initials = initials;
+        this.name = name;
+        this.salaryNumber = salaryNumber;
+    }
+    
+    
+
     /**
      * Get the value of SalaryNumber
      *

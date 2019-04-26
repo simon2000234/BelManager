@@ -87,4 +87,10 @@ public class Worker
         this.initials = Initials;
     }
 
+    @Override
+    public String toString() {
+        return "Worker{" + "initials=" + initials + ", name=" + name + ", salaryNumber=" + salaryNumber + '}';
+    }
+
+
 }

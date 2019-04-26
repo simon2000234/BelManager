@@ -17,6 +17,15 @@ public class DepartmentTask
     private String startDate;
     private boolean finishedOrder;
 
+    public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder) {
+        this.departmentName = departmentName;
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.finishedOrder = finishedOrder;
+    }
+
+    
+    
     public String getDepartmentName()
     {
         return departmentName;
@@ -56,4 +65,11 @@ public class DepartmentTask
     {
         this.finishedOrder = finishedOrder;
     }
+
+    @Override
+    public String toString() {
+        return "DepartmentTask{" + "departmentName=" + departmentName + ", endDate=" + endDate + ", startDate=" + startDate + ", finishedOrder=" + finishedOrder + '}';
+    }
+
+
 }

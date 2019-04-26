@@ -22,6 +22,14 @@ public class Order
 
     private Queue<DepartmentTask> departmentTasks;
 
+    public Order(String orderNumber, String customerName, String deliveryTime, Queue<DepartmentTask> departmentTasks) {
+        this.orderNumber = orderNumber;
+        this.customerName = customerName;
+        this.deliveryTime = deliveryTime;
+        this.departmentTasks = departmentTasks;
+    }
+
+    
     public Queue<DepartmentTask> getDepartmentTasks()
     {
         return departmentTasks;
@@ -56,5 +64,11 @@ public class Order
     {
         this.deliveryTime = deliveryTime;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderNumber=" + orderNumber + ", customerName=" + customerName + ", deliveryTime=" + deliveryTime + ", departmentTasks=" + departmentTasks + '}';
+    }
+
 
 }

@@ -12,11 +12,11 @@ package belmanager.BE;
 public class Worker
 {
     
-    private String Initials;
+    private String initials;
 
-    private String Name;
+    private String name;
 
-    private int SalaryNumber;
+    private int salaryNumber;
 
     /**
      * Get the value of SalaryNumber
@@ -25,7 +25,7 @@ public class Worker
      */
     public int getSalaryNumber()
     {
-        return SalaryNumber;
+        return salaryNumber;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Worker
      */
     public void setSalaryNumber(int SalaryNumber)
     {
-        this.SalaryNumber = SalaryNumber;
+        this.salaryNumber = SalaryNumber;
     }
 
     /**
@@ -45,7 +45,7 @@ public class Worker
      */
     public String getName()
     {
-        return Name;
+        return name;
     }
 
     /**
@@ -55,7 +55,7 @@ public class Worker
      */
     public void setName(String Name)
     {
-        this.Name = Name;
+        this.name = Name;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Worker
      */
     public String getInitials()
     {
-        return Initials;
+        return initials;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Worker
      */
     public void setInitials(String Initials)
     {
-        this.Initials = Initials;
+        this.initials = Initials;
     }
 
 }

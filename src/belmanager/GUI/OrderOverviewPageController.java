@@ -61,7 +61,6 @@ public class OrderOverviewPageController implements Initializable
 //        vboxScroll.setPrefSize(scrollPane.getWidth(), scrollPane.getHeight());
         vboxScroll.getChildren().add(testacc);
         System.out.println(vboxScroll.getPrefWidth());
-        System.out.println(vboxScroll.getWidth());
     }
 
     public TitledPane createTitledPane(String OrderNumber)

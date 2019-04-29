@@ -5,6 +5,7 @@
  */
 package belmanager.BE;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
 /**
@@ -20,9 +21,9 @@ public class Order
 
     private String deliveryTime;
 
-    private Queue<DepartmentTask> departmentTasks;
+    private ArrayList<DepartmentTask> departmentTasks;
 
-    public Order(String orderNumber, String customerName, String deliveryTime, Queue<DepartmentTask> departmentTasks) {
+    public Order(String orderNumber, String customerName, String deliveryTime, ArrayList<DepartmentTask> departmentTasks) {
         this.orderNumber = orderNumber;
         this.customerName = customerName;
         this.deliveryTime = deliveryTime;
@@ -30,7 +31,7 @@ public class Order
     }
 
     
-    public Queue<DepartmentTask> getDepartmentTasks()
+    public ArrayList<DepartmentTask> getDepartmentTasks()
     {
         return departmentTasks;
     }

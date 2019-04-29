@@ -16,12 +16,19 @@ public class DepartmentTask
     private String endDate;
     private String startDate;
     private boolean finishedOrder;
+    private int taskID;
 
-    public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder) {
+    public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, int taskID) {
         this.departmentName = departmentName;
         this.endDate = endDate;
         this.startDate = startDate;
         this.finishedOrder = finishedOrder;
+        this.taskID = taskID;
+    }
+
+    public int getTaskID()
+    {
+        return taskID;
     }
 
     

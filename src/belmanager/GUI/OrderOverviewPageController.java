@@ -5,6 +5,8 @@
  */
 package belmanager.GUI;
 
+import belmanager.BE.DepartmentTask;
+import belmanager.BE.Order;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,30 +47,44 @@ public class OrderOverviewPageController implements Initializable
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         Accordion testacc = new Accordion();
-        TitledPane test1 = createTitledPane("123-4567-89");
-        TitledPane test2 = createTitledPane("987-6543-21");
-        TitledPane test3 = createTitledPane("678-9543-21");
-        TitledPane test4 = createTitledPane("123-4567-89");
-        TitledPane test5 = createTitledPane("987-6543-21");
-        TitledPane test6 = createTitledPane("678-9543-21");
-        TitledPane test7 = createTitledPane("123-4567-89");
-        TitledPane test8 = createTitledPane("987-6543-21");
-        TitledPane test9 = createTitledPane("678-9543-21");
-        TitledPane test10 = createTitledPane("123-4567-89");
-        TitledPane test11 = createTitledPane("987-6543-21");
-        TitledPane test12 = createTitledPane("678-9543-21");
-        testacc.getPanes().addAll(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12);
-//        vboxScroll.setPrefSize(scrollPane.getWidth(), scrollPane.getHeight());
+        
+        // Temporary code for testing GUI and View stuff
+        DepartmentTask dt1 = new DepartmentTask("Department_One", "30-04-2019", "26-04-2019", false, -1);
+        DepartmentTask dt2 = new DepartmentTask("Department_Two", "01-05-2019", "25-04-2019", false, -2);
+        DepartmentTask dt3 = new DepartmentTask("Department_Three", "29-04-2019", "23-04-2019", false, -3);
+        List<DepartmentTask> dtQueue = new ArrayList<>();
+        dtQueue.add(dt3);
+        dtQueue.add(dt2);
+        dtQueue.add(dt1);
+        
+        
+        Order o1 = new Order("123-456-78", "Customer_One", "Delivery_Time", dtQueue);
+        Order o2 = new Order("234-567-89", "Customer_Two", "Delivery_Time", dtQueue);
+        Order o3 = new Order("098-765-43", "Customer_Three", "Delivery_Time", dtQueue);
+        Order o4 = new Order("987-654-32", "Customer_Four", "Delivery_Time", dtQueue);
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(o1);
+        orderList.add(o2);
+        orderList.add(o3);
+        orderList.add(o4);
+        
+        for (Order order : orderList)
+        {
+            testacc.getPanes().add(createTitledPane(order));
+        }
+        
         vboxScroll.getChildren().add(testacc);
         System.out.println(vboxScroll.getPrefWidth());
     }
 
-    public TitledPane createTitledPane(String OrderNumber)
+    public TitledPane createTitledPane(Order order)
     {
         double X = 15.00;
         double Y = 20.00;
         AnchorPane tempAnch = new AnchorPane();
-        String titleString = "Order: " + OrderNumber + " "+"\t\t\t\t\t\t"+ " Start Date: "+"25-04-2019"+"\t\t"+"End Date: "+"30-04-2019";
+        String titleString = "Order: " + order.getOrderNumber() + " "+"\t\t\t\t\t\t"+
+                " Start Date: "+order.getCurrentDepartment().getStartDate()+"\t\t"+
+                "End Date: "+order.getCurrentDepartment().getEndDate();
         TitledPane temp = new TitledPane(titleString, tempAnch);
         temp.setOnMouseClicked((MouseEvent event) ->
         {
@@ -78,13 +94,17 @@ public class OrderOverviewPageController implements Initializable
             System.out.println(theOrderNumber);
         });
         List<Label> labels = new ArrayList<>();
-        Label OrderNumberLBL = new Label("Order Number: " + OrderNumber);
+        Label OrderNumberLBL = new Label("Order Number: " + order.getOrderNumber());
         labels.add(OrderNumberLBL);
-        Label CustomerLBL = new Label("CustomerName");
+        Label DeliveryDateLBL = new Label("Delivery Date: "+order.getDeliveryTime());
+        labels.add(DeliveryDateLBL);
+        Label DepartmentName = new Label("Department: "+order.getCurrentDepartment().getDepartmentName());
+        labels.add(DepartmentName);
+        Label CustomerLBL = new Label(order.getCustomerName());
         labels.add(CustomerLBL);
-        Label StartDateLBL = new Label("24-04-2019");
+        Label StartDateLBL = new Label(order.getCurrentDepartment().getStartDate());
         labels.add(StartDateLBL);
-        Label EndDateLBL = new Label("25-04-2019");
+        Label EndDateLBL = new Label(order.getCurrentDepartment().getEndDate());
         labels.add(EndDateLBL);
         Button btnFinishOrder = new Button("Complete");
         btnFinishOrder.setLayoutX(X);
@@ -98,7 +118,8 @@ public class OrderOverviewPageController implements Initializable
         realized.setLayoutY(Y*(labels.size()+5));
         realized.setPrefSize(300.00, 25.00);
         fixLabels(labels);
-        tempAnch.getChildren().addAll(OrderNumberLBL, CustomerLBL, StartDateLBL, EndDateLBL, btnFinishOrder, estimated, realized);
+        tempAnch.getChildren().addAll(labels);
+        tempAnch.getChildren().addAll(btnFinishOrder, estimated, realized);
 
         return temp;
 

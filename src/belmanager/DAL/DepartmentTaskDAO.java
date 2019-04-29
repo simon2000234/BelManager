@@ -28,7 +28,7 @@ public class DepartmentTaskDAO
     }
 
     public void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
-    {
+    {   
         String SQL = "INSERT INTO DepartmentTask(departmentName, endDate, startDate, finishedOrder, orderID)"
                 + "VALUES(?,?,?,?,?);";
         try (Connection con = DB.getConnection())

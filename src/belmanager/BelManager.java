@@ -21,7 +21,7 @@ public class BelManager extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/OrderOverviewPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
         
         Scene scene = new Scene(root);
         

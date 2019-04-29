@@ -61,6 +61,10 @@ public class DepartmentOverviewController implements Initializable
     {
     }
 
+    /*
+    denne methode giver en mulighed for at vægle en file
+    copy past fra tidligere opgave er en dejlige ting at gøre
+    */
     @FXML
     private void pickAFile(ActionEvent event)
     {

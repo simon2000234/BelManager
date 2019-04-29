@@ -12,7 +12,7 @@
       <Button layoutY="25.0" mnemonicParsing="false" onAction="#handleButtonActionDep2" prefHeight="25.0" prefWidth="367.0" text="Department 2" />
       <Button mnemonicParsing="false" onAction="#handleButtonActionDep1" prefHeight="25.0" prefWidth="367.0" text="Department 1" />
       <Button layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonActionDepMore" prefHeight="25.0" prefWidth="367.0" text="Department ..." />
-      <Button fx:id="PickAFile" layoutX="-1.0" layoutY="149.0" mnemonicParsing="false" onAction="#pickAFile" prefHeight="49.0" prefWidth="367.0" text="pick a file">
+      <Button fx:id="PickAFile" layoutX="-1.0" layoutY="149.0" mnemonicParsing="false" onAction="#pickAFile" prefHeight="51.0" prefWidth="367.0" text="pick a file">
          <font>
             <Font size="24.0" />
          </font>

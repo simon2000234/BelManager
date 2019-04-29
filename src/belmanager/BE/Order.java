@@ -20,7 +20,7 @@ public class Order
     private String customerName;
 
     private String deliveryTime;
-
+    
     private List<DepartmentTask> departmentTasks = new ArrayList<>();
 
     public Order(String orderNumber, String customerName, String deliveryTime, List<DepartmentTask> departmentTasks)
@@ -30,6 +30,8 @@ public class Order
         this.deliveryTime = deliveryTime;
         this.departmentTasks = departmentTasks;
     }
+
+    
 
     public List<DepartmentTask> getDepartmentTasks()
     {
@@ -74,7 +76,7 @@ public class Order
         {
             if (departmentTask.isFinishedOrder() == false)
             {
-                temp = new DepartmentTask(departmentTask.getDepartmentName(), departmentTask.getEndDate(), departmentTask.getStartDate(), false);
+                temp = new DepartmentTask(departmentTask.getDepartmentName(), departmentTask.getEndDate(), departmentTask.getStartDate(), false, departmentTask.getTaskID());
             }
         }
         return temp;

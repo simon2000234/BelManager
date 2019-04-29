@@ -57,13 +57,13 @@ public class OrderOverviewPageController implements Initializable
         mainAccordion = new Accordion();
 
         // Temporary code for testing GUI and View stuff
-        DepartmentTask dt1 = new DepartmentTask("Department_One", "30-04-2019", "26-04-2019", true);
-        DepartmentTask dt2 = new DepartmentTask("Department_Two", "01-05-2019", "25-04-2019", false);
-        DepartmentTask dt3 = new DepartmentTask("Department_Three", "29-04-2019", "23-04-2019", false);
-        DepartmentTask dt4 = new DepartmentTask("Department_Four", "29-04-2019", "23-04-2019", false);
-        DepartmentTask dt5 = new DepartmentTask("Department_Five", "29-04-2019", "23-04-2019", false);
-        DepartmentTask dt6 = new DepartmentTask("Department_Six", "29-04-2019", "23-04-2019", false);
-        DepartmentTask dt7 = new DepartmentTask("Department_Seven", "29-04-2019", "23-04-2019", false);
+        DepartmentTask dt1 = new DepartmentTask("Department_One", "30-04-2019", "26-04-2019", true,0);
+        DepartmentTask dt2 = new DepartmentTask("Department_Two", "01-05-2019", "25-04-2019", false,1);
+        DepartmentTask dt3 = new DepartmentTask("Department_Three", "29-04-2019", "23-04-2019", false,2);
+        DepartmentTask dt4 = new DepartmentTask("Department_Four", "29-04-2019", "23-04-2019", false,3);
+        DepartmentTask dt5 = new DepartmentTask("Department_Five", "29-04-2019", "23-04-2019", false,4);
+        DepartmentTask dt6 = new DepartmentTask("Department_Six", "29-04-2019", "23-04-2019", false,5);
+        DepartmentTask dt7 = new DepartmentTask("Department_Seven", "29-04-2019", "23-04-2019", false,6);
         List<DepartmentTask> dtQueue = new ArrayList<>();
         dtQueue.add(dt1);
         dtQueue.add(dt2);

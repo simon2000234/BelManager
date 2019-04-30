@@ -64,16 +64,16 @@ public class DepartmentOverviewController implements Initializable
     /*
     denne methode giver en mulighed for at vægle en file
     copy past fra tidligere opgave er en dejlige ting at gøre
+    .trim() fjerne whiteSpace " "
     */
     @FXML
     private void pickAFile(ActionEvent event)
     {
         FileChooser fileChooser;
         fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".txt","*.txt"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".JSON", "*.JSON"));
         file = fileChooser.showOpenDialog(null).getAbsoluteFile().getPath();
-        System.out.println("du har valgt: "+file);
+        System.out.println(file.trim());
         
     }
     

@@ -56,13 +56,13 @@ public class OrderOverviewPageController implements Initializable
         mainAccordion = new Accordion();
 
         // Temporary code for testing GUI and View stuff
-        DepartmentTask dt1 = new DepartmentTask("Department_One", "30-04-2019", "26-04-2019", true,0);
-        DepartmentTask dt2 = new DepartmentTask("Department_Two", "01-05-2019", "25-04-2019", false,1);
-        DepartmentTask dt3 = new DepartmentTask("Department_Three", "29-04-2019", "23-04-2019", false,2);
-        DepartmentTask dt4 = new DepartmentTask("Department_Four", "29-04-2019", "23-04-2019", false,3);
-        DepartmentTask dt5 = new DepartmentTask("Department_Five", "29-04-2019", "23-04-2019", false,4);
-        DepartmentTask dt6 = new DepartmentTask("Department_Six", "29-04-2019", "23-04-2019", false,5);
-        DepartmentTask dt7 = new DepartmentTask("Department_Seven", "29-04-2019", "23-04-2019", false,6);
+        DepartmentTask dt1 = new DepartmentTask("Department_One", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", true,0);
+        DepartmentTask dt2 = new DepartmentTask("Department_Two", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,1);
+        DepartmentTask dt3 = new DepartmentTask("Department_Three", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,2);
+        DepartmentTask dt4 = new DepartmentTask("Department_Four", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,3);
+        DepartmentTask dt5 = new DepartmentTask("Department_Five", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,4);
+        DepartmentTask dt6 = new DepartmentTask("Department_Six", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,5);
+        DepartmentTask dt7 = new DepartmentTask("Department_Seven", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,6);
         List<DepartmentTask> dtQueue = new ArrayList<>();
         dtQueue.add(dt1);
         dtQueue.add(dt2);
@@ -72,10 +72,10 @@ public class OrderOverviewPageController implements Initializable
         dtQueue.add(dt6);
         dtQueue.add(dt7);
 
-        Order o1 = new Order("123-456-78", "Customer_One", "Delivery_Time", dtQueue);
-        Order o2 = new Order("234-567-89", "Customer_Two", "Delivery_Time", dtQueue);
-        Order o3 = new Order("098-765-43", "Customer_Three", "Delivery_Time", dtQueue);
-        Order o4 = new Order("987-654-32", "Customer_Four", "Delivery_Time", dtQueue);
+        Order o1 = new Order("123-456-78", "Customer_One", "/Date(1559955098813+0200)/", dtQueue);
+        Order o2 = new Order("234-567-89", "Customer_Two", "/Date(1559955098813+0200)/", dtQueue);
+        Order o3 = new Order("098-765-43", "Customer_Three", "/Date(1559955098813+0200)/", dtQueue);
+        Order o4 = new Order("987-654-32", "Customer_Four", "/Date(1559955098813+0200)/", dtQueue);
         List<Order> orderList = new ArrayList<>();
         orderList.add(o1);
         orderList.add(o2);

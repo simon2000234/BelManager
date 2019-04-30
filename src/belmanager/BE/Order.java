@@ -89,8 +89,7 @@ public class Order
         {
             if (departmentTask.isFinishedOrder() == false)
             {
-                temp = new DepartmentTask(departmentTask.getDepartmentName(), departmentTask.getEndDate(), departmentTask.getStartDate(), false, departmentTask.getTaskID());
-                break;
+                return departmentTask;
             }
         }
         return temp;

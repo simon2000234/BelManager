@@ -9,7 +9,7 @@ package belmanager.BE;
  *
  * @author Melchertsen
  */
-public class DepartmentTask
+public class DepartmentTask implements Comparable<String>
 {
 
     private String departmentName;
@@ -18,7 +18,8 @@ public class DepartmentTask
     private boolean finishedOrder;
     private int taskID;
 
-    public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, int taskID) {
+    public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, int taskID)
+    {
         this.departmentName = departmentName;
         this.endDate = endDate;
         this.startDate = startDate;
@@ -31,8 +32,6 @@ public class DepartmentTask
         return taskID;
     }
 
-    
-    
     public String getDepartmentName()
     {
         return departmentName;
@@ -74,9 +73,32 @@ public class DepartmentTask
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "DepartmentTask{" + "departmentName=" + departmentName + ", endDate=" + endDate + ", startDate=" + startDate + ", finishedOrder=" + finishedOrder + '}';
     }
 
+    @Override
+    public int compareTo(String o)
+    {
+        int c;
+        String[] thisDepartment = this.startDate.split("-");
+        String[] givenDate = o.split("-");
+
+        c = thisDepartment[2].compareTo(givenDate[2]);
+        if (c >= 0)
+        {
+            c = thisDepartment[1].compareTo(givenDate[1]);
+        }
+        if (c >= 0)
+        {
+            c = thisDepartment[0].compareTo(givenDate[0]);
+        }
+        if (c >= 0)
+        {
+            return c;
+        }
+        return -1;
+    }
 
 }

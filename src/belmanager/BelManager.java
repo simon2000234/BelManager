@@ -5,6 +5,7 @@
  */
 package belmanager;
 
+import belmanager.BLL.BMManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +39,7 @@ public class BMManager
     {
         List<Order> temp = new ArrayList<>();
         c = Calendar.getInstance();
-        currentDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+        currentDate = new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
 
         for (Order order : daFacade.getAllOrders())
         {

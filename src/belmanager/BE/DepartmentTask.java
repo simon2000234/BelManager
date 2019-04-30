@@ -98,8 +98,8 @@ public class DepartmentTask implements Comparable<String>
     public int compareTo(String o)
     {
         int c;
-        String[] thisDepartment = this.startDate.split("-");
-        String[] givenDate = o.split("-");
+        String[] thisDepartment = this.startDate.split("/");
+        String[] givenDate = o.split("/");
 
         c = thisDepartment[2].compareTo(givenDate[2]);
         if (c >= 0)

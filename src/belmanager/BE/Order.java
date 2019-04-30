@@ -16,7 +16,7 @@ import java.util.TimeZone;
  *
  * @author Melchertsen
  */
-public class Order
+public class Order implements Comparable<Order>
 {
 
     private String orderNumber;
@@ -24,7 +24,7 @@ public class Order
     private String customerName;
 
     private String deliveryTime;
-    
+
     private List<DepartmentTask> departmentTasks = new ArrayList<>();
 
     public Order(String orderNumber, String customerName, String deliveryTime, List<DepartmentTask> departmentTasks)
@@ -83,7 +83,7 @@ public class Order
 
     public DepartmentTask getCurrentDepartment()
     {
-        
+
         DepartmentTask temp = null;
         for (DepartmentTask departmentTask : departmentTasks)
         {
@@ -99,6 +99,45 @@ public class Order
     public String toString()
     {
         return "Order{" + "orderNumber=" + orderNumber + ", customerName=" + customerName + ", deliveryTime=" + deliveryTime + ", departmentTasks=" + departmentTasks + '}';
+    }
+
+    @Override
+    public int compareTo(Order o)
+    {
+        int c;
+        String[] thisDepartment = this.getCurrentDepartment().getEndDate().split("/");
+        String[] givenDate = o.getCurrentDepartment().getEndDate().split("/");
+
+        c = thisDepartment[2].compareTo(givenDate[2]);
+        if (c < 0)
+        {
+            return c;
+        } else if (c > 0)
+        {
+            return 1;
+        } else
+        {
+            c = thisDepartment[1].compareTo(givenDate[1]);
+        }
+        if (c < 0)
+        {
+            return c;
+        } else if (c > 0)
+        {
+            return 1;
+        } else
+        {
+            c = thisDepartment[0].compareTo(givenDate[0]);
+        }
+        if (c < 0)
+        {
+            return c;
+        } else if (c > 0)
+        {
+            return 1;
+        }
+
+        return 0;
     }
 
 }

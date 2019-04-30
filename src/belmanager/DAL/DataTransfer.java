@@ -54,7 +54,7 @@ public class DataTransfer
         }
         catch (SQLException ex)
         {
-            System.out.println("DAB Workers");
+            System.out.println("SQL Fail, are you connected to the school internet?");
         }
     }
 
@@ -80,7 +80,7 @@ public class DataTransfer
         }
         catch (SQLException ex)
         {
-            System.out.println("DAB Orders");
+            System.out.println("SQL Fail, are you connected to the school internet?");
         }
     }
 
@@ -103,7 +103,7 @@ public class DataTransfer
         }
         catch (SQLException ex)
         {
-            System.out.println("DAB task");
+            System.out.println("SQL Fail, are you connected to the school internet?");
         }
     }
 

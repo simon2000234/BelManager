@@ -7,6 +7,7 @@ package belmanager.BLL;
 
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
+import belmanager.BE.Worker;
 import belmanager.DAL.DataAccessFacade;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,4 +44,54 @@ public class BMManager
 
     }
 
+    
+    public List<Order> getAllOrders() throws SQLException
+    {
+        return daFacade.getAllOrders();
+    }
+
+    public Order getOrder(String orderNumber) throws SQLException
+    {
+        return daFacade.getOrder(orderNumber);
+    }
+
+    public void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
+    {
+        daFacade.createDeparmentTask(departmentName, endDate, startDate, finishedOrder, orderID);
+    }
+
+    public void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
+    {
+        daFacade.createOrder(orderNumber, customerName, deliveryTime);
+    }
+
+    public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
+    {
+        return daFacade.getAllDepartmentTasks(orderNumber);
+    }
+
+    public List<DepartmentTask> getAllDepartmentTasks() throws SQLException
+    {
+        return daFacade.getAllDepartmentTasks();
+    }
+
+    public void createWorker(String initials, String name, int salaryNumber) throws SQLException
+    {
+        daFacade.createWorker(initials, name, salaryNumber);
+    }
+
+    public Worker getWorker(int salaryNumber) throws SQLException
+    {
+        return daFacade.getWorker(salaryNumber);
+    }
+
+    public void deleteWorker(int salaryNumber) throws SQLException
+    {
+        daFacade.deleteWorker(salaryNumber);
+    }
+
+    public ArrayList<Worker> getAllWorkers() throws SQLException
+    {
+        return daFacade.getAllWorkers();
+    }
 }

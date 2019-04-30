@@ -39,7 +39,7 @@ public class BMManager
     {
         List<Order> temp = new ArrayList<>();
         c = Calendar.getInstance();
-        currentDate = new SimpleDateFormat("dd-MM-yyyy").format(c.getTime());
+        currentDate = new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
 
         for (Order order : daFacade.getAllOrders())
         {

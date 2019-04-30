@@ -10,7 +10,10 @@ import belmanager.BE.Order;
 import belmanager.BE.Worker;
 import belmanager.DAL.DataAccessFacade;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,27 +22,34 @@ import java.util.List;
  */
 public class BMManager
 {
-    DataAccessFacade daFacade = new DataAccessFacade();
+
+    private DataAccessFacade daFacade = new DataAccessFacade();
+    private Calendar c;
+    private String currentDate;
 
     /**
-     * Filters all orders, showing only the orders where their current department
-     * is the department that we are trying to get orders for.
+     * Filters all orders, showing only the orders where their current
+     * department is the department that we are trying to get orders for.
      *
      * @param currentDepartment
-     * @return a list of orders where the current department equals the department
-     * given in the parameter.
+     * @return a list of orders where the current department equals the
+     * department given in the parameter.
      */
-    public List<Order> filterOrders(DepartmentTask currentDepartment) throws SQLException
+    public List<Order> filterOrdersByDepartment(DepartmentTask currentDepartment) throws SQLException
     {
         List<Order> temp = new ArrayList<>();
-        
+        c = Calendar.getInstance();
+        currentDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+
         for (Order order : daFacade.getAllOrders())
         {
-            if (currentDepartment.getDepartmentName().equals(order.getCurrentDepartment().getDepartmentName()))
+            if (currentDepartment.getDepartmentName().equals(order.getCurrentDepartment().getDepartmentName())
+                    || order.getCurrentDepartment().getStartDate().compareTo(currentDate) >= 0
+                    && order.getCurrentDepartment().isFinishedOrder() == false)
             {
                 temp.add(order);
             }
-        }       
+        }
         return temp;
 
     }

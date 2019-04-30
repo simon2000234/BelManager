@@ -46,7 +46,7 @@ public class DepartmentTaskDAO
 
     public void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
     {
-        String SQL = "INSERT INTO Order(orderNumber, customerName, deliveryTime) VALUES(?,?,?);";
+        String SQL = "INSERT INTO [Order](orderNumber, customerName, deliveryTime) VALUES(?,?,?);";
 
         try (Connection con = DB.getConnection())
         {
@@ -61,7 +61,7 @@ public class DepartmentTaskDAO
 
     public Order getOrder(String orderNumber) throws SQLException
     {
-        String SQL = "SELECT * FROM Order WHERE orderNumber = ?";
+        String SQL = "SELECT * FROM [Order] WHERE orderNumber = ?";
         Order order = null;
         try (Connection con = DB.getConnection())
         {
@@ -81,7 +81,7 @@ public class DepartmentTaskDAO
 
     public ArrayList<Order> getAllOrders() throws SQLException
     {
-        String SQL = "SELECT * FROM Order;";
+        String SQL = "SELECT * FROM [Order];";
         ArrayList<Order> allOrders = new ArrayList<>();
 
         try (Connection con = DB.getConnection())

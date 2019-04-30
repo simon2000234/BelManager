@@ -5,8 +5,12 @@
  */
 package belmanager.BE;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  *
@@ -27,8 +31,19 @@ public class Order implements Comparable<Order>
     {
         this.orderNumber = orderNumber;
         this.customerName = customerName;
-        this.deliveryTime = deliveryTime;
+        this.deliveryTime = convertDate(deliveryTime);
         this.departmentTasks = departmentTasks;
+    }
+
+    private String convertDate(String dateToConvert)
+    {
+        String sringDate = dateToConvert.substring(6, 19);
+        long DateEpoch = Long.parseLong(sringDate);
+        Date date = new Date(DateEpoch);
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String formatted = format.format(date);
+        return formatted;
     }
 
     public List<DepartmentTask> getDepartmentTasks()
@@ -91,8 +106,8 @@ public class Order implements Comparable<Order>
     public int compareTo(Order o)
     {
         int c;
-        String[] thisDepartment = this.getCurrentDepartment().getEndDate().split("-");
-        String[] givenDate = o.getCurrentDepartment().getEndDate().split("-");
+        String[] thisDepartment = this.getCurrentDepartment().getEndDate().split("/");
+        String[] givenDate = o.getCurrentDepartment().getEndDate().split("/");
 
         c = thisDepartment[2].compareTo(givenDate[2]);
         if (c < 0)

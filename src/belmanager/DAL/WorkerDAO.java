@@ -80,7 +80,7 @@ public class WorkerDAO
         }
     }
     
-    public ArrayList<Worker> getAlllWorkers() throws SQLException
+    public ArrayList<Worker> getAllWorkers() throws SQLException
     {
         String SQL = "SELECT * FROM Worker;";
         ArrayList<Worker> allWorkers = new ArrayList<>();

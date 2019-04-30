@@ -69,6 +69,6 @@ public class DataAccessFacade
 
     public ArrayList<Worker> getAllWorkers() throws SQLException
     {
-        return wdao.getAlllWorkers();
+        return wdao.getAllWorkers();
     }
 }

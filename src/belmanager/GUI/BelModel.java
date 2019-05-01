@@ -9,9 +9,11 @@ import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.Worker;
 import belmanager.BLL.BMManager;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -19,9 +21,24 @@ import java.util.List;
  */
 public class BelModel
 {
+
     private BMManager bmm = new BMManager();
-            
-            
+    private List<Order> currentOrders;
+    private String currentDepartment;
+    private Order selectedOrder;
+
+    public BelModel() throws SQLException
+    {
+        this.currentDepartment = "Halvfab"; //Need to get department from a config file on login
+        this.currentOrders = new ArrayList<>();
+        currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
+    }
+
+    public List<Order> filterOrdersByDepartment(String selectedDepartment) throws SQLException
+    {
+        return bmm.filterOrdersByDepartment(currentDepartment);
+    }
+
     public List<Order> getAllOrders() throws SQLException
     {
         return bmm.getAllOrders();
@@ -32,16 +49,6 @@ public class BelModel
         return bmm.getOrder(orderNumber);
     }
 
-    public void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
-    {
-        bmm.createDeparmentTask(departmentName, endDate, startDate, finishedOrder, orderID);
-    }
-
-    public void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
-    {
-        bmm.createOrder(orderNumber, customerName, deliveryTime);
-    }
-
     public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         return bmm.getAllDepartmentTasks(orderNumber);
@@ -50,11 +57,6 @@ public class BelModel
     public List<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         return bmm.getAllDepartmentTasks();
-    }
-
-    public void createWorker(String initials, String name, int salaryNumber) throws SQLException
-    {
-        bmm.createWorker(initials, name, salaryNumber);
     }
 
     public Worker getWorker(int salaryNumber) throws SQLException
@@ -71,4 +73,40 @@ public class BelModel
     {
         return bmm.getAllWorkers();
     }
+
+    public List<Order> getCurrentOrders()
+    {
+        return currentOrders;
+    }
+
+    public void setCurrentOrders(List<Order> currentOrders)
+    {
+        this.currentOrders = currentOrders;
+    }
+
+    public String getCurrentDepartment()
+    {
+        return currentDepartment;
+    }
+
+    public void setCurrentDepartment(String currentDepartment)
+    {
+        this.currentDepartment = currentDepartment;
+    }
+
+    public Order getSelectedOrder()
+    {
+        return selectedOrder;
+    }
+
+    public void setSelectedOrder(Order selectedOrder)
+    {
+        this.selectedOrder = selectedOrder;
+    }
+    
+     public void moveJsonToDB(String fileLocation) throws IOException, ParseException
+    {
+        bmm.moveJsonToDB(fileLocation);
+    }
 }
+

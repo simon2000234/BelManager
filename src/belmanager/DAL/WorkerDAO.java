@@ -21,12 +21,12 @@ public class WorkerDAO
 
     private DBConnectionProvider DB;
 
-    public WorkerDAO()
+    protected WorkerDAO()
     {
         DB = new DBConnectionProvider();
     }
     
-    public void createWorker(String initials, String name, int salaryNumber) throws SQLException
+    protected void createWorker(String initials, String name, int salaryNumber) throws SQLException
     {
         String SQL = "INSERT INTO Worker(initials, name, salaryNumber) VALUES(?,?,?);";
         try(Connection con = DB.getConnection())
@@ -40,7 +40,7 @@ public class WorkerDAO
         }
     }
     
-    public Worker getWorker(int salaryNumber) throws SQLException
+    protected Worker getWorker(int salaryNumber) throws SQLException
     {
         Worker worker = null;
         String SQL = "SELECT * FROM Worker WHERE salaryNumber = ?;";
@@ -67,7 +67,7 @@ public class WorkerDAO
         return worker;
     }
     
-    public void deleteWorker(int salaryNumber) throws SQLException
+    protected void deleteWorker(int salaryNumber) throws SQLException
     {
         String SQL = "DELETE FROM Worker WHERE salaryNumber = ?;";
         
@@ -80,7 +80,7 @@ public class WorkerDAO
         }
     }
     
-    public ArrayList<Worker> getAlllWorkers() throws SQLException
+    protected ArrayList<Worker> getAllWorkers() throws SQLException
     {
         String SQL = "SELECT * FROM Worker;";
         ArrayList<Worker> allWorkers = new ArrayList<>();

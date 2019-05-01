@@ -8,9 +8,11 @@ package belmanager.DAL;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.Worker;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -21,6 +23,7 @@ public class DataAccessFacade
 
     WorkerDAO wdao = new WorkerDAO();
     DepartmentTaskDAO dtdao = new DepartmentTaskDAO();
+    DataTransfer dt = new DataTransfer();
 
     public List<Order> getAllOrders() throws SQLException
     {
@@ -32,16 +35,6 @@ public class DataAccessFacade
         return dtdao.getOrder(orderNumber);
     }
 
-    public void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
-    {
-        dtdao.createDeparmentTask(departmentName, endDate, startDate, finishedOrder, orderID);
-    }
-
-    public void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
-    {
-        dtdao.createOrder(orderNumber, customerName, deliveryTime);
-    }
-
     public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         return dtdao.getAllDepartmentTasks(orderNumber);
@@ -50,11 +43,6 @@ public class DataAccessFacade
     public List<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         return dtdao.getAllDepartmentTasks();
-    }
-
-    public void createWorker(String initials, String name, int salaryNumber) throws SQLException
-    {
-        wdao.createWorker(initials, name, salaryNumber);
     }
 
     public Worker getWorker(int salaryNumber) throws SQLException
@@ -69,6 +57,11 @@ public class DataAccessFacade
 
     public ArrayList<Worker> getAllWorkers() throws SQLException
     {
-        return wdao.getAlllWorkers();
+        return wdao.getAllWorkers();
+    }
+    
+    public void moveJsonToDB(String fileLocation) throws IOException, ParseException
+    {
+        dt.moveJsonToDB(fileLocation);
     }
 }

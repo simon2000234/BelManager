@@ -22,12 +22,12 @@ public class DepartmentTaskDAO
 
     private DBConnectionProvider DB;
 
-    public DepartmentTaskDAO()
+    protected DepartmentTaskDAO()
     {
         DB = new DBConnectionProvider();
     }
 
-    public void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
+    protected void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
     {   
         String SQL = "INSERT INTO DepartmentTask(departmentName, endDate, startDate, finishedOrder, orderID)"
                 + "VALUES(?,?,?,?,?);";
@@ -44,7 +44,7 @@ public class DepartmentTaskDAO
         }
     }
 
-    public void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
+    protected void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
     {
         String SQL = "INSERT INTO [Order](orderNumber, customerName, deliveryTime) VALUES(?,?,?);";
 
@@ -59,7 +59,7 @@ public class DepartmentTaskDAO
         }
     }
 
-    public Order getOrder(String orderNumber) throws SQLException
+    protected Order getOrder(String orderNumber) throws SQLException
     {
         String SQL = "SELECT * FROM [Order] WHERE orderNumber = ?";
         Order order = null;
@@ -79,7 +79,7 @@ public class DepartmentTaskDAO
         return order;
     }
 
-    public ArrayList<Order> getAllOrders() throws SQLException
+    protected ArrayList<Order> getAllOrders() throws SQLException
     {
         String SQL = "SELECT * FROM [Order];";
         ArrayList<Order> allOrders = new ArrayList<>();
@@ -103,7 +103,7 @@ public class DepartmentTaskDAO
         }
     }
 
-    public ArrayList<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
+    protected ArrayList<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         String SQL = "SELECT * FROM DepartmentTask WHERE orderID = ?;";
         ArrayList<DepartmentTask> allTasks = new ArrayList<>();
@@ -130,7 +130,7 @@ public class DepartmentTaskDAO
         return allTasks;
     }
 
-    public ArrayList<DepartmentTask> getAllDepartmentTasks() throws SQLException
+    protected ArrayList<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         String SQL = "SELECT * FROM DepartmentTask;";
         ArrayList<DepartmentTask> allTasks = new ArrayList<>();

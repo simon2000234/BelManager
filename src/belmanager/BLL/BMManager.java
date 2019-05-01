@@ -35,7 +35,7 @@ public class BMManager
      * @return a list of orders where the current department equals the
      * department given in the parameter.
      */
-    public List<Order> filterOrdersByDepartment(DepartmentTask currentDepartment) throws SQLException
+    public List<Order> filterOrdersByDepartment(String currentDepartment) throws SQLException
     {
         List<Order> temp = new ArrayList<>();
         c = Calendar.getInstance();
@@ -43,13 +43,15 @@ public class BMManager
 
         for (Order order : daFacade.getAllOrders())
         {
-            if (currentDepartment.getDepartmentName().equals(order.getCurrentDepartment().getDepartmentName())
+            if (currentDepartment.equals(order.getCurrentDepartment().getDepartmentName())
                     || order.getCurrentDepartment().getStartDate().compareTo(currentDate) >= 0
                     && order.getCurrentDepartment().isFinishedOrder() == false)
             {
                 temp.add(order);
             }
         }
+        
+        Collections.sort(temp);
         return temp;
 
     }

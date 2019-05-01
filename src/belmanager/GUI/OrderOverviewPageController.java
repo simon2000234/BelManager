@@ -8,9 +8,12 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,9 +43,11 @@ public class OrderOverviewPageController implements Initializable
     private ScrollPane scrollPane;
     @FXML
     private VBox vboxScroll;
+    
+    private BelModel bm;
 
-    List<TitledPane> listPanes;
-    Accordion mainAccordion;
+    private List<TitledPane> listPanes;
+    private Accordion mainAccordion;
 
     /**
      * Initializes the controller class.
@@ -50,51 +55,34 @@ public class OrderOverviewPageController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
+        try
+        {
+            bm = new BelModel();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         listPanes = new ArrayList<>();
         mainAccordion = new Accordion();
-
-        // Temporary code for testing GUI and View stuff
-        DepartmentTask dt1 = new DepartmentTask("Department_One", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", true,0);
-        DepartmentTask dt2 = new DepartmentTask("Department_Two", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,1);
-        DepartmentTask dt3 = new DepartmentTask("Department_Three", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,2);
-        DepartmentTask dt4 = new DepartmentTask("Department_Four", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,3);
-        DepartmentTask dt5 = new DepartmentTask("Department_Five", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,4);
-        DepartmentTask dt6 = new DepartmentTask("Department_Six", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,5);
-        DepartmentTask dt7 = new DepartmentTask("Department_Seven", "/Date(1559955098813+0200)/", "/Date(1559955098813+0200)/", false,6);
-        List<DepartmentTask> dtQueue = new ArrayList<>();
-        dtQueue.add(dt1);
-        dtQueue.add(dt2);
-        dtQueue.add(dt3);
-        dtQueue.add(dt4);
-        dtQueue.add(dt5);
-        dtQueue.add(dt6);
-        dtQueue.add(dt7);
-
-        Order o1 = new Order("123-456-78", "Customer_One", "/Date(1559955098813+0200)/", dtQueue);
-        Order o2 = new Order("234-567-89", "Customer_Two", "/Date(1559955098813+0200)/", dtQueue);
-        Order o3 = new Order("098-765-43", "Customer_Three", "/Date(1559955098813+0200)/", dtQueue);
-        Order o4 = new Order("987-654-32", "Customer_Four", "/Date(1559955098813+0200)/", dtQueue);
-        List<Order> orderList = new ArrayList<>();
-        orderList.add(o1);
-        orderList.add(o2);
-        orderList.add(o3);
-        orderList.add(o4);
-
-        for (Order order : orderList)
+        
+        // Creates TitledPanes each containing the details of 1 order
+        try
         {
-            TitledPane temp = createTitledPane(order);
-            mainAccordion.getPanes().add(temp);
-            listPanes.add(temp);
+            for (Order order : bm.filterOrdersByDepartment("Halvfab"))
+            {
+                TitledPane temp = createTitledPane(order);
+                mainAccordion.getPanes().add(temp);
+                listPanes.add(temp);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        AnchorPane sometest = (AnchorPane) listPanes.get(0).getContent();
-
-        Label oktest = (Label) sometest.getChildren().get(2);
-        oktest.setText("Ikke mere department");
-
-        //---------Test code ends----------
         vboxScroll.getChildren().add(mainAccordion);
 
     }
@@ -106,8 +94,9 @@ public class OrderOverviewPageController implements Initializable
 
         List<DepartmentTask> tempDTlist = new ArrayList<>();
         tempDTlist = order.getDepartmentTasks();
-
         AnchorPane tempAnch = new AnchorPane();
+        
+        // Creates the title of each TitlePane based on the Order's variables
         String titleString = "Order: " + order.getOrderNumber() + " " + "\t\t\t\t\t\t"
                 + " Start Date: " + order.getCurrentDepartment().getStartDate() + "\t\t"
                 + "End Date: " + order.getCurrentDepartment().getEndDate();
@@ -118,6 +107,8 @@ public class OrderOverviewPageController implements Initializable
             String[] thisTpane = tempPane.getText().split(" ");
             String theOrderNumber = thisTpane[1];
         });
+        
+        //Creates labels for all the Order's variables and required information
         List<Label> labels = new ArrayList<>();
         Label OrderNumberLBL = new Label("Order Number: " + order.getOrderNumber());
         labels.add(OrderNumberLBL);
@@ -131,6 +122,8 @@ public class OrderOverviewPageController implements Initializable
         labels.add(StartDateLBL);
         Label EndDateLBL = new Label(order.getCurrentDepartment().getEndDate());
         labels.add(EndDateLBL);
+        
+        //Creates Button for marking an order as complete
         Button btnFinishOrder = new Button("Complete");
         AnchorPane.setTopAnchor(btnFinishOrder, Y * (labels.size() + 1));
         AnchorPane.setLeftAnchor(btnFinishOrder, X);
@@ -143,6 +136,8 @@ public class OrderOverviewPageController implements Initializable
             removeTPane(currentOrder);
 
         });
+        
+        //Creates ProgressBar's in order to show realized vs planned progress.
         ProgressBar estimated = new ProgressBar(0.65F);
         AnchorPane.setTopAnchor(estimated, Y * (labels.size() + 3));
         AnchorPane.setLeftAnchor(estimated, X);
@@ -154,13 +149,16 @@ public class OrderOverviewPageController implements Initializable
         AnchorPane.setRightAnchor(realized, X);
         realized.setPrefSize(300.00, 25.00);
         
+        //Creates a label for each department an order has to go through
+        //Creates a corresponding circle with a color RED/YELLOW/GREEN showing
+        // whether an order is INCOMPLETE/BEING WORKED ON/COMPLETED
         List<Circle> departmentStatus = new ArrayList<>();
         List<Label> labelsRightSide = new ArrayList<>();
         for (DepartmentTask departmentTask : tempDTlist)
         {
             Label tempDTname = new Label(departmentTask.getDepartmentName());
             labelsRightSide.add(tempDTname);
-            if (departmentTask.getDepartmentName().equals(tempDTlist.get(1).getDepartmentName()))
+            if (departmentTask.getDepartmentName().equals(bm.getCurrentDepartment()))
             {
                 Circle tempCircle = new Circle(X/2, Color.YELLOW);
                 AnchorPane.setRightAnchor(tempCircle, X);
@@ -180,9 +178,12 @@ public class OrderOverviewPageController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
+        
+        //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X*3, Y, true);
         fixLabels(labels, X, Y, false);
         
+        //adds everything to the pane
         tempAnch.getChildren().addAll(labels);
         tempAnch.getChildren().addAll(labelsRightSide);
         tempAnch.getChildren().addAll(btnFinishOrder, estimated, realized);

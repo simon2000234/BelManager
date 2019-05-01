@@ -21,9 +21,24 @@ import org.json.simple.parser.ParseException;
  */
 public class BelModel
 {
+
     private BMManager bmm = new BMManager();
-            
-            
+    private List<Order> currentOrders;
+    private String currentDepartment;
+    private Order selectedOrder;
+
+    public BelModel() throws SQLException
+    {
+        this.currentDepartment = "Halvfab"; //Need to get department from a config file on login
+        this.currentOrders = new ArrayList<>();
+        currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
+    }
+
+    public List<Order> filterOrdersByDepartment(String selectedDepartment) throws SQLException
+    {
+        return bmm.filterOrdersByDepartment(currentDepartment);
+    }
+
     public List<Order> getAllOrders() throws SQLException
     {
         return bmm.getAllOrders();
@@ -58,9 +73,40 @@ public class BelModel
     {
         return bmm.getAllWorkers();
     }
+
+    public List<Order> getCurrentOrders()
+    {
+        return currentOrders;
+    }
+
+    public void setCurrentOrders(List<Order> currentOrders)
+    {
+        this.currentOrders = currentOrders;
+    }
+
+    public String getCurrentDepartment()
+    {
+        return currentDepartment;
+    }
+
+    public void setCurrentDepartment(String currentDepartment)
+    {
+        this.currentDepartment = currentDepartment;
+    }
+
+    public Order getSelectedOrder()
+    {
+        return selectedOrder;
+    }
+
+    public void setSelectedOrder(Order selectedOrder)
+    {
+        this.selectedOrder = selectedOrder;
+    }
     
      public void moveJsonToDB(String fileLocation) throws IOException, ParseException
     {
         bmm.moveJsonToDB(fileLocation);
     }
 }
+

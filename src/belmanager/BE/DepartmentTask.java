@@ -70,11 +70,6 @@ public class DepartmentTask implements Comparable<String>
         return dateEpoch;
     }
 
-    public void setEndDate(String endDate)
-    {
-        this.endDate = endDate;
-    }
-
     public String getStartDate()
     {
         return convertDate(startDate);
@@ -85,11 +80,6 @@ public class DepartmentTask implements Comparable<String>
         String sringDate = startDate.substring(6, 19);
         long dateEpoch = Long.parseLong(sringDate);
         return dateEpoch;
-    }
-
-    public void setStartDate(String startDate)
-    {
-        this.startDate = startDate;
     }
 
     public boolean isFinishedOrder()

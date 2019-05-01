@@ -83,11 +83,6 @@ public class Order implements Comparable<Order>
         return dateEpoch;
     }
 
-    public void setDeliveryTime(String deliveryTime)
-    {
-        this.deliveryTime = deliveryTime;
-    }
-
     public DepartmentTask getCurrentDepartment()
     {
 

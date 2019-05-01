@@ -24,24 +24,41 @@ import org.json.simple.parser.ParseException;
 public class DataTransfer
 {
 
-    public void moveJsonToDB(String fileName) throws IOException, ParseException 
+    /**
+     * This methord takes a JSON file given to us by Belman, converts it 
+     * and sendt it to our database
+     * @param fileLocation the location of the file
+     * @throws IOException
+     * @throws ParseException
+     */
+    protected void moveJsonToDB(String fileLocation) throws IOException, ParseException 
     {
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(fileName))
+        try (FileReader reader = new FileReader(fileLocation))
         {
+            //Gets a hold of the entire file
             Object obj = jsonParser.parse(reader);
             JSONObject JsonFile = (JSONObject) obj;
+            
+            //Gets a hold of the array that holds all the workers in the file
             JSONArray workerList = (JSONArray) JsonFile.get("AvailableWorkers");
+            //Goes through each worker and send them to the database
             workerList.forEach( worker -> transferWorkersToDB( (JSONObject) worker ) );
 
+            //Gets a hold of the array that holds all the orders in the file
             JSONArray orderList = (JSONArray) JsonFile.get("ProductionOrders");
+            //Goes through each order and sendt it to the database
             orderList.forEach(order -> transferOrdersToDB((JSONObject) order));
 
         }
 
     }
 
-    public void transferWorkersToDB(JSONObject worker)
+    /**
+     * Goes through a workers data in the JSON file and sends it to our database
+     * @param worker the worker object in the JSON file
+     */
+    private void transferWorkersToDB(JSONObject worker)
     {
         try
         {
@@ -58,7 +75,11 @@ public class DataTransfer
         }
     }
 
-    public void transferOrdersToDB(JSONObject order)
+    /**
+     * Goes through an orders data in the JSON file and sends it to our database
+     * @param order the order object in the JSON file
+     */
+    private void transferOrdersToDB(JSONObject order)
     {
         try
         {
@@ -76,6 +97,8 @@ public class DataTransfer
             dt.createOrder(orderNumber, customerName, deliveryTime);
             JSONArray taskList = (JSONArray) order.get("DepartmentTasks");
             
+            //Each order can have multiple tasks in it, 
+            //therefore we go through each and send it to our database
             taskList.forEach(task -> transferTasksToDB((JSONObject) task, orderNumber));
         }
         catch (SQLException ex)
@@ -84,7 +107,13 @@ public class DataTransfer
         }
     }
 
-    public void transferTasksToDB(JSONObject task, String currentOrderNumber)
+    /**
+     * Goes through a taskin the JSON file and sends it to our databse
+     * @param task the task object in the JSON file
+     * @param currentOrderNumber the orderNumber of the order 
+     * this task belongs to
+     */
+    private void transferTasksToDB(JSONObject task, String currentOrderNumber)
     {
         try
         {

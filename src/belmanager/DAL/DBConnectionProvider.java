@@ -22,7 +22,7 @@ public class DBConnectionProvider
     private static final String SetPassword = "CS2018A_30";
     private final SQLServerDataSource ds;
 
-    public DBConnectionProvider()
+    protected DBConnectionProvider()
     {
         ds = new SQLServerDataSource();
         ds.setServerName(this.SetServerName);
@@ -31,7 +31,7 @@ public class DBConnectionProvider
         ds.setPassword(this.SetPassword);
     }
 
-    public Connection getConnection() throws SQLServerException
+    protected Connection getConnection() throws SQLServerException
     {
         return ds.getConnection();
     }

@@ -26,8 +26,8 @@ public class DepartmentTask implements Comparable<String>
     public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, int taskID)
     {
         this.departmentName = departmentName;
-        this.endDate = convertDate(endDate);
-        this.startDate = convertDate(startDate);
+        this.endDate = endDate;
+        this.startDate = startDate;
         this.finishedOrder = finishedOrder;
         this.taskID = taskID;
     }
@@ -35,8 +35,8 @@ public class DepartmentTask implements Comparable<String>
     private String convertDate(String dateToConvert)
     {
         String sringDate = dateToConvert.substring(6, 19);
-        long DateEpoch = Long.parseLong(sringDate);
-        Date date = new Date(DateEpoch);
+        long dateEpoch = Long.parseLong(sringDate);
+        Date date = new Date(dateEpoch);
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         String formatted = format.format(date);
@@ -60,7 +60,14 @@ public class DepartmentTask implements Comparable<String>
 
     public String getEndDate()
     {
-        return endDate;
+        return convertDate(endDate);
+    }
+    
+    public long getEpochEndDate()
+    {
+        String sringDate = startDate.substring(6, 19);
+        long dateEpoch = Long.parseLong(sringDate);
+        return dateEpoch;
     }
 
     public void setEndDate(String endDate)
@@ -70,7 +77,14 @@ public class DepartmentTask implements Comparable<String>
 
     public String getStartDate()
     {
-        return startDate;
+        return convertDate(startDate);
+    }
+    
+    public long getEpochStartDate()
+    {
+        String sringDate = startDate.substring(6, 19);
+        long dateEpoch = Long.parseLong(sringDate);
+        return dateEpoch;
     }
 
     public void setStartDate(String startDate)

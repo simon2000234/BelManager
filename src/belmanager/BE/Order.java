@@ -31,7 +31,7 @@ public class Order implements Comparable<Order>
     {
         this.orderNumber = orderNumber;
         this.customerName = customerName;
-        this.deliveryTime = convertDate(deliveryTime);
+        this.deliveryTime = deliveryTime;
         this.departmentTasks = departmentTasks;
     }
 
@@ -73,7 +73,14 @@ public class Order implements Comparable<Order>
 
     public String getDeliveryTime()
     {
-        return deliveryTime;
+        return convertDate(deliveryTime);
+    }
+    
+    public long getEpochDeliveryTime()
+    {
+        String sringDate = deliveryTime.substring(6, 19);
+        long dateEpoch = Long.parseLong(sringDate);
+        return dateEpoch;
     }
 
     public void setDeliveryTime(String deliveryTime)

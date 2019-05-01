@@ -9,12 +9,14 @@ import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.Worker;
 import belmanager.DAL.DataAccessFacade;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -67,16 +69,6 @@ public class BMManager
         return daFacade.getOrder(orderNumber);
     }
 
-    public void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
-    {
-        daFacade.createDeparmentTask(departmentName, endDate, startDate, finishedOrder, orderID);
-    }
-
-    public void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
-    {
-        daFacade.createOrder(orderNumber, customerName, deliveryTime);
-    }
-
     public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         return daFacade.getAllDepartmentTasks(orderNumber);
@@ -85,11 +77,6 @@ public class BMManager
     public List<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         return daFacade.getAllDepartmentTasks();
-    }
-
-    public void createWorker(String initials, String name, int salaryNumber) throws SQLException
-    {
-        daFacade.createWorker(initials, name, salaryNumber);
     }
 
     public Worker getWorker(int salaryNumber) throws SQLException
@@ -105,5 +92,10 @@ public class BMManager
     public ArrayList<Worker> getAllWorkers() throws SQLException
     {
         return daFacade.getAllWorkers();
+    }
+    
+     public void moveJsonToDB(String fileLocation) throws IOException, ParseException
+    {
+        daFacade.moveJsonToDB(fileLocation);
     }
 }

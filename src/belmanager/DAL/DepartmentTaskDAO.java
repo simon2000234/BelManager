@@ -155,4 +155,18 @@ public class DepartmentTaskDAO
         }
         return allTasks;
     }
+    
+    protected void updateTaskIsFinished(int taskID) throws SQLException
+    {
+        String SQL = "UPDATE DepartmentTask SET finishedOrder = ? WHERE taskID = ?;";
+        
+        try(Connection con = DB.getConnection())
+        {
+            PreparedStatement st = con.prepareStatement(SQL);
+            st.setBoolean(1, true);
+            st.setInt(1, taskID);
+            st.execute();
+            st.close();
+        }
+    }
 }

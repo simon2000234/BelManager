@@ -8,6 +8,7 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import java.net.URL;
+import java.time.Instant;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,35 +153,46 @@ public class OrderOverviewPageController implements Initializable
         AnchorPane.setRightAnchor(realized, X);
         realized.setPrefSize(300.00, 25.00);
         
+        
         //Creates a label for each department an order has to go through
         //Creates a corresponding circle with a color RED/YELLOW/GREEN showing
-        // whether an order is INCOMPLETE/BEING WORKED ON/COMPLETED
+        // whether an order is delayed/close to delayed/on time
         List<Circle> departmentStatus = new ArrayList<>();
         List<Label> labelsRightSide = new ArrayList<>();
         for (DepartmentTask departmentTask : tempDTlist)
         {
             Label tempDTname = new Label(departmentTask.getDepartmentName());
             labelsRightSide.add(tempDTname);
-            if (departmentTask.getDepartmentName().equals(bm.getCurrentDepartment()))
+            if (departmentTask.isFinishedOrder() == true)
             {
-                Circle tempCircle = new Circle(X/2, Color.YELLOW);
+                Circle tempCircle = new Circle(X / 2, Color.GREEN);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.isFinishedOrder() == true)
+            }
+            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
             {
-                Circle tempCircle = new Circle(X/2, Color.GREEN);
+                Circle tempCircle = new Circle(X / 2, Color.RED);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else
+            }
+            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + 86400000)
             {
-                Circle tempCircle = new Circle(X/2, Color.RED);
+                Circle tempCircle = new Circle(X / 2, Color.YELLOW);
+                AnchorPane.setRightAnchor(tempCircle, X);
+                AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
+                departmentStatus.add(tempCircle);
+            }
+            else
+            {
+                Circle tempCircle = new Circle(X / 2, Color.GREY);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
             }
         }
+
         
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X*3, Y, true);
@@ -219,7 +231,8 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setLeftAnchor(label1, X);
                 space++;
             }
-        } else if (leftORright == true)
+        }
+        else if (leftORright == true)
         {
             for (Label label1 : labels)
             {

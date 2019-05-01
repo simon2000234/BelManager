@@ -105,38 +105,34 @@ public class Order implements Comparable<Order>
     public int compareTo(Order o)
     {
         int c;
-        String[] thisDepartment = this.getCurrentDepartment().getEndDate().split("/");
-        String[] givenDate = o.getCurrentDepartment().getEndDate().split("/");
+        String[] thisDepartment = this.getCurrentDepartment().getEndDate().split("/| ");
+        String[] givenDate = o.getCurrentDepartment().getEndDate().split("/| ");
 
-        c = thisDepartment[2].compareTo(givenDate[2]);
-        if (c < 0)
+        if (Integer.parseInt(thisDepartment[2]) < Integer.parseInt(givenDate[2]))
         {
-            return c;
-        } else if (c > 0)
-        {
-            return 1;
-        } else
-        {
-            c = thisDepartment[1].compareTo(givenDate[1]);
+            return -1;
         }
-        if (c < 0)
-        {
-            return c;
-        } else if (c > 0)
-        {
-            return 1;
-        } else
-        {
-            c = thisDepartment[0].compareTo(givenDate[0]);
-        }
-        if (c < 0)
-        {
-            return c;
-        } else if (c > 0)
+        if (Integer.parseInt(thisDepartment[2]) > Integer.parseInt(givenDate[2]))
         {
             return 1;
         }
-
+        if (Integer.parseInt(thisDepartment[1]) < Integer.parseInt(givenDate[1]))
+        {
+            return -1;
+        }
+        if (Integer.parseInt(thisDepartment[1]) > Integer.parseInt(givenDate[1]))
+        {
+            return 1;
+        }
+        if (Integer.parseInt(thisDepartment[0]) < Integer.parseInt(givenDate[0]))
+        {
+            return -1;
+        }
+        if (Integer.parseInt(thisDepartment[0]) > Integer.parseInt(givenDate[0]))
+        {
+            return 1;
+        }
+        
         return 0;
     }
 

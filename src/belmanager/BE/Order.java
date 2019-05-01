@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -138,4 +139,11 @@ public class Order implements Comparable<Order>
         return 0;
     }
 
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.orderNumber);
+        return hash;
+    }
 }

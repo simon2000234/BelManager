@@ -12,6 +12,7 @@ import belmanager.BLL.BMManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.json.simple.parser.ParseException;
 
@@ -26,12 +27,14 @@ public class BelModel
     private List<Order> currentOrders;
     private String currentDepartment;
     private Order selectedOrder;
+    private HashMap<String, Order> ShownOrders;
 
     public BelModel() throws SQLException
     {
         this.currentDepartment = "Halvfab"; //Need to get department from a config file on login
         this.currentOrders = new ArrayList<>();
         currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
+        this.ShownOrders = new HashMap();
     }
 
     public List<Order> filterOrdersByDepartment(String selectedDepartment) throws SQLException
@@ -112,5 +115,26 @@ public class BelModel
     public void updateTaskIsFinished(int taskID) throws SQLException
     {
         bmm.updateTaskIsFinished(taskID);
+
+    }
+
+    public HashMap<String, Order> getShownOrders()
+    {
+        return ShownOrders;
+    }
+
+    public void setShownOrders(HashMap<String, Order> ShownOrders)
+    {
+        this.ShownOrders = ShownOrders;
+    }
+
+    public HashMap<String, Order> createTheHashmap(List<Order> orderlist)
+    {
+        HashMap<String, Order> temp = new HashMap();
+        for (Order order : orderlist)
+        {
+            temp.put(order.getOrderNumber(), order);
+        }
+        return temp;
     }
 }

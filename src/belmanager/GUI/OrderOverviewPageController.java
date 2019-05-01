@@ -72,6 +72,7 @@ public class OrderOverviewPageController implements Initializable
         // Creates TitledPanes each containing the details of 1 order
         try
         {
+            bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment("Halvfab")));
             for (Order order : bm.filterOrdersByDepartment("Halvfab"))
             {
                 TitledPane temp = createTitledPane(order);
@@ -92,7 +93,7 @@ public class OrderOverviewPageController implements Initializable
         double X = 15.00;
         double Y = 20.00;
 
-        List<DepartmentTask> tempDTlist = new ArrayList<>();
+        List<DepartmentTask> tempDTlist;
         tempDTlist = order.getDepartmentTasks();
         AnchorPane tempAnch = new AnchorPane();
         
@@ -106,6 +107,7 @@ public class OrderOverviewPageController implements Initializable
             TitledPane tempPane = (TitledPane) event.getSource();
             String[] thisTpane = tempPane.getText().split(" ");
             String theOrderNumber = thisTpane[1];
+            bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
         });
         
         //Creates labels for all the Order's variables and required information
@@ -133,6 +135,7 @@ public class OrderOverviewPageController implements Initializable
             AnchorPane currentApane = (AnchorPane) completeButton.getParent();
             Label orderLabel = (Label) currentApane.getChildren().get(0);
             String currentOrder = orderLabel.getText();
+            bm.getSelectedOrder(); //TO DO: Set selected order as completed and call for DB update
             removeTPane(currentOrder);
 
         });

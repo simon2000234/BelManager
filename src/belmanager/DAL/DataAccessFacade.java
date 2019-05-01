@@ -64,4 +64,9 @@ public class DataAccessFacade
     {
         dt.moveJsonToDB(fileLocation);
     }
+    
+    public void updateTaskIsFinished(int taskID) throws SQLException
+    {
+        dtdao.updateTaskIsFinished(taskID);
+    }
 }

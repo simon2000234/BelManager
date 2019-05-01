@@ -103,10 +103,14 @@ public class BelModel
     {
         this.selectedOrder = selectedOrder;
     }
-    
-     public void moveJsonToDB(String fileLocation) throws IOException, ParseException
+
+    public void moveJsonToDB(String fileLocation) throws IOException, ParseException
     {
         bmm.moveJsonToDB(fileLocation);
     }
-}
 
+    public void updateTaskIsFinished(int taskID) throws SQLException
+    {
+        bmm.updateTaskIsFinished(taskID);
+    }
+}

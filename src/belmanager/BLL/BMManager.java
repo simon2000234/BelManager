@@ -52,13 +52,12 @@ public class BMManager
                 temp.add(order);
             }
         }
-        
+
         Collections.sort(temp);
         return temp;
 
     }
 
-    
     public List<Order> getAllOrders() throws SQLException
     {
         return daFacade.getAllOrders();
@@ -93,9 +92,14 @@ public class BMManager
     {
         return daFacade.getAllWorkers();
     }
-    
-     public void moveJsonToDB(String fileLocation) throws IOException, ParseException
+
+    public void moveJsonToDB(String fileLocation) throws IOException, ParseException
     {
         daFacade.moveJsonToDB(fileLocation);
+    }
+
+    public void updateTaskIsFinished(int taskID) throws SQLException
+    {
+        daFacade.updateTaskIsFinished(taskID);
     }
 }

@@ -5,13 +5,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="202.0" prefWidth="131.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="belmanager.GUI.DepartmentOverviewController">
    <children>
-      <Button layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonActionDep5" prefHeight="25.0" prefWidth="132.0" text="Maler" />
-      <Button layoutY="75.0" mnemonicParsing="false" onAction="#handleButtonActionDep4" prefHeight="25.0" prefWidth="132.0" text="Halvfab" />
-      <Button layoutY="50.0" mnemonicParsing="false" onAction="#handleButtonActionDep3" prefHeight="25.0" prefWidth="132.0" text="Forsendelse" />
-      <Button layoutY="25.0" mnemonicParsing="false" onAction="#handleButtonActionDep2" prefHeight="25.0" prefWidth="132.0" text="Bælg" />
-      <Button mnemonicParsing="false" onAction="#handleButtonActionDep1" prefHeight="25.0" prefWidth="132.0" text="Bertel" />
-      <Button layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonActionDep6" prefHeight="25.0" prefWidth="132.0" text="Montage 1" />
+      <Button fx:id="btnDep5" layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonActionDep5" prefHeight="25.0" prefWidth="132.0" text="Maler" />
+      <Button fx:id="btnDep4" layoutY="75.0" mnemonicParsing="false" onAction="#handleButtonActionDep4" prefHeight="25.0" prefWidth="132.0" text="Halvfab" />
+      <Button fx:id="btnDep3" layoutY="50.0" mnemonicParsing="false" onAction="#handleButtonActionDep3" prefHeight="25.0" prefWidth="132.0" text="Forsendelse" />
+      <Button fx:id="btnDep2" layoutY="25.0" mnemonicParsing="false" onAction="#handleButtonActionDep2" prefHeight="25.0" prefWidth="132.0" text="Bælg" />
+      <Button fx:id="btnDep1" mnemonicParsing="false" onAction="#handleButtonActionDep1" prefHeight="25.0" prefWidth="132.0" text="Bertel" />
+      <Button fx:id="btnDep6" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonActionDep6" prefHeight="25.0" prefWidth="132.0" text="Montage 1" />
       <Button fx:id="PickAFile" layoutY="177.0" mnemonicParsing="false" onAction="#pickAFile" prefHeight="0.0" prefWidth="132.0" text="JSON Loader" />
-      <Button layoutY="152.0" mnemonicParsing="false" onAction="#handleButtonActionDep7" prefHeight="25.0" prefWidth="132.0" text="Montage 2" />
+      <Button fx:id="btnDep7" layoutY="152.0" mnemonicParsing="false" onAction="#handleButtonActionDep7" prefHeight="25.0" prefWidth="132.0" text="Montage 2" />
    </children>
 </AnchorPane>

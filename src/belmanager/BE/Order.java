@@ -97,6 +97,32 @@ public class Order implements Comparable<Order>
         }
         return temp;
     }
+    
+    public DepartmentTask getDepartment(String department)
+    {
+        DepartmentTask temp = null;
+        for (DepartmentTask departmentTask : departmentTasks)
+        {
+            if (departmentTask.getDepartmentName().equals(department))
+            {
+                return departmentTask;
+            }
+        }
+        return temp;
+    }
+    
+    
+    public ArrayList<String> getAllDepartments()
+    {
+        ArrayList<String> allDeps = new ArrayList<>();
+        ArrayList<DepartmentTask> allTasks = (ArrayList) departmentTasks;
+        
+        for (DepartmentTask task : allTasks)
+        {
+            allDeps.add(task.getDepartmentName());
+        }
+        return allDeps;
+    }
 
     @Override
     public String toString()

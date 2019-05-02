@@ -31,7 +31,7 @@ public class BelModel
 
     public BelModel() throws SQLException
     {
-        this.currentDepartment = "Halvfab"; //Need to get department from a config file on login
+        //this.currentDepartment = "Bælg"; //Need to get department from a config file on login
         this.currentOrders = new ArrayList<>();
         currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
         this.ShownOrders = new HashMap();
@@ -39,7 +39,7 @@ public class BelModel
 
     public List<Order> filterOrdersByDepartment(String selectedDepartment) throws SQLException
     {
-        return bmm.filterOrdersByDepartment(currentDepartment);
+        return bmm.filterOrdersByDepartment(selectedDepartment);
     }
 
     public List<Order> getAllOrders() throws SQLException

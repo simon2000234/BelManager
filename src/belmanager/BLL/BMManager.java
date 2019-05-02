@@ -40,19 +40,18 @@ public class BMManager
     public List<Order> filterOrdersByDepartment(String currentDepartment) throws SQLException
     {
         List<Order> temp = new ArrayList<>();
-        c = Calendar.getInstance();
-        currentDate = new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
 
         for (Order order : daFacade.getAllOrders())
         {
-            if (currentDepartment.equals(order.getCurrentDepartment().getDepartmentName())
-                    || order.getCurrentDepartment().getStartDate().compareTo(currentDate) >= 0
-                    && order.getCurrentDepartment().isFinishedOrder() == false)
+            ArrayList<String> allDepsInOrder = order.getAllDepartments();
+            for (String dep : allDepsInOrder)
             {
-                temp.add(order);
+                if(dep.equals(currentDepartment))
+                {
+                    temp.add(order);
+                }
             }
         }
-
         Collections.sort(temp);
         return temp;
 

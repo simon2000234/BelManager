@@ -169,4 +169,20 @@ public class DepartmentTaskDAO
             st.close();
         }
     }
+    
+    
+     protected void DeleteOrder (int orderID) throws SQLException
+    {
+        String SQL = "delete * from [Order] where orderNumber= ? ";
+       
+
+        try (Connection con = DB.getConnection())
+        {
+            PreparedStatement st = con.prepareCall(SQL);
+            st.setInt(1, orderID);
+            st.executeUpdate();
+                     
+        }
+        
+    }
 }

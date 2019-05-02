@@ -24,7 +24,7 @@ import org.json.simple.parser.ParseException;
  */
 public class BMManager
 {
-
+    
     private DataAccessFacade daFacade = new DataAccessFacade();
     private Calendar c;
     private String currentDate;
@@ -40,7 +40,6 @@ public class BMManager
     public List<Order> filterOrdersByDepartment(String currentDepartment) throws SQLException
     {
         List<Order> temp = new ArrayList<>();
-
         for (Order order : daFacade.getAllOrders())
         {
             ArrayList<String> allDepsInOrder = order.getAllDepartments();
@@ -54,49 +53,55 @@ public class BMManager
         }
         Collections.sort(temp);
         return temp;
-
+        
     }
-
+    
     public List<Order> getAllOrders() throws SQLException
     {
         return daFacade.getAllOrders();
     }
-
+    
+    public void deleteOrder(int orderID) throws SQLException
+    {
+        daFacade.DeleteOrder(orderID);
+        
+    }
+    
     public Order getOrder(String orderNumber) throws SQLException
     {
         return daFacade.getOrder(orderNumber);
     }
-
+    
     public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         return daFacade.getAllDepartmentTasks(orderNumber);
     }
-
+    
     public List<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         return daFacade.getAllDepartmentTasks();
     }
-
+    
     public Worker getWorker(int salaryNumber) throws SQLException
     {
         return daFacade.getWorker(salaryNumber);
     }
-
+    
     public void deleteWorker(int salaryNumber) throws SQLException
     {
         daFacade.deleteWorker(salaryNumber);
     }
-
+    
     public ArrayList<Worker> getAllWorkers() throws SQLException
     {
         return daFacade.getAllWorkers();
     }
-
+    
     public void moveJsonToDB(String fileLocation) throws IOException, ParseException
     {
         daFacade.moveJsonToDB(fileLocation);
     }
-
+    
     public void updateTaskIsFinished(int taskID) throws SQLException
     {
         daFacade.updateTaskIsFinished(taskID);

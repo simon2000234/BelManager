@@ -65,7 +65,7 @@ public class DepartmentTask implements Comparable<String>
     
     public long getEpochEndDate()
     {
-        String sringDate = startDate.substring(6, 19);
+        String sringDate = endDate.substring(6, 19);
         long dateEpoch = Long.parseLong(sringDate);
         return dateEpoch;
     }

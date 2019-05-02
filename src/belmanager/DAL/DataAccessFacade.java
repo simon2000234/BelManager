@@ -34,6 +34,12 @@ public class DataAccessFacade
     {
         return dtdao.getOrder(orderNumber);
     }
+    
+    public void DeleteOrder(int OrderID) throws SQLException
+    {
+    dtdao.DeleteOrder(OrderID);
+    
+    }
 
     public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {

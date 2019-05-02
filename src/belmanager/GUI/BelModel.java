@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -80,6 +82,17 @@ public class BelModel
     public List<Order> getCurrentOrders()
     {
         return currentOrders;
+    }
+    
+    public void DeleteOrder (int OrderID)
+    {
+        try
+        {
+            bmm.deleteOrder(OrderID);
+        } catch (SQLException ex)
+        {
+            System.out.println("order er ikke blivet slette fordi der er sket en fejl");
+        }
     }
 
     public void setCurrentOrders(List<Order> currentOrders)

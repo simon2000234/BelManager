@@ -127,6 +127,8 @@ public class BelModel
 
     public void updateTaskIsFinished(int taskID) throws SQLException
     {
+        ShownOrders.remove(selectedOrder.getOrderNumber());
+        currentOrders.remove(selectedOrder);
         bmm.updateTaskIsFinished(taskID);
 
     }

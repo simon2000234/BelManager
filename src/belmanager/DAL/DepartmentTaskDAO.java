@@ -164,7 +164,7 @@ public class DepartmentTaskDAO
         {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setBoolean(1, true);
-            st.setInt(1, taskID);
+            st.setInt(2, taskID);
             st.execute();
             st.close();
         }

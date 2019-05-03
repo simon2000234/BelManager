@@ -103,12 +103,15 @@ public class OrderOverviewPageController implements Initializable
         AnchorPane.setLeftAnchor(btnFinishOrder, X);
         btnFinishOrder.setOnAction((ActionEvent event) ->
         {
-            Button completeButton = (Button) event.getSource();
-            AnchorPane currentApane = (AnchorPane) completeButton.getParent();
-            Label orderLabel = (Label) currentApane.getChildren().get(0);
-            String currentOrder = orderLabel.getText();
-            bm.getSelectedOrder(); //TO DO: Set selected order as completed and call for DB update
-            removeTPane(currentOrder);
+            
+            try
+            {
+                bm.updateTaskIsFinished(bm.getSelectedOrder().getCurrentDepartment().getTaskID());
+                removeTPane(bm.getSelectedOrder().getOrderNumber());
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
 
@@ -221,12 +224,9 @@ public class OrderOverviewPageController implements Initializable
      */
     public void removeTPane(String orderNumber)
     {
-        String[] tempStringArray = orderNumber.split(" ");
-        String tempString = tempStringArray[2];
-
         for (TitledPane pane : mainAccordion.getPanes())
         {
-            if (getOrderNumberPaneTitle(pane).equals(tempString))
+            if (getOrderNumberPaneTitle(pane).equals(orderNumber))
             {
                 mainAccordion.getPanes().remove(pane);
                 break;

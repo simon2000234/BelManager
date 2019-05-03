@@ -42,10 +42,10 @@ public class BMManager
         List<Order> temp = new ArrayList<>();
         for (Order order : daFacade.getAllOrders())
         {
-            ArrayList<String> allDepsInOrder = order.getAllDepartments();
-            for (String dep : allDepsInOrder)
+            List<DepartmentTask> allDepsInOrder = order.getDepartmentTasks(); //order.getAllDepartments();
+            for (DepartmentTask dep : allDepsInOrder)
             {
-                if(dep.equals(currentDepartment))
+                if(dep.getDepartmentName().equals(currentDepartment) && dep.isFinishedOrder()==false)
                 {
                     temp.add(order);
                 }

@@ -133,7 +133,7 @@ public class DepartmentOverviewController implements Initializable
                 root = loader.load();
                 Stage stage = new Stage();
                 stage.setTitle(departmentName);
-                stage.setScene(new Scene(root, 600, 450));
+                stage.setScene(new Scene(root, 730, 550));
                 stage.show();
                 OrderOverviewPageController oopController = loader.getController();
                 oopController.setModel(model);

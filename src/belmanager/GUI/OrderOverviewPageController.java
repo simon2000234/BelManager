@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,6 +54,8 @@ public class OrderOverviewPageController implements Initializable
     private List<TitledPane> listPanes;
     private Accordion mainAccordion;
     private final int oneDayInEpochMilli = 86400000;
+    private double initialHeight;
+    private double initialWidth;
 
     /**
      * Initializes the controller class.
@@ -57,6 +63,8 @@ public class OrderOverviewPageController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        initialHeight = scrollPane.getHeight();
+        initialWidth = scrollPane.getWidth();
 
     }
 
@@ -99,6 +107,7 @@ public class OrderOverviewPageController implements Initializable
 
         //Creates Button for marking an order as complete
         Button btnFinishOrder = new Button("Complete");
+        btnFinishOrder.setMinHeight(25.00);
         AnchorPane.setTopAnchor(btnFinishOrder, Y * (labels.size() + 1));
         AnchorPane.setLeftAnchor(btnFinishOrder, X);
         btnFinishOrder.setOnAction((ActionEvent event) ->
@@ -161,8 +170,7 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else
+            } else
             {
                 Circle tempCircle = new Circle(X / 2, Color.GREY);
                 AnchorPane.setRightAnchor(tempCircle, X);
@@ -174,6 +182,57 @@ public class OrderOverviewPageController implements Initializable
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
         fixLabels(labels, X, Y, false);
+
+        scrollPane.heightProperty().addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue)
+            {
+                double heightOld = (double) oldValue;
+                double heightNew = (double) newValue;
+                double fontsize = 8;
+                double heightChanger = heightNew / 100;
+                double fontChanger = (heightNew - initialHeight) / 100;
+                btnFinishOrder.setPrefHeight(btnFinishOrder.getMinHeight() + heightChanger);
+                if ((fontsize + fontChanger) >= 8)
+                {
+                    btnFinishOrder.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(fontsize+fontChanger)));
+                }
+                for (Label label : labels)
+                {
+                    label.setMinHeight(25.00);
+                    double newfontsize = fontsize + fontChanger;
+                    label.setPrefHeight(label.getMinHeight() + heightChanger);
+                    if (newfontsize >= 8)
+                    {
+                        label.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(newfontsize)));
+                    }
+                }
+                for (Label label : labelsRightSide)
+                {
+                    label.setMinHeight(25.00);
+                    double newfontsize = fontsize + fontChanger;
+                    label.setPrefHeight(label.getMinHeight() + heightChanger);
+                    if (newfontsize >= 8)
+                    {
+                        label.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(newfontsize)));
+                    }
+                }
+                for (Circle departmentStatu : departmentStatus)
+                {
+                    double defaultRadius = (X / 2);
+                    double defaultAnchor = Y * departmentStatus.indexOf(departmentStatu);
+                    if (labelsRightSide.get(departmentStatus.indexOf(departmentStatu)).getHeight() / 2
+                            >= departmentStatu.getRadius())
+                    {
+                        departmentStatu.setRadius(defaultRadius + (fontChanger / 4));
+                    }
+                    AnchorPane.setTopAnchor(departmentStatu, (defaultAnchor + (fontChanger)));
+
+                }
+
+            }
+        });
 
         //adds everything to the pane
         tempAnch.getChildren().addAll(labels);

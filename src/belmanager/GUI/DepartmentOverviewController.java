@@ -49,12 +49,13 @@ public class DepartmentOverviewController implements Initializable {
     private BelModel model;
 
     @Override
+
     public void initialize(URL url, ResourceBundle rb) {
         try {
             model = new BelModel();
-           
 
         } catch (SQLException ex) {
+
             Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -105,6 +106,7 @@ public class DepartmentOverviewController implements Initializable {
     }
 
     @FXML
+
     private void handleButtonActionDep1(ActionEvent event) throws Exception {
         openDepartments(btnDep1.getText());
         model.WriteToFile(btnDep1.getText());
@@ -114,7 +116,9 @@ public class DepartmentOverviewController implements Initializable {
     @FXML
     private void handleButtonActionDep6(ActionEvent event) throws IOException {
         openDepartments(btnDep6.getText());
+
         model.WriteToFile(btnDep6.getText());
+
     }
 
     @FXML
@@ -124,6 +128,7 @@ public class DepartmentOverviewController implements Initializable {
     }
 
     private void openDepartments(String departmentName) throws IOException {
+
         model.setCurrentDepartment(departmentName);
 
         Parent root;

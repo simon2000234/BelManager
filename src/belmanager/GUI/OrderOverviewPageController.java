@@ -102,7 +102,7 @@ public class OrderOverviewPageController implements Initializable
         AnchorPane.setLeftAnchor(btnFinishOrder, X);
         btnFinishOrder.setOnAction((ActionEvent event) ->
         {
-            
+
             try
             {
                 bm.updateTaskIsFinished(bm.getSelectedOrder().getCurrentDepartment().getTaskID());
@@ -141,15 +141,20 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
+            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.RED);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + 86400000)
+            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + 86400000)
+            {
+                Circle tempCircle = new Circle(X / 2, Color.ORANGE);
+                AnchorPane.setRightAnchor(tempCircle, X);
+                AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
+                departmentStatus.add(tempCircle);
+            } else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + 86400000
+                    && departmentTask.getEpochStartDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.YELLOW);
                 AnchorPane.setRightAnchor(tempCircle, X);
@@ -202,8 +207,7 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setLeftAnchor(label1, X);
                 space++;
             }
-        }
-        else if (leftORright == true)
+        } else if (leftORright == true)
         {
             for (Label label1 : labels)
             {
@@ -263,15 +267,14 @@ public class OrderOverviewPageController implements Initializable
             bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {
-                if(order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli())
+                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli())
                 {
                     TitledPane temp = createTitledPane(order);
                     mainAccordion.getPanes().add(temp);
                     listPanes.add(temp);
                 }
             }
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }

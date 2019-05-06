@@ -47,6 +47,7 @@ public class BMManager
             {
                 if(dep.getDepartmentName().equals(currentDepartment) && dep.isFinishedOrder()==false)
                 {
+                    order.setSelectedDepartmentTask(currentDepartment);
                     temp.add(order);
                 }
             }

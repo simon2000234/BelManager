@@ -28,6 +28,8 @@ public class Order implements Comparable<Order>
 
     private List<DepartmentTask> departmentTasks = new ArrayList<>();
 
+    private DepartmentTask selectedDepartmentTask;
+
     public Order(String orderNumber, String customerName, String deliveryTime, List<DepartmentTask> departmentTasks)
     {
         this.orderNumber = orderNumber;
@@ -76,12 +78,34 @@ public class Order implements Comparable<Order>
     {
         return convertDate(deliveryTime);
     }
-    
+
     public long getEpochDeliveryTime()
     {
         String sringDate = deliveryTime.substring(6, 19);
         long dateEpoch = Long.parseLong(sringDate);
         return dateEpoch;
+    }
+
+    public DepartmentTask setSelectedDepartmentTask(String departmentname)
+    {
+        DepartmentTask temp = null;
+        for (DepartmentTask departmentTask : departmentTasks)
+        {
+            if (departmentTask.isFinishedOrder() == false && departmentTask.getDepartmentName().equals(departmentname))
+            {
+                selectedDepartmentTask = departmentTask;
+            }
+        }
+        return temp;
+    }
+
+    public DepartmentTask getSelectedDepartmentTask()
+    {
+        if (selectedDepartmentTask != null)
+        {
+            return selectedDepartmentTask;
+        }
+        return null;
     }
 
     public DepartmentTask getCurrentDepartment()
@@ -97,7 +121,7 @@ public class Order implements Comparable<Order>
         }
         return temp;
     }
-    
+
     public DepartmentTask getDepartment(String department)
     {
         DepartmentTask temp = null;
@@ -110,13 +134,12 @@ public class Order implements Comparable<Order>
         }
         return temp;
     }
-    
-    
+
     public ArrayList<String> getAllDepartments()
     {
         ArrayList<String> allDeps = new ArrayList<>();
         ArrayList<DepartmentTask> allTasks = (ArrayList) departmentTasks;
-        
+
         for (DepartmentTask task : allTasks)
         {
             allDeps.add(task.getDepartmentName());
@@ -134,8 +157,8 @@ public class Order implements Comparable<Order>
     public int compareTo(Order o)
     {
         int c;
-        String[] thisDepartment = this.getCurrentDepartment().getEndDate().split("/| ");
-        String[] givenDate = o.getCurrentDepartment().getEndDate().split("/| ");
+        String[] thisDepartment = this.getSelectedDepartmentTask().getEndDate().split("/| ");
+        String[] givenDate = o.getSelectedDepartmentTask().getEndDate().split("/| ");
 
         if (Integer.parseInt(thisDepartment[2]) < Integer.parseInt(givenDate[2]))
         {
@@ -161,7 +184,7 @@ public class Order implements Comparable<Order>
         {
             return 1;
         }
-        
+
         return 0;
     }
 

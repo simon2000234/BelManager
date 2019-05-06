@@ -83,6 +83,14 @@ public class BelModel
     {
         return currentOrders;
     }
+     public String readFromFile() throws IOException {
+            return bmm.readFromFile();
+        
+     }
+    
+     public void WriteToFile(String myData) throws IOException {
+        bmm.WriteToFile(currentDepartment);
+     }
     
     public void DeleteOrder (int OrderID)
     {

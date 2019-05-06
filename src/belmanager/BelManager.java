@@ -5,6 +5,8 @@
  */
 package belmanager;
 
+import belmanager.GUI.BelModel;
+import belmanager.GUI.OrderOverviewPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,26 +17,40 @@ import javafx.stage.Stage;
  *
  * @author Melchertsen
  */
-public class BelManager extends Application
-{
+public class BelManager extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception
-    {
+    public void start(Stage stage) throws Exception {
+        BelModel model = new BelModel();
 
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
+        if (model.readFromFile() == null) {
+            Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
 
-        Scene scene = new Scene(root);
+            Scene scene = new Scene(root);
 
-        stage.setScene(scene);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+               model.setCurrentDepartment(model.readFromFile());
+
+        Parent root;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
+        root = loader.load();
+        stage.setTitle(model.readFromFile());
+        stage.setScene(new Scene(root, 730, 550));
         stage.show();
+        OrderOverviewPageController oopController = loader.getController();
+        oopController.setModel(model);
+
+        }
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 

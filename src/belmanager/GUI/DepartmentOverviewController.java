@@ -5,7 +5,6 @@
  */
 package belmanager.GUI;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -49,26 +48,25 @@ public class DepartmentOverviewController implements Initializable
     @FXML
     private Button btnDep7;
     private BelModel model;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         try
         {
-             model = new BelModel();
+            model = new BelModel();
         }
         catch (SQLException ex)
         {
             Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
 
     /*
     denne methode giver en mulighed for at vægle en file
     copy past fra tidligere opgave er en dejlige ting at gøre
     .trim() fjerne whiteSpace " "
-    */
+     */
     @FXML
     private void pickAFile(ActionEvent event)
     {
@@ -88,7 +86,7 @@ public class DepartmentOverviewController implements Initializable
         {
             Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     @FXML
@@ -118,17 +116,15 @@ public class DepartmentOverviewController implements Initializable
     @FXML
     private void handleButtonActionDep1(ActionEvent event) throws Exception
     {
-       openDepartments(btnDep1.getText());
-                
-                
-           
+        openDepartments(btnDep1.getText());
+
     }
 
     @FXML
     private void handleButtonActionDep6(ActionEvent event) throws IOException
     {
         openDepartments(btnDep6.getText());
-       
+
     }
 
     @FXML
@@ -136,24 +132,24 @@ public class DepartmentOverviewController implements Initializable
     {
         openDepartments(btnDep7.getText());
     }
-    private void openDepartments(String departmentName) throws IOException{
-       model.setCurrentDepartment(departmentName);
-        
+
+    private void openDepartments(String departmentName) throws IOException
+    {
+        model.setCurrentDepartment(departmentName);
+
         Parent root;
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
-                root = loader.load();
-                Stage stage = new Stage();
-                stage.setTitle(departmentName);
-                stage.setScene(new Scene(root, 730, 550));
-                stage.show();
-                OrderOverviewPageController oopController = loader.getController();
-                oopController.setModel(model);
-                 Stage current = (Stage)PickAFile.getScene().getWindow() ;
-                 current.close();
-       
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
+        root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle(departmentName);
+        stage.setScene(new Scene(root, 730, 550));
+        stage.show();
+        OrderOverviewPageController oopController = loader.getController();
+        oopController.setModel(model);
+        Stage current = (Stage) PickAFile.getScene().getWindow();
+        current.close();
+
     }
 
-  
-    
 }

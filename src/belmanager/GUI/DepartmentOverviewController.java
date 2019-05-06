@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -71,11 +72,22 @@ public class DepartmentOverviewController implements Initializable
     @FXML
     private void pickAFile(ActionEvent event)
     {
-        FileChooser fileChooser;
-        fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".JSON", "*.JSON"));
-        file = fileChooser.showOpenDialog(null).getAbsoluteFile().getPath();
-        System.out.println(file.trim());
+        try
+        {
+            FileChooser fileChooser;
+            fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".JSON", "*.JSON"));
+            file = fileChooser.showOpenDialog(null).getAbsoluteFile().getPath();
+            model.moveJsonToDB(file.trim());
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ParseException ex)
+        {
+            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 

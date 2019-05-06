@@ -15,8 +15,10 @@
             <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/OrderOverviewPageController.java</file>
             <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/BelModel.java</file>
             <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/BE/Order.java</file>
+            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/DepartmentOverviewController.java</file>
             <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/BLL/BMManager.java</file>
             <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/DAL/DataTransfer.java</file>
+            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/BE/DepartmentTask.java</file>
         </group>
     </open-files>
 </project-private>

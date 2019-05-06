@@ -49,6 +49,7 @@ public class OrderOverviewPageController implements Initializable
 
     private List<TitledPane> listPanes;
     private Accordion mainAccordion;
+    private final int oneDayInEpochMilli = 86400000;
 
     /**
      * Initializes the controller class.
@@ -147,13 +148,13 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + 86400000)
+            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
             {
                 Circle tempCircle = new Circle(X / 2, Color.ORANGE);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + 86400000
+            } else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
                     && departmentTask.getEpochStartDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.YELLOW);

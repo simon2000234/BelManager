@@ -19,9 +19,9 @@ import java.io.InputStreamReader;
  *
  * @author Christian Occhionero
  */
-public class ConfickFileDao {
+public class ConfigFileDao {
 
-    private static String file_location = "Confick.txt";
+    private static String file_location = "Config.txt";
 
 public void fileInit() throws IOException {
    File f = new File(file_location);

@@ -23,7 +23,7 @@ public class DataAccessFacade {
     WorkerDAO wdao = new WorkerDAO();
     DepartmentTaskDAO dtdao = new DepartmentTaskDAO();
     DataTransfer dt = new DataTransfer();
-    ConfickFileDao cfdao = new ConfickFileDao();
+    ConfigFileDao cfdao = new ConfigFileDao();
 
     public List<Order> getAllOrders() throws SQLException {
         return dtdao.getAllOrders();

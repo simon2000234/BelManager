@@ -26,6 +26,7 @@ public class UpdateNewPane implements Runnable
 {
 
     private long lastUpdateTime;
+    private final long fiveSecInMili = 5000L;
     private Accordion acc;
     private BMManager bm;
     private String currentDepartment;
@@ -51,20 +52,18 @@ public class UpdateNewPane implements Runnable
                 List<Order> Orderlist = bm.filterOrdersByDepartment(currentDepartment);
                 Platform.runLater(() ->
                 {
-
                     for (Order order : Orderlist)
                     {
                         List<DepartmentTask> tasks = order.getDepartmentTasks();
                         for (DepartmentTask task : tasks)
                         {
                             if (task.getEpochStartDate() >= lastUpdateTime
-                                    && task.getEpochStartDate() <= Instant.now().toEpochMilli())
+                                    && task.getEpochStartDate() <= Instant.now().toEpochMilli() + fiveSecInMili)
                             {
                                 TitledPane temp = oopc.createTitledPane(order);
                                 acc.getPanes().add(temp);
                             }
                         }
-
                     }
                 });
                 lastUpdateTime = Instant.now().toEpochMilli();

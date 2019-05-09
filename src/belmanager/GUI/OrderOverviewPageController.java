@@ -7,12 +7,15 @@ package belmanager.GUI;
 
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
+import belmanager.BLL.UpdateNewPane;
 import java.net.URL;
 import java.time.Instant;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
@@ -56,6 +59,8 @@ public class OrderOverviewPageController implements Initializable
     private final int oneDayInEpochMilli = 86400000;
     private double initialHeight;
     private double initialWidth;
+    private ExecutorService executor;
+    private Runnable task;
 
     /**
      * Initializes the controller class.
@@ -117,7 +122,8 @@ public class OrderOverviewPageController implements Initializable
             {
                 bm.updateTaskIsFinished(bm.getSelectedOrder().getCurrentDepartment().getTaskID());
                 removeTPane(bm.getSelectedOrder().getOrderNumber());
-            } catch (SQLException ex)
+            }
+            catch (SQLException ex)
             {
                 Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -151,26 +157,30 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
+            }
+            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.RED);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
+            }
+            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
             {
                 Circle tempCircle = new Circle(X / 2, Color.ORANGE);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
+            }
+            else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
                     && departmentTask.getEpochStartDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.YELLOW);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else
+            }
+            else
             {
                 Circle tempCircle = new Circle(X / 2, Color.GREY);
                 AnchorPane.setRightAnchor(tempCircle, X);
@@ -196,7 +206,7 @@ public class OrderOverviewPageController implements Initializable
                 btnFinishOrder.setPrefHeight(btnFinishOrder.getMinHeight() + heightChanger);
                 if ((fontsize + fontChanger) >= 8)
                 {
-                    btnFinishOrder.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(fontsize+fontChanger)));
+                    btnFinishOrder.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(fontsize + fontChanger)));
                 }
                 for (Label label : labels)
                 {
@@ -267,7 +277,8 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setLeftAnchor(label1, X);
                 space++;
             }
-        } else if (leftORright == true)
+        }
+        else if (leftORright == true)
         {
             for (Label label1 : labels)
             {
@@ -334,12 +345,18 @@ public class OrderOverviewPageController implements Initializable
                     listPanes.add(temp);
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         vboxScroll.getChildren().add(mainAccordion);
+
+        task = new UpdateNewPane(Instant.now().toEpochMilli(), mainAccordion, model.getCurrentDepartment(), this);
+        
+        executor = Executors.newSingleThreadExecutor();
+        executor.submit(task);
 
     }
 }

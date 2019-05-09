@@ -8,6 +8,7 @@ package belmanager.BE;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -120,5 +121,45 @@ public class DepartmentTask implements Comparable<String>
         }
         return -1;
     }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final DepartmentTask other = (DepartmentTask) obj;
+        if (this.finishedOrder != other.finishedOrder)
+        {
+            return false;
+        }
+        if (this.taskID != other.taskID)
+        {
+            return false;
+        }
+        if (!Objects.equals(this.departmentName, other.departmentName))
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

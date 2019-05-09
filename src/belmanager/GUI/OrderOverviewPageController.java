@@ -7,6 +7,8 @@ package belmanager.GUI;
 
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
+import belmanager.BE.UpdatableInformation;
+import belmanager.BLL.UpdateInfo;
 import belmanager.BLL.UpdateNewPane;
 import java.net.URL;
 import java.time.Instant;
@@ -59,8 +61,11 @@ public class OrderOverviewPageController implements Initializable
     private final int oneDayInEpochMilli = 86400000;
     private double initialHeight;
     private double initialWidth;
-    private ExecutorService executor;
-    private Runnable task;
+    private ExecutorService newPanesUpdater;
+    private Runnable newPanestask;
+    private ExecutorService infoUpdater;
+    private Runnable infoTask;
+    private List<UpdatableInformation> updateList;
 
     /**
      * Initializes the controller class.
@@ -70,7 +75,7 @@ public class OrderOverviewPageController implements Initializable
     {
         initialHeight = scrollPane.getHeight();
         initialWidth = scrollPane.getWidth();
-
+        updateList = new ArrayList<>();
     }
 
     public TitledPane createTitledPane(Order order)
@@ -189,7 +194,8 @@ public class OrderOverviewPageController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
-
+        updateList.add(new UpdatableInformation(departmentStatus, order));
+        
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
         fixLabels(labels, X, Y, false);
@@ -356,10 +362,18 @@ public class OrderOverviewPageController implements Initializable
 
         vboxScroll.getChildren().add(mainAccordion);
 
-        task = new UpdateNewPane(Instant.now().toEpochMilli(), mainAccordion, model.getCurrentDepartment(), this);
+        newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(), 
+                mainAccordion, model.getCurrentDepartment(), this);
+                //Husk skal tilføje nye panes til liste
         
-        executor = Executors.newSingleThreadExecutor();
-        executor.submit(task);
+        newPanesUpdater = Executors.newSingleThreadExecutor();
+        newPanesUpdater.submit(newPanestask);
+        
+        infoTask = new UpdateInfo(updateList);
+        
+        infoUpdater = Executors.newSingleThreadExecutor();
+        infoUpdater.submit(infoTask);
+        
 
     }
 }

@@ -10,7 +10,6 @@ import belmanager.BE.Order;
 import belmanager.GUI.OrderOverviewPageController;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -18,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -48,43 +46,40 @@ public class UpdateNewPane implements Runnable
     {
         try
         {
-            try
+            while (true)
             {
-                while (true)
+                List<Order> Orderlist = bm.filterOrdersByDepartment(currentDepartment);
+                Platform.runLater(() ->
                 {
-                    List<Order> Orderlist = bm.filterOrdersByDepartment(currentDepartment);
 
-                    Platform.runLater(() ->
+                    for (Order order : Orderlist)
                     {
-
-                        for (Order order : Orderlist)
+                        List<DepartmentTask> tasks = order.getDepartmentTasks();
+                        for (DepartmentTask task : tasks)
                         {
-                            List<DepartmentTask> tasks = order.getDepartmentTasks();
-                            for (DepartmentTask task : tasks)
+                            if (task.getEpochStartDate() >= lastUpdateTime
+                                    && task.getEpochStartDate() <= Instant.now().toEpochMilli())
                             {
-                                if (task.getEpochStartDate() >= lastUpdateTime
-                                        && task.getEpochStartDate() <= Instant.now().toEpochMilli())
-                                {
-                                    TitledPane temp = oopc.createTitledPane(order);
-                                    acc.getPanes().add(temp);
-                                }
+                                TitledPane temp = oopc.createTitledPane(order);
+                                acc.getPanes().add(temp);
                             }
-
                         }
-                    });
-                    lastUpdateTime = Instant.now().toEpochMilli();
-                    TimeUnit.SECONDS.sleep(5);
-                }
+
+                    }
+                });
+                lastUpdateTime = Instant.now().toEpochMilli();
+                TimeUnit.SECONDS.sleep(5);
             }
-            catch (InterruptedException ex)
-            {
-                System.out.println("Thred Stopped");
-            }
+        }
+        catch (InterruptedException ex)
+        {
+            System.out.println("Thred Stopped");
         }
         catch (SQLException ex)
         {
             Logger.getLogger(UpdateNewPane.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 }

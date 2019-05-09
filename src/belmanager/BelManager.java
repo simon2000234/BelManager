@@ -27,22 +27,22 @@ public class BelManager extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
 
             Scene scene = new Scene(root);
-
+            scene.getStylesheets().add(getClass().getResource("GUI/BelStyle.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
-        }
-        else {
-               model.setCurrentDepartment(model.readFromFile());
+        } else {
+            model.setCurrentDepartment(model.readFromFile());
 
-        Parent root;
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
-        root = loader.load();
-        stage.setTitle(model.readFromFile());
-        stage.setScene(new Scene(root, 730, 550));
-        stage.show();
-        OrderOverviewPageController oopController = loader.getController();
-        oopController.setModel(model);
+            Parent root;
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
+            root = loader.load();
+
+            stage.setTitle(model.readFromFile());
+            stage.setScene(new Scene(root, 730, 550));
+            stage.show();
+            OrderOverviewPageController oopController = loader.getController();
+            oopController.setModel(model);
 
         }
     }

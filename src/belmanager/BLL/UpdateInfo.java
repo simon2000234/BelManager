@@ -43,7 +43,7 @@ public class UpdateInfo implements Runnable
     {
         try
         {
-            
+
             while (true)
             {
                 Platform.runLater(() ->
@@ -80,7 +80,7 @@ public class UpdateInfo implements Runnable
                                 {
                                     circles.get(i).setFill(Color.GREY);
                                 }
-                                
+
                             }
                         }
                         catch (SQLException ex)

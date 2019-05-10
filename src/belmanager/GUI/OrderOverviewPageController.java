@@ -84,6 +84,7 @@ public class OrderOverviewPageController implements Initializable
         List<DepartmentTask> tempDTlist;
         tempDTlist = order.getDepartmentTasks();
         AnchorPane tempAnch = new AnchorPane();
+        
 
         // Creates the title of each TitlePane based on the Order's variables
         String titleString = "Order: " + order.getOrderNumber() + " " + "\t\t\t\t\t\t"
@@ -197,6 +198,8 @@ public class OrderOverviewPageController implements Initializable
         fixLabels(labelsRightSide, X * 3, Y, true);
         fixLabels(labels, X, Y, false);
 
+        
+        //Scales all labels and text as the height of the application increases/decreases
         scrollPane.heightProperty().addListener(new ChangeListener()
         {
             @Override

@@ -195,4 +195,48 @@ public class Order implements Comparable<Order>
         hash = 31 * hash + Objects.hashCode(this.orderNumber);
         return hash;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Order other = (Order) obj;
+        if (!Objects.equals(this.orderNumber, other.orderNumber))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.customerName, other.customerName))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.deliveryTime, other.deliveryTime))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.departmentTasks, other.departmentTasks))
+        {
+            return false;
+        }
+        for (int i = 0; i < departmentTasks.size() - 1; i++)
+        {
+            if (!Objects.equals(this.departmentTasks.get(i), other.departmentTasks.get(i)))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

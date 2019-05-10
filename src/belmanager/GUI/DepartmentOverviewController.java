@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -139,6 +142,14 @@ public class DepartmentOverviewController implements Initializable {
         stage.setTitle(departmentName);
         stage.setScene(new Scene(root, 730, 550));
         stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+            {
+                public void handle(WindowEvent we)
+                {
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
         OrderOverviewPageController oopController = loader.getController();
         oopController.setModel(model);
 

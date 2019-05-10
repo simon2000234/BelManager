@@ -195,7 +195,7 @@ public class OrderOverviewPageController implements Initializable
             }
         }
         updateList.add(new UpdatableInformation(departmentStatus, order));
-        
+
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
         fixLabels(labels, X, Y, false);
@@ -362,18 +362,17 @@ public class OrderOverviewPageController implements Initializable
 
         vboxScroll.getChildren().add(mainAccordion);
 
-        newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(), 
+        newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
                 mainAccordion, model.getCurrentDepartment(), this);
-                //Husk skal tilføje nye panes til liste
-        
+        //Husk skal tilføje nye panes til liste
+
         newPanesUpdater = Executors.newSingleThreadExecutor();
         newPanesUpdater.submit(newPanestask);
-        
+
         infoTask = new UpdateInfo(updateList);
-        
+
         infoUpdater = Executors.newSingleThreadExecutor();
         infoUpdater.submit(infoTask);
-        
 
     }
 }

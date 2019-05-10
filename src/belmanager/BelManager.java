@@ -8,29 +8,37 @@ package belmanager;
 import belmanager.GUI.BelModel;
 import belmanager.GUI.OrderOverviewPageController;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author Melchertsen
  */
-public class BelManager extends Application {
+public class BelManager extends Application
+{
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
         BelModel model = new BelModel();
 
-        if (model.readFromFile() == null) {
+        if (model.readFromFile() == null)
+        {
             Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("GUI/BelStyle.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
-        } else {
+        }
+        else
+        {
             model.setCurrentDepartment(model.readFromFile());
 
             Parent root;
@@ -41,6 +49,15 @@ public class BelManager extends Application {
             stage.setTitle(model.readFromFile());
             stage.setScene(new Scene(root, 730, 550));
             stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+            {
+                public void handle(WindowEvent we)
+                {
+                    Platform.exit();
+                    System.exit(0);
+                    
+                }
+            });
             OrderOverviewPageController oopController = loader.getController();
             oopController.setModel(model);
 
@@ -50,7 +67,8 @@ public class BelManager extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 

@@ -56,7 +56,8 @@ public class UpdateInfo implements Runnable
                         for (int i = 0; i < orders.size(); i++)
                         {
                             //Gets the order from the new info that matches the old info
-                            if (orders.get(i).getOrderNumber().equals(updatableInformation.getOrder().getOrderNumber()))
+                            if (orders.get(i).getOrderNumber().equals
+                                (updatableInformation.getOrder().getOrderNumber()))
                             {
                                 currentOrderIndex = i;
                             }

@@ -19,33 +19,41 @@ import java.io.InputStreamReader;
  *
  * @author Christian Occhionero
  */
-public class ConfigFileDao {
+public class ConfigFileDao
+{
 
     private static String file_location = "Config.txt";
 
-public void fileInit() throws IOException {
-   File f = new File(file_location);
-   f.createNewFile();
-}
+    protected void fileInit() throws IOException
+    {
+        File f = new File(file_location);
+        f.createNewFile();
+    }
 
-    
 // Save to file Utility
-    public void WriteToFile(String myData) throws IOException {
+    protected void WriteToFile(String myData) throws IOException
+    {
         fileInit();
         File file = new File(file_location);
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 File directory = new File(file.getParent());
-                if (!directory.exists()) {
+                if (!directory.exists())
+                {
                     directory.mkdirs();
                 }
                 file.createNewFile();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
 
             }
         }
 
-        try {
+        try
+        {
             // Convenience class for writing character files
             FileWriter Writer;
             Writer = new FileWriter(file.getAbsoluteFile(), true);
@@ -54,24 +62,29 @@ public void fileInit() throws IOException {
             BufferedWriter bufferWriter = new BufferedWriter(Writer);
             bufferWriter.write(myData.toString());
             bufferWriter.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
 
         }
     }
 
     // Read From File Utility
-    public String readFromFile() throws IOException {
-      fileInit(); 
-      
-      File file = new File(file_location);
-       String line = null;
-      if (!file.exists()) {
+    protected String readFromFile() throws IOException
+    {
+        fileInit();
+
+        File file = new File(file_location);
+        String line = null;
+        if (!file.exists())
+        {
             System.out.println("File doesn't exist");
         }
 
         InputStreamReader isReader;
-        try {
-           
+        try
+        {
+
             // FileReader reads text files in the default encoding.
             FileReader fileReader
                     = new FileReader(file_location);
@@ -80,14 +93,17 @@ public void fileInit() throws IOException {
             BufferedReader bufferedReader
                     = new BufferedReader(fileReader);
 
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null)
+            {
 //                System.out.println(line);
-                 return line;
+                return line;
             }
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex)
+        {
             System.out.println(
                     "Unable to open file '"
                     + file_location + "'");

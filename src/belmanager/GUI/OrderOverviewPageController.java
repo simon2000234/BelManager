@@ -8,8 +8,6 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
-import belmanager.BLL.UpdateInfo;
-import belmanager.BLL.UpdateNewPane;
 import java.net.URL;
 import java.time.Instant;
 import java.sql.SQLException;
@@ -369,17 +367,22 @@ public class OrderOverviewPageController implements Initializable
 
         vboxScroll.getChildren().add(mainAccordion);
 
-        newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
-                mainAccordion, model.getCurrentDepartment(), this);
-        //Husk skal tilføje nye panes til liste
+        try
+        {
+            newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
+                    mainAccordion, model.getCurrentDepartment(), this);
+            newPanesUpdater = Executors.newSingleThreadExecutor();
+            newPanesUpdater.submit(newPanestask);
 
-        newPanesUpdater = Executors.newSingleThreadExecutor();
-        newPanesUpdater.submit(newPanestask);
+            infoTask = new UpdateInfo(updateList);
 
-        infoTask = new UpdateInfo(updateList);
-
-        infoUpdater = Executors.newSingleThreadExecutor();
-        infoUpdater.submit(infoTask);
+            infoUpdater = Executors.newSingleThreadExecutor();
+            infoUpdater.submit(infoTask);
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 }

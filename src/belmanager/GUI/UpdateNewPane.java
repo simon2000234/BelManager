@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package belmanager.BLL;
+package belmanager.GUI;
 
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
+import belmanager.BLL.BMManager;
 import belmanager.GUI.OrderOverviewPageController;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -28,16 +29,16 @@ public class UpdateNewPane implements Runnable
     private long lastUpdateTime;
     private final long fiveSecInMili = 5000L;
     private Accordion acc;
-    private BMManager bm;
+    private BelModel bm;
     private String currentDepartment;
     private OrderOverviewPageController oopc;
 
     public UpdateNewPane(long currentTime, Accordion mainAccordion, String currentDepartment,
-            OrderOverviewPageController oopc)
+            OrderOverviewPageController oopc) throws SQLException
     {
         lastUpdateTime = currentTime;
         acc = mainAccordion;
-        bm = new BMManager();
+        bm = new BelModel();
         this.currentDepartment = currentDepartment;
         this.oopc = oopc;
     }
@@ -49,14 +50,18 @@ public class UpdateNewPane implements Runnable
         {
             while (true)
             {
+                //Gets the current up to fate information
                 List<Order> Orderlist = bm.filterOrdersByDepartment(currentDepartment);
                 Platform.runLater(() ->
                 {
+                    //Goes through each order in the list
                     for (Order order : Orderlist)
                     {
+                        //Goes through each department task in each order 
                         List<DepartmentTask> tasks = order.getDepartmentTasks();
                         for (DepartmentTask task : tasks)
                         {
+                            //Adds new order to the panes, on certain conditions
                             if (task.getEpochStartDate() >= lastUpdateTime
                                     && task.getEpochStartDate() <= Instant.now().toEpochMilli() + fiveSecInMili)
                             {
@@ -66,6 +71,7 @@ public class UpdateNewPane implements Runnable
                         }
                     }
                 });
+                //waits 5 seconds before updateing again
                 lastUpdateTime = Instant.now().toEpochMilli();
                 TimeUnit.SECONDS.sleep(5);
             }

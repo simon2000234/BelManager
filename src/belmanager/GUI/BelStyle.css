@@ -9,35 +9,80 @@ and open the template in the editor.
 */
 
 .background {
-    -fx-background-color:  #17406A;
+    -fx-background-color:  #ffffff;
 }
 
 .label {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill:  #17406A;
+    -fx-font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+    -fx-text-fill:  #000000;
     -fx-opacity: 1;
 }
+.scroll-pane{
+    -fx-border-color: #004884;
+    -fx-border-width: 1;
+    -fx-background-color: #ffffff;
+}
+
+.vbox{
+    -fx-background-color: #ffffff;
+}
+
+.titled-pane{
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 1;
+    -fx-text-fill: #ffffff;
+}
+
+.titled-pane > .title 
+{
+    -fx-background-color: #004884;
+}
+.titled-pane > *.content 
+{
+    -fx-background-color: #ffffff;
+ }
+ 
+ .titled-pane > .title > .arrow-button .arrow 
+{
+    -fx-background-color: #ffffff;
+}
+
+.progress-bar{
+    -fx-border-color: #000000;
+}
+
+.progress-bar .bar{
+    -fx-background-color: #004884;
+    -fx-background-insets: 3, 3, 3, 3;
+}
+
+.progress-bar .track{
+    -fx-background-color: #ffffff;
+}
+
 
 .button {
     -fx-padding: 5 22 5 22;   
-    -fx-border-color: #e2e2e2;
+    -fx-border-color: #004884;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #004eff;
+    -fx-background-color: #ffffff;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #FFDC49;
+    -fx-text-fill: #000000;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #494dff;
+    -fx-background-color: #004884;
+    -fx-text-fill: #ffffff;
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: #494dae;
-    -fx-text-fill: #ffbe49;
+    -fx-background-color: #004884;
+    -fx-text-fill: #ffffff;
 }
 
 .button:focused {

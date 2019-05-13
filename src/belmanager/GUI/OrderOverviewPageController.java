@@ -31,6 +31,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -64,6 +66,8 @@ public class OrderOverviewPageController implements Initializable
     private ExecutorService infoUpdater;
     private Runnable infoTask;
     private List<UpdatableInformation> updateList;
+    @FXML
+    private ImageView imageLogo;
 
     /**
      * Initializes the controller class.
@@ -71,6 +75,8 @@ public class OrderOverviewPageController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        Image logo = new Image("belman_logo.jpg");
+        imageLogo.setImage(logo);
         initialHeight = scrollPane.getHeight();
         initialWidth = scrollPane.getWidth();
         updateList = new ArrayList<>();
@@ -207,11 +213,12 @@ public class OrderOverviewPageController implements Initializable
             {
                 double heightOld = (double) oldValue;
                 double heightNew = (double) newValue;
-                double fontsize = 8;
+                double fontsize = 11;
                 double heightChanger = heightNew / 100;
                 double fontChanger = (heightNew - initialHeight) / 100;
                 btnFinishOrder.setPrefHeight(btnFinishOrder.getMinHeight() + heightChanger);
-                if ((fontsize + fontChanger) >= 8)
+                imageLogo.setLayoutX((scrollPane.getWidth()/2)-(imageLogo.getFitWidth()/2));
+                if ((fontsize + fontChanger) >= fontsize)
                 {
                     btnFinishOrder.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(fontsize + fontChanger)));
                 }
@@ -220,7 +227,7 @@ public class OrderOverviewPageController implements Initializable
                     label.setMinHeight(25.00);
                     double newfontsize = fontsize + fontChanger;
                     label.setPrefHeight(label.getMinHeight() + heightChanger);
-                    if (newfontsize >= 8)
+                    if (newfontsize >= fontsize)
                     {
                         label.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(newfontsize)));
                     }
@@ -230,7 +237,7 @@ public class OrderOverviewPageController implements Initializable
                     label.setMinHeight(25.00);
                     double newfontsize = fontsize + fontChanger;
                     label.setPrefHeight(label.getMinHeight() + heightChanger);
-                    if (newfontsize >= 8)
+                    if (newfontsize >= fontsize)
                     {
                         label.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(newfontsize)));
                     }

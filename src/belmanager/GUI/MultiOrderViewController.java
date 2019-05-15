@@ -8,12 +8,14 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
+import belmanager.BE.Worker;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,7 +52,7 @@ public class MultiOrderViewController implements Initializable
 
     @FXML
     private ScrollPane mainScrollPane;
-
+    private List<Worker> workerList;
     private double initialHeight;
     private double initialWidth;
     private BelModel bm;
@@ -83,7 +85,7 @@ public class MultiOrderViewController implements Initializable
         {
             Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 //        vboxOne = new VBox();
 //        vboxTwo = new VBox();
 //
@@ -132,7 +134,6 @@ public class MultiOrderViewController implements Initializable
 //        HBox.setHgrow(vboxTwo, Priority.ALWAYS);
 //        mainHBox.setFillHeight(true);
 //        mainHBox.getChildren().addAll(vboxOne, vboxTwo);
-
     }
 
     public TitledPane createTitledPane(Order order)
@@ -156,7 +157,7 @@ public class MultiOrderViewController implements Initializable
             String[] thisTpane = tempPane.getText().split(" ");
             String theOrderNumber = thisTpane[1];
             bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
-            System.out.println(""+bm.getSelectedOrder());
+            System.out.println("" + bm.getSelectedOrder());
         });
 
         //Creates labels for all the Order's variables and required information
@@ -173,6 +174,10 @@ public class MultiOrderViewController implements Initializable
         labels.add(StartDateLBL);
         Label EndDateLBL = new Label("End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate());
         labels.add(EndDateLBL);
+
+        Random r = new Random();
+        Label WorkerLBL = new Label("Worker: " + workerList.get(r.nextInt(workerList.size() - 1)).getName());
+        labels.add(WorkerLBL);
 
         //Creates Button for marking an order as complete
         Button btnFinishOrder = new Button("Complete");
@@ -391,7 +396,7 @@ public class MultiOrderViewController implements Initializable
         String theOrderNumber = thisTpane[1];
         return theOrderNumber;
     }
-    
+
     public void setModel(BelModel model)
     {
         this.bm = model;
@@ -406,6 +411,7 @@ public class MultiOrderViewController implements Initializable
         // Creates TitledPanes each containing the details of 1 order
         try
         {
+            workerList = bm.getAllWorkers();
             int col = 0;
             bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
@@ -456,8 +462,7 @@ public class MultiOrderViewController implements Initializable
 
             infoUpdater = Executors.newSingleThreadExecutor();
             infoUpdater.submit(infoTask);
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }

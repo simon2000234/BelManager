@@ -21,9 +21,10 @@ import java.io.InputStreamReader;
  */
 public class ConfigFileDao
 {
-
+    // filen vi skriver til
     private static String file_location = "Config.txt";
 
+    // vi laver filen
     protected void fileInit() throws IOException
     {
         File f = new File(file_location);

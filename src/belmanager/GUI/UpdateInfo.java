@@ -8,7 +8,6 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
-import belmanager.BLL.BMManager;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;

@@ -8,11 +8,13 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
+import belmanager.BE.Worker;
 import java.net.URL;
 import java.time.Instant;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -56,6 +58,7 @@ public class OrderOverviewPageController implements Initializable
 
     private BelModel bm;
 
+    private List<Worker> workerList;
     private List<TitledPane> listPanes;
     private Accordion mainAccordion;
     private final int oneDayInEpochMilli = 86400000;
@@ -119,6 +122,11 @@ public class OrderOverviewPageController implements Initializable
         labels.add(StartDateLBL);
         Label EndDateLBL = new Label(order.getDepartment(bm.getCurrentDepartment()).getEndDate());
         labels.add(EndDateLBL);
+        
+        
+        Random r = new Random();
+        Label WorkerLBL = new Label ("Worker " + workerList.get(r.nextInt(workerList.size()-1)).getName());
+        labels.add(WorkerLBL);
 
         //Creates Button for marking an order as complete
         Button btnFinishOrder = new Button("Complete");
@@ -349,6 +357,7 @@ public class OrderOverviewPageController implements Initializable
         // Creates TitledPanes each containing the details of 1 order
         try
         {
+             workerList = bm.getAllWorkers();
             bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {

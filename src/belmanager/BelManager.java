@@ -48,7 +48,7 @@ public class BelManager extends Application
             root = loader.load();
 
             stage.setTitle(model.readFromFile());
-            stage.setScene(new Scene(root, 730, 550));
+            stage.setScene(new Scene(root, 1000, 750));
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {

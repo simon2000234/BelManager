@@ -156,7 +156,6 @@ public class MultiOrderViewController implements Initializable
             String[] thisTpane = tempPane.getText().split(" ");
             String theOrderNumber = thisTpane[1];
             bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
-            System.out.println(""+bm.getSelectedOrder());
         });
 
         //Creates labels for all the Order's variables and required information

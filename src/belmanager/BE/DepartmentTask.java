@@ -38,7 +38,7 @@ public class DepartmentTask implements Comparable<String>
         String sringDate = dateToConvert.substring(6, 19);
         long dateEpoch = Long.parseLong(sringDate);
         Date date = new Date(dateEpoch);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat format = new SimpleDateFormat("ww:u");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         String formatted = format.format(date);
         return formatted;

@@ -8,7 +8,6 @@ package belmanager.GUI;
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
-import belmanager.BLL.BMManager;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
@@ -56,7 +55,8 @@ public class UpdateInfo implements Runnable
                         for (int i = 0; i < orders.size(); i++)
                         {
                             //Gets the order from the new info that matches the old info
-                            if (orders.get(i).getOrderNumber().equals(updatableInformation.getOrder().getOrderNumber()))
+                            if (orders.get(i).getOrderNumber().equals
+                                (updatableInformation.getOrder().getOrderNumber()))
                             {
                                 currentOrderIndex = i;
                             }

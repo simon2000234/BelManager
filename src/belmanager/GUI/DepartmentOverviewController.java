@@ -136,11 +136,11 @@ public class DepartmentOverviewController implements Initializable {
 
         Parent root;
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
+        loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
         root = loader.load();
         Stage stage = new Stage();
         stage.setTitle(departmentName);
-        stage.setScene(new Scene(root, 730, 550));
+        stage.setScene(new Scene(root, 1000, 750));
         stage.show();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {
@@ -150,8 +150,8 @@ public class DepartmentOverviewController implements Initializable {
                     System.exit(0);
                 }
             });
-        OrderOverviewPageController oopController = loader.getController();
-        oopController.setModel(model);
+        MultiOrderViewController mopController = loader.getController();
+        mopController.setModel(model);
 
         Stage current = (Stage) PickAFile.getScene().getWindow();
         current.close();

@@ -9,9 +9,10 @@ import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
 import java.net.URL;
-import java.time.Instant;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -19,22 +20,22 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -44,30 +45,27 @@ import javafx.scene.shape.Circle;
  *
  * @author Caspe
  */
-public class OrderOverviewPageController implements Initializable
+public class MultiOrderViewController implements Initializable
 {
 
     @FXML
-    private AnchorPane mainPane;
-    @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private VBox vboxScroll;
+    private ScrollPane mainScrollPane;
 
-    private BelModel bm;
-
-    private List<TitledPane> listPanes;
-    private Accordion mainAccordion;
-    private final int oneDayInEpochMilli = 86400000;
     private double initialHeight;
     private double initialWidth;
+    private BelModel bm;
+    private final int oneDayInEpochMilli = 86400000;
+    private VBox vboxOne;
+    private VBox vboxTwo;
+    private List<UpdatableInformation> updateList;
+    @FXML
+    private HBox mainHBox;
+    private Collection<TitledPane> boxOneList = new ArrayList<>();
+    private Collection<TitledPane> boxTwoList = new ArrayList<>();
     private ExecutorService newPanesUpdater;
     private Runnable newPanestask;
     private ExecutorService infoUpdater;
     private Runnable infoTask;
-    private List<UpdatableInformation> updateList;
-    @FXML
-    private ImageView imageLogo;
 
     /**
      * Initializes the controller class.
@@ -75,11 +73,66 @@ public class OrderOverviewPageController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        Image logo = new Image("belman_logo.jpg");
-        imageLogo.setImage(logo);
-        initialHeight = scrollPane.getHeight();
-        initialWidth = scrollPane.getWidth();
+        initialHeight = mainScrollPane.getHeight();
+        initialWidth = mainScrollPane.getWidth();
         updateList = new ArrayList<>();
+        try
+        {
+            bm = new BelModel();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        vboxOne = new VBox();
+//        vboxTwo = new VBox();
+//
+//        mainScrollPane.setFitToHeight(true);
+//        mainScrollPane.setFitToWidth(true);
+//
+//        bm.setCurrentDepartment("Bælg");
+//        // Creates TitledPanes each containing the details of 1 order
+//        try
+//        {
+//            int col = 0;
+//            bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
+//            for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
+//            {
+//                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 0)
+//                {
+//                    TitledPane temp = createTitledPane(order);
+//                    if (col > 5)
+//                    {
+//                        temp.setExpanded(false);
+//                    }
+//                    boxOneList.add(temp);
+//                    col++;
+//                } else if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 1)
+//                {
+//                    TitledPane temp = createTitledPane(order);
+//                    if (col > 5)
+//                    {
+//                        temp.setExpanded(false);
+//                    }
+//                    boxTwoList.add(temp);
+//                    col++;
+//                }
+//            }
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        vboxOne.getChildren().addAll(boxOneList);
+//        vboxTwo.getChildren().addAll(boxTwoList);
+//        vboxOne.setMinWidth(450.00);
+//        vboxTwo.setMinWidth(450.00);
+//        vboxOne.setFillWidth(true);
+//        vboxTwo.setFillWidth(true);
+//        HBox.setHgrow(vboxOne, Priority.ALWAYS);
+//        HBox.setHgrow(vboxTwo, Priority.ALWAYS);
+//        mainHBox.setFillHeight(true);
+//        mainHBox.getChildren().addAll(vboxOne, vboxTwo);
+
     }
 
     public TitledPane createTitledPane(Order order)
@@ -90,12 +143,12 @@ public class OrderOverviewPageController implements Initializable
         List<DepartmentTask> tempDTlist;
         tempDTlist = order.getDepartmentTasks();
         AnchorPane tempAnch = new AnchorPane();
-        
 
         // Creates the title of each TitlePane based on the Order's variables
-        String titleString = "Order: " + order.getOrderNumber() + " " + "\t\t\t\t\t\t"
-                + " Start Date: " + order.getDepartment(bm.getCurrentDepartment()).getStartDate() + "\t\t"
-                + "End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate();
+        String titleString = "Order: " + order.getOrderNumber();
+//        + " " + "\t\t\t\t\t\t"
+//                + " Start Date: " + order.getDepartment(bm.getCurrentDepartment()).getStartDate() + "\t\t"
+//                + "End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate();
         TitledPane temp = new TitledPane(titleString, tempAnch);
         temp.setOnMouseClicked((MouseEvent event) ->
         {
@@ -103,6 +156,7 @@ public class OrderOverviewPageController implements Initializable
             String[] thisTpane = tempPane.getText().split(" ");
             String theOrderNumber = thisTpane[1];
             bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
+            System.out.println(""+bm.getSelectedOrder());
         });
 
         //Creates labels for all the Order's variables and required information
@@ -113,11 +167,11 @@ public class OrderOverviewPageController implements Initializable
         labels.add(DeliveryDateLBL);
         Label DepartmentName = new Label("Department: " + order.getDepartment(bm.getCurrentDepartment()).getDepartmentName());
         labels.add(DepartmentName);
-        Label CustomerLBL = new Label(order.getCustomerName());
+        Label CustomerLBL = new Label("Customer: " + order.getCustomerName());
         labels.add(CustomerLBL);
-        Label StartDateLBL = new Label(order.getDepartment(bm.getCurrentDepartment()).getStartDate());
+        Label StartDateLBL = new Label("Start Date: " + order.getDepartment(bm.getCurrentDepartment()).getStartDate());
         labels.add(StartDateLBL);
-        Label EndDateLBL = new Label(order.getDepartment(bm.getCurrentDepartment()).getEndDate());
+        Label EndDateLBL = new Label("End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate());
         labels.add(EndDateLBL);
 
         //Creates Button for marking an order as complete
@@ -131,11 +185,12 @@ public class OrderOverviewPageController implements Initializable
             try
             {
                 bm.updateTaskIsFinished(bm.getSelectedOrder().getCurrentDepartment().getTaskID());
-                removeTPane(bm.getSelectedOrder().getOrderNumber());
-            }
-            catch (SQLException ex)
+                Label tempLabel = (Label) tempAnch.getChildren().get(0);
+                String[] tempOrderNumber = tempLabel.getText().split(" ");
+                removeTPane(tempOrderNumber[2]);
+            } catch (SQLException ex)
             {
-                Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         });
@@ -145,12 +200,7 @@ public class OrderOverviewPageController implements Initializable
         AnchorPane.setTopAnchor(estimated, Y * (labels.size() + 3));
         AnchorPane.setLeftAnchor(estimated, X);
         AnchorPane.setRightAnchor(estimated, X);
-        estimated.setPrefSize((300.00), 25.00);
-        ProgressBar realized = new ProgressBar(0.35F);
-        AnchorPane.setTopAnchor(realized, Y * (labels.size() + 5));
-        AnchorPane.setLeftAnchor(realized, X);
-        AnchorPane.setRightAnchor(realized, X);
-        realized.setPrefSize(300.00, 25.00);
+        estimated.setPrefSize((initialWidth / 4), 25.00);
 
         //Creates a label for each department an order has to go through
         //Creates a corresponding circle with a color RED/YELLOW/GREEN showing
@@ -167,30 +217,26 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
+            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.RED);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
+            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
             {
                 Circle tempCircle = new Circle(X / 2, Color.ORANGE);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
+            } else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
                     && departmentTask.getEpochStartDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.YELLOW);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            }
-            else
+            } else
             {
                 Circle tempCircle = new Circle(X / 2, Color.GREY);
                 AnchorPane.setRightAnchor(tempCircle, X);
@@ -204,20 +250,18 @@ public class OrderOverviewPageController implements Initializable
         fixLabels(labelsRightSide, X * 3, Y, true);
         fixLabels(labels, X, Y, false);
 
-        
         //Scales all labels and text as the height of the application increases/decreases
-        scrollPane.heightProperty().addListener(new ChangeListener()
+        mainScrollPane.heightProperty().addListener(new ChangeListener()
         {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue)
             {
-                double heightOld = (double) oldValue;
                 double heightNew = (double) newValue;
                 double fontsize = 11;
                 double heightChanger = heightNew / 100;
                 double fontChanger = (heightNew - initialHeight) / 100;
                 btnFinishOrder.setPrefHeight(btnFinishOrder.getMinHeight() + heightChanger);
-                imageLogo.setLayoutX((scrollPane.getWidth()/2)-(imageLogo.getFitWidth()/2));
+//                imageLogo.setLayoutX((mainScrollPane.getWidth()/2)-(imageLogo.getFitWidth()/2));
                 if ((fontsize + fontChanger) >= fontsize)
                 {
                     btnFinishOrder.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(fontsize + fontChanger)));
@@ -261,7 +305,7 @@ public class OrderOverviewPageController implements Initializable
         //adds everything to the pane
         tempAnch.getChildren().addAll(labels);
         tempAnch.getChildren().addAll(labelsRightSide);
-        tempAnch.getChildren().addAll(btnFinishOrder, estimated, realized);
+        tempAnch.getChildren().addAll(btnFinishOrder, estimated);
         tempAnch.getChildren().addAll(departmentStatus);
 
         return temp;
@@ -291,8 +335,7 @@ public class OrderOverviewPageController implements Initializable
                 AnchorPane.setLeftAnchor(label1, X);
                 space++;
             }
-        }
-        else if (leftORright == true)
+        } else if (leftORright == true)
         {
             for (Label label1 : labels)
             {
@@ -312,14 +355,26 @@ public class OrderOverviewPageController implements Initializable
      */
     public void removeTPane(String orderNumber)
     {
-        for (TitledPane pane : mainAccordion.getPanes())
+        for (Node node : vboxOne.getChildren())
         {
-            if (getOrderNumberPaneTitle(pane).equals(orderNumber))
+            TitledPane temp = (TitledPane) node;
+            if (getOrderNumberPaneTitle(temp).equals(orderNumber))
             {
-                mainAccordion.getPanes().remove(pane);
+                vboxOne.getChildren().remove(temp);
                 break;
             }
         }
+
+        for (Node node : vboxTwo.getChildren())
+        {
+            TitledPane temp = (TitledPane) node;
+            if (getOrderNumberPaneTitle(temp).equals(orderNumber))
+            {
+                vboxTwo.getChildren().remove(temp);
+                break;
+            }
+        }
+
     }
 
     /**
@@ -336,41 +391,64 @@ public class OrderOverviewPageController implements Initializable
         String theOrderNumber = thisTpane[1];
         return theOrderNumber;
     }
-
+    
     public void setModel(BelModel model)
     {
         this.bm = model;
 
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        listPanes = new ArrayList<>();
-        mainAccordion = new Accordion();
+        vboxOne = new VBox();
+        vboxTwo = new VBox();
 
+        mainScrollPane.setFitToHeight(true);
+        mainScrollPane.setFitToWidth(true);
+
+        bm.setCurrentDepartment("Bælg");
         // Creates TitledPanes each containing the details of 1 order
         try
         {
+            int col = 0;
             bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {
-                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli())
+                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 0)
                 {
                     TitledPane temp = createTitledPane(order);
-                    mainAccordion.getPanes().add(temp);
-                    listPanes.add(temp);
+                    if (col > 5)
+                    {
+                        temp.setExpanded(false);
+                    }
+                    boxOneList.add(temp);
+                    col++;
+                } else if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 1)
+                {
+                    TitledPane temp = createTitledPane(order);
+                    if (col > 5)
+                    {
+                        temp.setExpanded(false);
+                    }
+                    boxTwoList.add(temp);
+                    col++;
                 }
             }
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        vboxScroll.getChildren().add(mainAccordion);
+        vboxOne.getChildren().addAll(boxOneList);
+        vboxTwo.getChildren().addAll(boxTwoList);
+        vboxOne.setMinWidth(450.00);
+        vboxTwo.setMinWidth(450.00);
+        vboxOne.setFillWidth(true);
+        vboxTwo.setFillWidth(true);
+        HBox.setHgrow(vboxOne, Priority.ALWAYS);
+        HBox.setHgrow(vboxTwo, Priority.ALWAYS);
+        mainHBox.setFillHeight(true);
+        mainHBox.getChildren().addAll(vboxOne, vboxTwo);
 
         try
         {
-//            newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
-//                    mainAccordion, model.getCurrentDepartment(), this);
+            newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
+                    vboxOne, vboxTwo, model.getCurrentDepartment(), this);
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
 

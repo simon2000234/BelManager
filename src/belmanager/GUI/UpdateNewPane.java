@@ -7,8 +7,6 @@ package belmanager.GUI;
 
 import belmanager.BE.DepartmentTask;
 import belmanager.BE.Order;
-import belmanager.BLL.BMManager;
-import belmanager.GUI.OrderOverviewPageController;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
@@ -18,6 +16,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -28,20 +27,23 @@ public class UpdateNewPane implements Runnable
 
     private long lastUpdateTime;
     private final long fiveSecInMili = 5000L;
-    private Accordion acc;
+    private VBox vboxOne;
+    private VBox vboxTwo;
     private BelModel bm;
     private String currentDepartment;
-    private OrderOverviewPageController oopc;
+    private MultiOrderViewController oopc;
 
-    public UpdateNewPane(long currentTime, Accordion mainAccordion, String currentDepartment,
-            OrderOverviewPageController oopc) throws SQLException
+    public UpdateNewPane(long lastUpdateTime, VBox vboxOne, VBox vboxTwo, String currentDepartment, MultiOrderViewController oopc) throws SQLException
     {
-        lastUpdateTime = currentTime;
-        acc = mainAccordion;
-        bm = new BelModel();
+        this.lastUpdateTime = lastUpdateTime;
+        this.vboxOne = vboxOne;
+        this.vboxTwo = vboxTwo;
+        this.bm = new BelModel();
         this.currentDepartment = currentDepartment;
         this.oopc = oopc;
     }
+
+    
 
     @Override
     public void run()
@@ -66,7 +68,14 @@ public class UpdateNewPane implements Runnable
                                     && task.getEpochStartDate() <= Instant.now().toEpochMilli() + fiveSecInMili)
                             {
                                 TitledPane temp = oopc.createTitledPane(order);
-                                acc.getPanes().add(temp);
+                                if (vboxOne.getChildren().size() < vboxTwo.getChildren().size())
+                                {
+                                    vboxOne.getChildren().add(temp);
+                                } else
+                                {
+                                    vboxTwo.getChildren().add(temp);
+                                }
+
                             }
                         }
                     }
@@ -75,12 +84,10 @@ public class UpdateNewPane implements Runnable
                 lastUpdateTime = Instant.now().toEpochMilli();
                 TimeUnit.SECONDS.sleep(5);
             }
-        }
-        catch (InterruptedException ex)
+        } catch (InterruptedException ex)
         {
             System.out.println("Thred Stopped");
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             Logger.getLogger(UpdateNewPane.class.getName()).log(Level.SEVERE, null, ex);
         }

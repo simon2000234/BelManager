@@ -6,6 +6,7 @@
 package belmanager;
 
 import belmanager.GUI.BelModel;
+import belmanager.GUI.MultiOrderViewController;
 import belmanager.GUI.OrderOverviewPageController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -43,7 +44,7 @@ public class BelManager extends Application
 
             Parent root;
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(BelManager.class.getResource("GUI/OrderOverviewPage.fxml"));
+            loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
             root = loader.load();
 
             stage.setTitle(model.readFromFile());
@@ -58,8 +59,8 @@ public class BelManager extends Application
                     
                 }
             });
-            OrderOverviewPageController oopController = loader.getController();
-            oopController.setModel(model);
+            MultiOrderViewController mopController = loader.getController();
+            mopController.setModel(model);
 
         }
     }

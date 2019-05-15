@@ -125,7 +125,7 @@ public class OrderOverviewPageController implements Initializable
         
         
         Random r = new Random();
-        Label WorkerLBL = new Label ("Worker " + workerList.get(r.nextInt(workerList.size()-1)).getName());
+        Label WorkerLBL = new Label ("Worker: " + workerList.get(r.nextInt(workerList.size()-1)).getName());
         labels.add(WorkerLBL);
 
         //Creates Button for marking an order as complete

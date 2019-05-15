@@ -16,6 +16,12 @@ import java.util.ArrayList;
 /**
  *
  * @author Melchertsen
+ * 
+ * 
+ * en departmentTask er at de forskellig afdellinger skal lavet noget på den samme order 
+ * f.esk: bælg->male->montage2
+ * bælg ville være en departmentTask osv..
+
  */
 public class DepartmentTaskDAO
 {
@@ -27,6 +33,11 @@ public class DepartmentTaskDAO
         DB = new DBConnectionProvider();
     }
 
+    /*
+    
+    create a DepartTask to the database
+    
+    */
     protected void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
     {   
         String SQL = "INSERT INTO DepartmentTask(departmentName, endDate, startDate, finishedOrder, orderID)"
@@ -44,6 +55,10 @@ public class DepartmentTaskDAO
         }
     }
 
+    /*
+    creat a order on to the database
+    
+    */
     protected void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
     {
         String SQL = "INSERT INTO [Order](orderNumber, customerName, deliveryTime) VALUES(?,?,?);";
@@ -58,7 +73,14 @@ public class DepartmentTaskDAO
             st.close();
         }
     }
-
+/**
+ * select en bestemt order med et bestemt orderNumber 
+ * det bestemmet ordernumber er  @param orderNumber
+ * 
+ * @param orderNumber
+ * @return Order
+ * @throws SQLException 
+ */
     protected Order getOrder(String orderNumber) throws SQLException
     {
         String SQL = "SELECT * FROM [Order] WHERE orderNumber = ?";
@@ -79,6 +101,13 @@ public class DepartmentTaskDAO
         return order;
     }
 
+    
+    /**
+     * returner alle orders
+     * 
+     * @return ArrayList<Order> 
+     * @throws SQLException 
+     */
     protected ArrayList<Order> getAllOrders() throws SQLException
     {
         String SQL = "SELECT * FROM [Order];";
@@ -103,6 +132,12 @@ public class DepartmentTaskDAO
         }
     }
 
+    /**
+     *  returner alle departmentTask
+     * @param orderNumber
+     * @return ArrayList<DepartmentTask>
+     * @throws SQLException 
+     */
     protected ArrayList<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         String SQL = "SELECT * FROM DepartmentTask WHERE orderID = ?;";
@@ -130,6 +165,12 @@ public class DepartmentTaskDAO
         return allTasks;
     }
 
+    /**
+     * henter alle departmentTask fra DataBasen
+     * 
+     * @return ArrayList<DepartmentTask> 
+     * @throws SQLException 
+     */
     protected ArrayList<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         String SQL = "SELECT * FROM DepartmentTask;";
@@ -156,6 +197,12 @@ public class DepartmentTaskDAO
         return allTasks;
     }
     
+    
+    /**
+     * update en task til at være færdig i databasen
+     * @param taskID
+     * @throws SQLException 
+     */
     protected void updateTaskIsFinished(int taskID) throws SQLException
     {
         String SQL = "UPDATE DepartmentTask SET finishedOrder = ? WHERE taskID = ?;";
@@ -170,7 +217,11 @@ public class DepartmentTaskDAO
         }
     }
     
-    
+    /**
+     * sletter en order med det givet @parameter orderID
+     * @param orderID
+     * @throws SQLException 
+     */
      protected void DeleteOrder (int orderID) throws SQLException
     {
         String SQL = "delete * from [Order] where orderNumber= ? ";

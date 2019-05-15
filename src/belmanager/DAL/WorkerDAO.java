@@ -26,6 +26,13 @@ public class WorkerDAO
         DB = new DBConnectionProvider();
     }
     
+    /**
+     * opretter en worker 
+     * @param initials
+     * @param name
+     * @param salaryNumber
+     * @throws SQLException 
+     */
     protected void createWorker(String initials, String name, int salaryNumber) throws SQLException
     {
         String SQL = "INSERT INTO Worker(initials, name, salaryNumber) VALUES(?,?,?);";
@@ -40,6 +47,12 @@ public class WorkerDAO
         }
     }
     
+    /**
+     * henter en worker fra databasen
+     * @param salaryNumber
+     * @return
+     * @throws SQLException 
+     */
     protected Worker getWorker(int salaryNumber) throws SQLException
     {
         Worker worker = null;
@@ -67,6 +80,11 @@ public class WorkerDAO
         return worker;
     }
     
+    /**
+     * sletter en worker fra databasen 
+     * @param salaryNumber
+     * @throws SQLException 
+     */
     protected void deleteWorker(int salaryNumber) throws SQLException
     {
         String SQL = "DELETE FROM Worker WHERE salaryNumber = ?;";
@@ -79,7 +97,11 @@ public class WorkerDAO
             st.close();
         }
     }
-    
+    /**
+     * henter alle worker fra db
+     * @return
+     * @throws SQLException 
+     */
     protected ArrayList<Worker> getAllWorkers() throws SQLException
     {
         String SQL = "SELECT * FROM Worker;";

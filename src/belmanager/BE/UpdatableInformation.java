@@ -6,6 +6,7 @@
 package belmanager.BE;
 
 import java.util.List;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.shape.Circle;
 
 /**
@@ -14,13 +15,16 @@ import javafx.scene.shape.Circle;
  */
 public class UpdatableInformation
 {
+
     private List<Circle> circles;
     private Order order;
+    private ProgressBar estimatedBar;
 
-    public UpdatableInformation(List<Circle> circles, Order order)
+    public UpdatableInformation(List<Circle> circles, Order order, ProgressBar estimatedBar)
     {
         this.circles = circles;
         this.order = order;
+        this.estimatedBar = estimatedBar;
     }
 
     public Order getOrder()
@@ -32,9 +36,10 @@ public class UpdatableInformation
     {
         return circles;
     }
-    
-    
-    
-    
-    
+
+    public ProgressBar getEstimatedBar()
+    {
+        return estimatedBar;
+    }
+
 }

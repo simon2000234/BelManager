@@ -52,8 +52,14 @@ public class BMManager {
 
     }
 
-    public List<Order> getAllOrders() throws SQLException {
-        return daFacade.getAllOrders();
+    public List<Order> getAllOrders(String currentDepartment) throws SQLException {
+        List<Order> temp = new ArrayList<>();
+        for (Order allOrder : daFacade.getAllOrders())
+        {
+            allOrder.setSelectedDepartmentTask(currentDate);
+            temp.add(allOrder);
+        }
+        return temp;
     }
 
     public void deleteOrder(int orderID) throws SQLException {

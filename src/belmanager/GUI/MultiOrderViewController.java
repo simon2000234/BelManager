@@ -248,7 +248,7 @@ public class MultiOrderViewController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
-        updateList.add(new UpdatableInformation(departmentStatus, order));
+        updateList.add(new UpdatableInformation(departmentStatus, order, estimated));
 
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
@@ -457,7 +457,7 @@ public class MultiOrderViewController implements Initializable
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
 
-            infoTask = new UpdateInfo(updateList);
+            infoTask = new UpdateInfo(updateList, bm);
 
             infoUpdater = Executors.newSingleThreadExecutor();
             infoUpdater.submit(infoTask);

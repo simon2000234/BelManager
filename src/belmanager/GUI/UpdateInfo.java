@@ -10,6 +10,7 @@ import belmanager.BE.Order;
 import belmanager.BE.UpdatableInformation;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -30,11 +31,12 @@ public class UpdateInfo implements Runnable
     private final int oneDayInEpochMilli = 86400000;
     private BelModel bm;
     private int currentOrderIndex;
+    private double dumbTest = 0.00;
 
-    public UpdateInfo(List<UpdatableInformation> info) throws SQLException
+    public UpdateInfo(List<UpdatableInformation> info, BelModel model) throws SQLException
     {
         this.info = info;
-        bm = new BelModel();
+        this.bm = model;
     }
 
     @Override
@@ -50,13 +52,13 @@ public class UpdateInfo implements Runnable
 
                 Platform.runLater(() ->
                 {
+                    dumbTest = dumbTest + 0.05;
                     for (UpdatableInformation updatableInformation : info)
                     {
                         for (int i = 0; i < orders.size(); i++)
                         {
                             //Gets the order from the new info that matches the old info
-                            if (orders.get(i).getOrderNumber().equals
-                                (updatableInformation.getOrder().getOrderNumber()))
+                            if (orders.get(i).getOrderNumber().equals(updatableInformation.getOrder().getOrderNumber()))
                             {
                                 currentOrderIndex = i;
                             }
@@ -67,8 +69,30 @@ public class UpdateInfo implements Runnable
                             Order order = orders.get(currentOrderIndex);
                             List<DepartmentTask> tasks = order.getDepartmentTasks();
                             List<Circle> circles = updatableInformation.getCircles();
+
+                            double endTime;
+                            double progressTime;
+                            double progress;
+
                             for (int i = 0; i < tasks.size(); i++)
                             {
+                                if (tasks.get(i).getDepartmentName().equals(bm.getCurrentDepartment()))
+                                {
+                                    System.out.println("got through");
+                                    endTime = (double)tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
+                                    if (Instant.now().toEpochMilli() > tasks.get(i).getEpochEndDate())
+                                    {
+                                        progressTime = endTime;
+                                    } else
+                                    {
+                                        progressTime = (double) tasks.get(i).getEpochEndDate() - Instant.now().toEpochMilli();
+                                    }
+                                    progress = progressTime / endTime;
+
+                                    System.out.println("progress: "+progress);
+
+                                    updatableInformation.getEstimatedBar().setProgress(dumbTest);
+                                }
                                 Paint color = circles.get(i).getFill();
                                 if (tasks.get(i).isFinishedOrder() == true)
                                 {
@@ -77,16 +101,14 @@ public class UpdateInfo implements Runnable
                                     {
                                         circles.get(i).setFill(Color.GREEN);
                                     }
-                                }
-                                else if (tasks.get(i).getEpochEndDate() <= Instant.now().toEpochMilli())
+                                } else if (tasks.get(i).getEpochEndDate() <= Instant.now().toEpochMilli())
                                 {
                                     //Only change color if there is a defferance
                                     if (color != Color.RED)
                                     {
                                         circles.get(i).setFill(Color.RED);
                                     }
-                                }
-                                else if (tasks.get(i).getEpochEndDate()
+                                } else if (tasks.get(i).getEpochEndDate()
                                         <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
                                 {
                                     //Only change color if there is a defferance
@@ -94,8 +116,7 @@ public class UpdateInfo implements Runnable
                                     {
                                         circles.get(i).setFill(Color.ORANGE);
                                     }
-                                }
-                                else if (tasks.get(i).getEpochEndDate()
+                                } else if (tasks.get(i).getEpochEndDate()
                                         > Instant.now().toEpochMilli() + oneDayInEpochMilli
                                         && tasks.get(i).getEpochStartDate() <= Instant.now().toEpochMilli())
                                 {
@@ -104,8 +125,7 @@ public class UpdateInfo implements Runnable
                                     {
                                         circles.get(i).setFill(Color.YELLOW);
                                     }
-                                }
-                                else
+                                } else
                                 {
                                     //Only change color if there is a defferance
                                     if (color != Color.GREY)
@@ -121,12 +141,10 @@ public class UpdateInfo implements Runnable
                 //Waits 5 seconds before updating again
                 TimeUnit.SECONDS.sleep(5);
             }
-        }
-        catch (InterruptedException ex)
+        } catch (InterruptedException ex)
         {
             System.out.println("Thred Stopped");
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             Logger.getLogger(UpdateInfo.class.getName()).log(Level.SEVERE, null, ex);
         }

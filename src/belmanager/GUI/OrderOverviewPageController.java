@@ -205,7 +205,7 @@ public class OrderOverviewPageController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
-        updateList.add(new UpdatableInformation(departmentStatus, order));
+//        updateList.add(new UpdatableInformation(departmentStatus, order));
 
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
@@ -375,22 +375,22 @@ public class OrderOverviewPageController implements Initializable
 
         vboxScroll.getChildren().add(mainAccordion);
 
-        try
-        {
-//            newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
-//                    mainAccordion, model.getCurrentDepartment(), this);
-            newPanesUpdater = Executors.newSingleThreadExecutor();
-            newPanesUpdater.submit(newPanestask);
-
-            infoTask = new UpdateInfo(updateList);
-
-            infoUpdater = Executors.newSingleThreadExecutor();
-            infoUpdater.submit(infoTask);
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try
+//        {
+////            newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
+////                    mainAccordion, model.getCurrentDepartment(), this);
+//            newPanesUpdater = Executors.newSingleThreadExecutor();
+//            newPanesUpdater.submit(newPanestask);
+//
+////            infoTask = new UpdateInfo(updateList);
+//
+//            infoUpdater = Executors.newSingleThreadExecutor();
+//            infoUpdater.submit(infoTask);
+//        }
+//        catch (SQLException ex)
+//        {
+//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 }

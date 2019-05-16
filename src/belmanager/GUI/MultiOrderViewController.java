@@ -437,7 +437,7 @@ public class MultiOrderViewController implements Initializable
             }
         } catch (SQLException ex)
         {
-            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
         vboxOne.getChildren().addAll(boxOneList);
         vboxTwo.getChildren().addAll(boxTwoList);
@@ -463,7 +463,7 @@ public class MultiOrderViewController implements Initializable
             infoUpdater.submit(infoTask);
         } catch (SQLException ex)
         {
-            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

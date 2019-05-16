@@ -138,7 +138,7 @@ public class Order implements Comparable<Order>
     public ArrayList<String> getAllDepartments()
     {
         ArrayList<String> allDeps = new ArrayList<>();
-        ArrayList<DepartmentTask> allTasks = (ArrayList) departmentTasks;
+        List<DepartmentTask> allTasks =  departmentTasks;
 
         for (DepartmentTask task : allTasks)
         {

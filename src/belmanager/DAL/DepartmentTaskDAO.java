@@ -97,6 +97,8 @@ public class DepartmentTaskDAO
                 order = new Order(orderNumber, customerName, deliveryTime,
                         getAllDepartmentTasks(orderNumber));
             }
+            st.close();
+            rs.close();
         }
         return order;
     }
@@ -222,7 +224,7 @@ public class DepartmentTaskDAO
      * @param orderID
      * @throws SQLException 
      */
-     protected void DeleteOrder (int orderID) throws SQLException
+     protected void deleteOrder (int orderID) throws SQLException
     {
         String SQL = "delete * from [Order] where orderNumber= ? ";
        
@@ -232,7 +234,7 @@ public class DepartmentTaskDAO
             PreparedStatement st = con.prepareCall(SQL);
             st.setInt(1, orderID);
             st.executeUpdate();
-                     
+            st.close();
         }
         
     }

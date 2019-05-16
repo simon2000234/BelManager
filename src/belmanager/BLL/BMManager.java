@@ -11,9 +11,7 @@ import belmanager.BE.Worker;
 import belmanager.DAL.DataAccessFacade;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import org.json.simple.parser.ParseException;
@@ -25,8 +23,6 @@ import org.json.simple.parser.ParseException;
 public class BMManager {
 
     private DataAccessFacade daFacade = new DataAccessFacade();
-    private Calendar c;
-    private String currentDate;
 
     /**
      * Filters all orders, showing only the orders where their current
@@ -57,7 +53,7 @@ public class BMManager {
     }
 
     public void deleteOrder(int orderID) throws SQLException {
-        daFacade.DeleteOrder(orderID);
+        daFacade.deleteOrder(orderID);
 
     }
 
@@ -93,8 +89,8 @@ public class BMManager {
         daFacade.updateTaskIsFinished(taskID);
     }
 
-    public void WriteToFile(String myData) throws IOException {
-        daFacade.WriteToFile(myData);
+    public void writeToFile(String myData) throws IOException {
+        daFacade.writeToFile(myData);
 
     }
 

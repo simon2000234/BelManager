@@ -87,32 +87,31 @@ public class DepartmentOverviewController implements Initializable {
     @FXML
     private void handleButtonActionDep5(ActionEvent event) throws IOException {
         openDepartments(btnDep5.getText());
-        model.WriteToFile(btnDep5.getText());
+        model.writeToFile(btnDep5.getText());
     }
 
     @FXML
     private void handleButtonActionDep4(ActionEvent event) throws IOException {
         openDepartments(btnDep4.getText());
-        model.WriteToFile(btnDep4.getText());
+        model.writeToFile(btnDep4.getText());
     }
 
     @FXML
     private void handleButtonActionDep3(ActionEvent event) throws IOException {
         openDepartments(btnDep3.getText());
-        model.WriteToFile(btnDep3.getText());
+        model.writeToFile(btnDep3.getText());
     }
 
     @FXML
     private void handleButtonActionDep2(ActionEvent event) throws IOException {
         openDepartments(btnDep2.getText());
-        model.WriteToFile(btnDep2.getText());
+        model.writeToFile(btnDep2.getText());
     }
 
     @FXML
-
     private void handleButtonActionDep1(ActionEvent event) throws Exception {
         openDepartments(btnDep1.getText());
-        model.WriteToFile(btnDep1.getText());
+        model.writeToFile(btnDep1.getText());
 
     }
 
@@ -120,14 +119,14 @@ public class DepartmentOverviewController implements Initializable {
     private void handleButtonActionDep6(ActionEvent event) throws IOException {
         openDepartments(btnDep6.getText());
 
-        model.WriteToFile(btnDep6.getText());
+        model.writeToFile(btnDep6.getText());
 
     }
 
     @FXML
     private void handleButtonActionDep7(ActionEvent event) throws IOException {
         openDepartments(btnDep7.getText());
-        model.WriteToFile(btnDep7.getText());
+        model.writeToFile(btnDep7.getText());
     }
 
     private void openDepartments(String departmentName) throws IOException {

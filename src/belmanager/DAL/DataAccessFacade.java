@@ -33,8 +33,8 @@ public class DataAccessFacade {
         return dtdao.getOrder(orderNumber);
     }
 
-    public void DeleteOrder(int OrderID) throws SQLException {
-        dtdao.DeleteOrder(OrderID);
+    public void deleteOrder(int OrderID) throws SQLException {
+        dtdao.deleteOrder(OrderID);
 
     }
 
@@ -66,8 +66,8 @@ public class DataAccessFacade {
         dtdao.updateTaskIsFinished(taskID);
     }
 
-    public void WriteToFile(String myData) throws IOException {
-        cfdao.WriteToFile(myData);
+    public void writeToFile(String myData) throws IOException {
+        cfdao.writeToFile(myData);
     }
 
     public String readFromFile() throws IOException {

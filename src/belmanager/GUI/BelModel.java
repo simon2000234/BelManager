@@ -14,8 +14,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -29,14 +27,14 @@ public class BelModel
     private List<Order> currentOrders;
     private String currentDepartment;
     private Order selectedOrder;
-    private HashMap<String, Order> ShownOrders;
+    private HashMap<String, Order> shownOrders;
 
     public BelModel() throws SQLException
     {
         //this.currentDepartment = "Bælg"; //Need to get department from a config file on login
         this.currentOrders = new ArrayList<>();
         currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
-        this.ShownOrders = new HashMap();
+        this.shownOrders = new HashMap();
     }
 
     public List<Order> filterOrdersByDepartment(String selectedDepartment) throws SQLException
@@ -88,18 +86,18 @@ public class BelModel
         
      }
     
-     public void WriteToFile(String myData) throws IOException {
-        bmm.WriteToFile(currentDepartment);
+     public void writeToFile(String myData) throws IOException {
+        bmm.writeToFile(currentDepartment);
      }
     
-    public void DeleteOrder (int OrderID)
+    public void deleteOrder (int OrderID)
     {
         try
         {
             bmm.deleteOrder(OrderID);
         } catch (SQLException ex)
         {
-            System.out.println("order er ikke blivet slette fordi der er sket en fejl");
+            System.out.println("the order could not be deleted");
         }
     }
 
@@ -135,7 +133,7 @@ public class BelModel
 
     public void updateTaskIsFinished(int taskID) throws SQLException
     {
-        ShownOrders.remove(selectedOrder.getOrderNumber());
+        shownOrders.remove(selectedOrder.getOrderNumber());
         currentOrders.remove(selectedOrder);
         bmm.updateTaskIsFinished(taskID);
 
@@ -143,12 +141,12 @@ public class BelModel
 
     public HashMap<String, Order> getShownOrders()
     {
-        return ShownOrders;
+        return shownOrders;
     }
 
     public void setShownOrders(HashMap<String, Order> ShownOrders)
     {
-        this.ShownOrders = ShownOrders;
+        this.shownOrders = ShownOrders;
     }
 
     public HashMap<String, Order> createTheHashmap(List<Order> orderlist)

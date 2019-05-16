@@ -7,7 +7,6 @@ package belmanager;
 
 import belmanager.GUI.BelModel;
 import belmanager.GUI.MultiOrderViewController;
-import belmanager.GUI.OrderOverviewPageController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

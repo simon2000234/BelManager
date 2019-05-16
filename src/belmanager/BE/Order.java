@@ -43,7 +43,7 @@ public class Order implements Comparable<Order>
         String sringDate = dateToConvert.substring(6, 19);
         long DateEpoch = Long.parseLong(sringDate);
         Date date = new Date(DateEpoch);
-        DateFormat format = new SimpleDateFormat("ww:u");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy (ww:u)");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         String formatted = format.format(date);
         return formatted;

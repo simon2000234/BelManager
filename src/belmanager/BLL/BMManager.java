@@ -52,7 +52,7 @@ public class BMManager {
         List<Order> temp = new ArrayList<>();
         for (Order allOrder : daFacade.getAllOrders())
         {
-            allOrder.setSelectedDepartmentTask(currentDate);
+            allOrder.setSelectedDepartmentTask(currentDepartment);
             temp.add(allOrder);
         }
         return temp;

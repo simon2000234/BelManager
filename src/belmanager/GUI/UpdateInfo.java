@@ -78,7 +78,6 @@ public class UpdateInfo implements Runnable
                             {
                                 if (tasks.get(i).getDepartmentName().equals(bm.getCurrentDepartment()))
                                 {
-                                    System.out.println("got through");
                                     endTime = (double)tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
                                     if (Instant.now().toEpochMilli() > tasks.get(i).getEpochEndDate())
                                     {
@@ -88,10 +87,7 @@ public class UpdateInfo implements Runnable
                                         progressTime = (double) tasks.get(i).getEpochEndDate() - Instant.now().toEpochMilli();
                                     }
                                     progress = progressTime / endTime;
-
-                                    System.out.println("progress: "+progress);
-
-                                    updatableInformation.getEstimatedBar().setProgress(dumbTest);
+                                    updatableInformation.getEstimatedBar().setProgress(progress);
                                 }
                                 Paint color = circles.get(i).getFill();
                                 if (tasks.get(i).isFinishedOrder() == true)

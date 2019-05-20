@@ -144,7 +144,8 @@ public class MultiOrderViewController implements Initializable
                 removeTPane(tempOrderNumber[2]);
             } catch (SQLException ex)
             {
-                Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Something went wrong at the complete button,"
+                        + " are you connected to the internet?");
             }
 
         });

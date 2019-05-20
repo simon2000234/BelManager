@@ -33,6 +33,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -67,6 +69,11 @@ public class MultiOrderViewController implements Initializable
     private Runnable newPanestask;
     private ExecutorService infoUpdater;
     private Runnable infoTask;
+    @FXML
+    private ImageView imgView;
+    @FXML
+    private AnchorPane mainPane;
+   
 
     /**
      * Initializes the controller class.
@@ -84,6 +91,9 @@ public class MultiOrderViewController implements Initializable
         {
             Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Image bellLogo = new Image("belman_logo.jpg");
+        imgView.setImage(bellLogo);
+        
     }
 
     public TitledPane createTitledPane(Order order)
@@ -416,4 +426,6 @@ public class MultiOrderViewController implements Initializable
         }
 
     }
+    
 }
+    

@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 
@@ -52,7 +51,7 @@ public class UpdateNewPane implements Runnable
         {
             while (true)
             {
-                //Gets the current up to fate information
+                //Gets the current up to date information
                 List<Order> Orderlist = bm.filterOrdersByDepartment(currentDepartment);
                 Platform.runLater(() ->
                 {

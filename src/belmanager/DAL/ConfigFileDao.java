@@ -8,7 +8,6 @@ package belmanager.DAL;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,6 +20,7 @@ import java.io.InputStreamReader;
  */
 public class ConfigFileDao
 {
+
     // filen vi skriver til
     private static String file_location = "Config.txt";
 
@@ -32,7 +32,7 @@ public class ConfigFileDao
     }
 
 // Save to file Utility
-    protected void WriteToFile(String myData) throws IOException
+    protected void writeToFile(String myData) throws IOException
     {
         fileInit();
         File file = new File(file_location);
@@ -56,13 +56,14 @@ public class ConfigFileDao
         try
         {
             // Convenience class for writing character files
-            FileWriter Writer;
-            Writer = new FileWriter(file.getAbsoluteFile(), true);
+            FileWriter writer;
+            writer = new FileWriter(file.getAbsoluteFile(), true);
 
             // Writes text to a character-output stream
-            BufferedWriter bufferWriter = new BufferedWriter(Writer);
-            bufferWriter.write(myData.toString());
+            BufferedWriter bufferWriter = new BufferedWriter(writer);
+            bufferWriter.write(myData);
             bufferWriter.close();
+            writer.close();
         }
         catch (IOException e)
         {
@@ -96,7 +97,7 @@ public class ConfigFileDao
 
             while ((line = bufferedReader.readLine()) != null)
             {
-//                System.out.println(line);
+                bufferedReader.close();
                 return line;
             }
 

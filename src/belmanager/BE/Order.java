@@ -24,13 +24,13 @@ public class Order implements Comparable<Order>
 
     private String customerName;
 
-    private String deliveryTime;
+    private long deliveryTime;
 
     private List<DepartmentTask> departmentTasks = new ArrayList<>();
 
     private DepartmentTask selectedDepartmentTask;
 
-    public Order(String orderNumber, String customerName, String deliveryTime, List<DepartmentTask> departmentTasks)
+    public Order(String orderNumber, String customerName, long deliveryTime, List<DepartmentTask> departmentTasks)
     {
         this.orderNumber = orderNumber;
         this.customerName = customerName;
@@ -38,12 +38,11 @@ public class Order implements Comparable<Order>
         this.departmentTasks = departmentTasks;
     }
 
-    private String convertDate(String dateToConvert)
+    private String convertDate(long dateToConvert)
     {
-        String sringDate = dateToConvert.substring(6, 19);
-        long DateEpoch = Long.parseLong(sringDate);
+        long DateEpoch = dateToConvert;
         Date date = new Date(DateEpoch);
-        DateFormat format = new SimpleDateFormat("ww:u");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy (ww:u)");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         String formatted = format.format(date);
         return formatted;
@@ -81,9 +80,7 @@ public class Order implements Comparable<Order>
 
     public long getEpochDeliveryTime()
     {
-        String sringDate = deliveryTime.substring(6, 19);
-        long dateEpoch = Long.parseLong(sringDate);
-        return dateEpoch;
+        return deliveryTime;
     }
 
     public DepartmentTask setSelectedDepartmentTask(String departmentname)
@@ -138,7 +135,7 @@ public class Order implements Comparable<Order>
     public ArrayList<String> getAllDepartments()
     {
         ArrayList<String> allDeps = new ArrayList<>();
-        ArrayList<DepartmentTask> allTasks = (ArrayList) departmentTasks;
+        List<DepartmentTask> allTasks =  departmentTasks;
 
         for (DepartmentTask task : allTasks)
         {
@@ -156,7 +153,6 @@ public class Order implements Comparable<Order>
     @Override
     public int compareTo(Order o)
     {
-        int c;
         long thisDepartment = this.getSelectedDepartmentTask().getEpochEndDate();
         long givenDate = o.getSelectedDepartmentTask().getEpochEndDate();
 

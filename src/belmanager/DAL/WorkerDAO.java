@@ -119,6 +119,8 @@ public class WorkerDAO
                 Worker wk = new Worker(initials, name, salaryNumber);
                 allWorkers.add(wk);
             }
+            st.close();
+            rs.close();
         }
         
         if(allWorkers.isEmpty())

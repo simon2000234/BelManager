@@ -5,13 +5,9 @@ package belmanager.DAL;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -89,7 +85,9 @@ public class DataTransfer
             String customerName = (String) customer.get("Name");
             
             JSONObject delivery = (JSONObject) order.get("Delivery");
-            String deliveryTime = (String) delivery.get("DeliveryTime");
+            String stringDeliveryTime = (String) delivery.get("DeliveryTime");
+            String sringDate = stringDeliveryTime.substring(6, 19);
+            long deliveryTime = Long.parseLong(sringDate);
             
             JSONObject realOrder = (JSONObject) order.get("Order");
             String orderNumber = (String) realOrder.get("OrderNumber");
@@ -122,9 +120,13 @@ public class DataTransfer
             JSONObject department = (JSONObject) task.get("Department");
             String departmentName = (String) department.get("Name");
             
-            String endDate = (String) task.get("EndDate");
+            String stringEndDate = (String) task.get("EndDate");
+            String endDateSubstring = stringEndDate.substring(6, 19);
+            long endDate = Long.parseLong(endDateSubstring);
             
-            String startDate = (String) task.get("StartDate");
+            String stringStartDate = (String) task.get("StartDate");
+            String startDateSubstring = stringStartDate.substring(6, 19);
+            long startDate = Long.parseLong(startDateSubstring);
             
             boolean finishedOrder = (boolean) task.get("FinishedOrder");
             

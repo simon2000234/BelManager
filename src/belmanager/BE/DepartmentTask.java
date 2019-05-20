@@ -15,16 +15,16 @@ import java.util.TimeZone;
  *
  * @author Melchertsen
  */
-public class DepartmentTask implements Comparable<String>
+public class DepartmentTask implements Comparable<Long>
 {
 
     private String departmentName;
-    private String endDate;
-    private String startDate;
+    private long endDate;
+    private long startDate;
     private boolean finishedOrder;
     private int taskID;
 
-    public DepartmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, int taskID)
+    public DepartmentTask(String departmentName, long endDate, long startDate, boolean finishedOrder, int taskID)
     {
         this.departmentName = departmentName;
         this.endDate = endDate;
@@ -33,17 +33,17 @@ public class DepartmentTask implements Comparable<String>
         this.taskID = taskID;
     }
 
-    private String convertDate(String dateToConvert)
+    private String convertDate(long dateToConvert)
     {
-        String sringDate = dateToConvert.substring(6, 19);
-        long dateEpoch = Long.parseLong(sringDate);
+
+        long dateEpoch = dateToConvert;
         Date date = new Date(dateEpoch);
-        DateFormat format = new SimpleDateFormat("ww:u");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy (ww:u)");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         String formatted = format.format(date);
         return formatted;
     }
-    
+
     public int getTaskID()
     {
         return taskID;
@@ -63,24 +63,20 @@ public class DepartmentTask implements Comparable<String>
     {
         return convertDate(endDate);
     }
-    
+
     public long getEpochEndDate()
     {
-        String sringDate = endDate.substring(6, 19);
-        long dateEpoch = Long.parseLong(sringDate);
-        return dateEpoch;
+        return endDate;
     }
 
     public String getStartDate()
     {
         return convertDate(startDate);
     }
-    
+
     public long getEpochStartDate()
     {
-        String sringDate = startDate.substring(6, 19);
-        long dateEpoch = Long.parseLong(sringDate);
-        return dateEpoch;
+        return startDate;
     }
 
     public boolean isFinishedOrder()
@@ -100,26 +96,21 @@ public class DepartmentTask implements Comparable<String>
     }
 
     @Override
-    public int compareTo(String o)
+    public int compareTo(Long o)
     {
-        int c;
-        String[] thisDepartment = this.startDate.split("/");
-        String[] givenDate = o.split("/");
+        long thisDepartment = getEpochStartDate();
+        long givenDate = o;
 
-        c = thisDepartment[2].compareTo(givenDate[2]);
-        if (c >= 0)
+        if (thisDepartment < givenDate)
         {
-            c = thisDepartment[1].compareTo(givenDate[1]);
+            return -1;
         }
-        if (c >= 0)
+        if (thisDepartment > givenDate)
         {
-            c = thisDepartment[0].compareTo(givenDate[0]);
+            return 1;
         }
-        if (c >= 0)
-        {
-            return c;
-        }
-        return -1;
+        return 0;
+
     }
 
     @Override
@@ -159,7 +150,5 @@ public class DepartmentTask implements Comparable<String>
         }
         return true;
     }
-    
-    
 
 }

@@ -38,7 +38,7 @@ public class DepartmentTaskDAO
     create a DepartTask to the database
     
     */
-    protected void createDeparmentTask(String departmentName, String endDate, String startDate, boolean finishedOrder, String orderID) throws SQLException
+    protected void createDeparmentTask(String departmentName, long endDate, long startDate, boolean finishedOrder, String orderID) throws SQLException
     {   
         String SQL = "INSERT INTO DepartmentTask(departmentName, endDate, startDate, finishedOrder, orderID)"
                 + "VALUES(?,?,?,?,?);";
@@ -46,8 +46,8 @@ public class DepartmentTaskDAO
         {
             PreparedStatement st = con.prepareCall(SQL);
             st.setString(1, departmentName);
-            st.setString(2, endDate);
-            st.setString(3, startDate);
+            st.setLong(2, endDate);
+            st.setLong(3, startDate);
             st.setBoolean(4, finishedOrder);
             st.setString(5, orderID);
             st.executeUpdate();
@@ -59,7 +59,7 @@ public class DepartmentTaskDAO
     creat a order on to the database
     
     */
-    protected void createOrder(String orderNumber, String customerName, String deliveryTime) throws SQLException
+    protected void createOrder(String orderNumber, String customerName, long deliveryTime) throws SQLException
     {
         String SQL = "INSERT INTO [Order](orderNumber, customerName, deliveryTime) VALUES(?,?,?);";
 
@@ -68,7 +68,7 @@ public class DepartmentTaskDAO
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, orderNumber);
             st.setString(2, customerName);
-            st.setString(3, deliveryTime);
+            st.setLong(3, deliveryTime);
             st.executeUpdate();
             st.close();
         }
@@ -93,10 +93,12 @@ public class DepartmentTaskDAO
             while (rs.next())
             {
                 String customerName = rs.getString("customerName");
-                String deliveryTime = rs.getString("deliveryTime");
+                long deliveryTime = rs.getLong("deliveryTime");
                 order = new Order(orderNumber, customerName, deliveryTime,
                         getAllDepartmentTasks(orderNumber));
             }
+            st.close();
+            rs.close();
         }
         return order;
     }
@@ -121,7 +123,7 @@ public class DepartmentTaskDAO
             {
                 String orderNumber = rs.getString("orderNumber");
                 String customerName = rs.getString("customerName");
-                String deliveryTime = rs.getString("deliveryTime");
+                long deliveryTime = rs.getLong("deliveryTime");
 
                 Order order = new Order(orderNumber, customerName, deliveryTime,
                         getAllDepartmentTasks(orderNumber));
@@ -151,8 +153,8 @@ public class DepartmentTaskDAO
             while (rs.next())
             {
                 String departmentName = rs.getString("departmentName");
-                String endDate = rs.getString("endDate");
-                String startDate = rs.getString("startDate");
+                long endDate = rs.getLong("endDate");
+                long startDate = rs.getLong("startDate");
                 boolean finishedOrder = rs.getBoolean("finishedOrder");
                 int taskID = rs.getInt("taskID");
 
@@ -183,8 +185,8 @@ public class DepartmentTaskDAO
             while (rs.next())
             {
                 String departmentName = rs.getString("departmentName");
-                String endDate = rs.getString("endDate");
-                String startDate = rs.getString("startDate");
+                long endDate = rs.getLong("endDate");
+                long startDate = rs.getLong("startDate");
                 boolean finishedOrder = rs.getBoolean("finishedOrder");
                 int taskID = rs.getInt("taskID");
 
@@ -222,7 +224,7 @@ public class DepartmentTaskDAO
      * @param orderID
      * @throws SQLException 
      */
-     protected void DeleteOrder (int orderID) throws SQLException
+     protected void deleteOrder (int orderID) throws SQLException
     {
         String SQL = "delete * from [Order] where orderNumber= ? ";
        
@@ -232,7 +234,7 @@ public class DepartmentTaskDAO
             PreparedStatement st = con.prepareCall(SQL);
             st.setInt(1, orderID);
             st.executeUpdate();
-                     
+            st.close();
         }
         
     }

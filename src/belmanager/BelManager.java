@@ -7,10 +7,6 @@ package belmanager;
 
 import belmanager.GUI.BelModel;
 import belmanager.GUI.MultiOrderViewController;
-import belmanager.GUI.OrderOverviewPageController;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -53,6 +49,7 @@ public class BelManager extends Application
 
             stage.setTitle(model.readFromFile());
             stage.setScene(new Scene(root, 1000, 750));
+            stage.setMaximized(true);
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {

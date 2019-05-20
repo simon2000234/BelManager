@@ -28,7 +28,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -437,7 +436,7 @@ public class MultiOrderViewController implements Initializable
             }
         } catch (SQLException ex)
         {
-            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
         vboxOne.getChildren().addAll(boxOneList);
         vboxTwo.getChildren().addAll(boxTwoList);
@@ -463,7 +462,7 @@ public class MultiOrderViewController implements Initializable
             infoUpdater.submit(infoTask);
         } catch (SQLException ex)
         {
-            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

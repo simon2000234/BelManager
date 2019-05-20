@@ -44,7 +44,7 @@ public class BelModel
 
     public List<Order> getAllOrders() throws SQLException
     {
-        return bmm.getAllOrders();
+        return bmm.getAllOrders(currentDepartment);
     }
 
     public Order getOrder(String orderNumber) throws SQLException

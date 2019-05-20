@@ -84,55 +84,6 @@ public class MultiOrderViewController implements Initializable
         {
             Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-//        vboxOne = new VBox();
-//        vboxTwo = new VBox();
-//
-//        mainScrollPane.setFitToHeight(true);
-//        mainScrollPane.setFitToWidth(true);
-//
-//        bm.setCurrentDepartment("Bælg");
-//        // Creates TitledPanes each containing the details of 1 order
-//        try
-//        {
-//            int col = 0;
-//            bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
-//            for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
-//            {
-//                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 0)
-//                {
-//                    TitledPane temp = createTitledPane(order);
-//                    if (col > 5)
-//                    {
-//                        temp.setExpanded(false);
-//                    }
-//                    boxOneList.add(temp);
-//                    col++;
-//                } else if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 1)
-//                {
-//                    TitledPane temp = createTitledPane(order);
-//                    if (col > 5)
-//                    {
-//                        temp.setExpanded(false);
-//                    }
-//                    boxTwoList.add(temp);
-//                    col++;
-//                }
-//            }
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        vboxOne.getChildren().addAll(boxOneList);
-//        vboxTwo.getChildren().addAll(boxTwoList);
-//        vboxOne.setMinWidth(450.00);
-//        vboxTwo.setMinWidth(450.00);
-//        vboxOne.setFillWidth(true);
-//        vboxTwo.setFillWidth(true);
-//        HBox.setHgrow(vboxOne, Priority.ALWAYS);
-//        HBox.setHgrow(vboxTwo, Priority.ALWAYS);
-//        mainHBox.setFillHeight(true);
-//        mainHBox.getChildren().addAll(vboxOne, vboxTwo);
     }
 
     public TitledPane createTitledPane(Order order)
@@ -247,7 +198,7 @@ public class MultiOrderViewController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
-        updateList.add(new UpdatableInformation(departmentStatus, order));
+        updateList.add(new UpdatableInformation(departmentStatus, order, estimated));
 
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
@@ -405,7 +356,6 @@ public class MultiOrderViewController implements Initializable
         mainScrollPane.setFitToHeight(true);
         mainScrollPane.setFitToWidth(true);
 
-        bm.setCurrentDepartment("Bælg");
         // Creates TitledPanes each containing the details of 1 order
         try
         {
@@ -456,7 +406,7 @@ public class MultiOrderViewController implements Initializable
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
 
-            infoTask = new UpdateInfo(updateList);
+            infoTask = new UpdateInfo(updateList, bm);
 
             infoUpdater = Executors.newSingleThreadExecutor();
             infoUpdater.submit(infoTask);

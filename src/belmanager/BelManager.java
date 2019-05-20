@@ -5,6 +5,7 @@
  */
 package belmanager;
 
+
 import belmanager.GUI.BelModel;
 import belmanager.GUI.MultiOrderViewController;
 import javafx.application.Application;
@@ -71,6 +72,8 @@ public class BelManager extends Application
      */
     public static void main(String[] args)
     {
+       
+        
         launch(args);
     }
 

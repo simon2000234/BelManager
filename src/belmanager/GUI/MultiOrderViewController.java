@@ -96,18 +96,16 @@ public class MultiOrderViewController implements Initializable
         AnchorPane tempAnch = new AnchorPane();
 
         // Creates the title of each TitlePane based on the Order's variables
-        String titleString = "Order: " + order.getOrderNumber();
-//        + " " + "\t\t\t\t\t\t"
-//                + " Start Date: " + order.getDepartment(bm.getCurrentDepartment()).getStartDate() + "\t\t"
-//                + "End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate();
+        String titleString = "Order: " + order.getOrderNumber()
+        + " " + "\t\t" + "End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate();
         TitledPane temp = new TitledPane(titleString, tempAnch);
-        temp.setOnMouseClicked((MouseEvent event) ->
-        {
-            TitledPane tempPane = (TitledPane) event.getSource();
-            String[] thisTpane = tempPane.getText().split(" ");
-            String theOrderNumber = thisTpane[1];
-            bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
-        });
+//        temp.setOnMouseClicked((MouseEvent event) ->
+//        {
+//            TitledPane tempPane = (TitledPane) event.getSource();
+//            String[] thisTpane = tempPane.getText().split(" ");
+//            String theOrderNumber = thisTpane[1];
+//            bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
+//        });
 
         //Creates labels for all the Order's variables and required information
         List<Label> labels = new ArrayList<>();
@@ -138,9 +136,9 @@ public class MultiOrderViewController implements Initializable
 
             try
             {
-                bm.updateTaskIsFinished(bm.getSelectedOrder().getCurrentDepartment().getTaskID());
                 Label tempLabel = (Label) tempAnch.getChildren().get(0);
                 String[] tempOrderNumber = tempLabel.getText().split(" ");
+                bm.updateTaskIsFinished(bm.getShownOrders().get(tempOrderNumber[2]).getSelectedDepartmentTask().getTaskID());
                 removeTPane(tempOrderNumber[2]);
             } catch (SQLException ex)
             {
@@ -199,6 +197,7 @@ public class MultiOrderViewController implements Initializable
             }
         }
         updateList.add(new UpdatableInformation(departmentStatus, order, estimated));
+        bm.getShownOrders().put(order.getOrderNumber(), order);
 
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
         fixLabels(labelsRightSide, X * 3, Y, true);
@@ -361,7 +360,6 @@ public class MultiOrderViewController implements Initializable
         {
             workerList = bm.getAllWorkers();
             int col = 0;
-            bm.setShownOrders(bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment())));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {
                 if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 0)

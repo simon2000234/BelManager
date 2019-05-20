@@ -52,7 +52,6 @@ public class UpdateInfo implements Runnable
 
                 Platform.runLater(() ->
                 {
-                    dumbTest = dumbTest + 0.05;
                     for (UpdatableInformation updatableInformation : info)
                     {
                         for (int i = 0; i < orders.size(); i++)
@@ -84,7 +83,7 @@ public class UpdateInfo implements Runnable
                                         progressTime = endTime;
                                     } else
                                     {
-                                        progressTime = (double) tasks.get(i).getEpochEndDate() - Instant.now().toEpochMilli();
+                                        progressTime = (double) Instant.now().toEpochMilli() - tasks.get(i).getEpochStartDate();
                                     }
                                     progress = progressTime / endTime;
                                     updatableInformation.getEstimatedBar().setProgress(progress);

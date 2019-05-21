@@ -6,11 +6,11 @@
 package belmanager.DAL;
 
 import java.io.BufferedReader;
-import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 
 /**
@@ -19,57 +19,46 @@ import java.util.ArrayList;
  */
 public class CSV_Reader
 {
-  public static final String CSV_File_Location= "result.csv";
+
+    private String csvFile = "result.csv";
+    private BufferedReader br = null;
+    private String line = "";
+    private String cvsSplitBy = ",";
+    private ArrayList<String> resultFromCsvFile = new ArrayList<>();
+
+    protected ArrayList<String> readFormCSVFile(){
     
-     public void fileInit() throws IOException
-    {
-        File f = new File(CSV_File_Location);
-        f.createNewFile();
-    }
-     
-     
-     
-         // Read From File Utility
-    public String readFromFile() throws IOException
-    {
-        fileInit();
-
-        File file = new File(CSV_File_Location);
-        String line = null;
-        if (!file.exists())
-        {
-            System.out.println("File doesn't exist");
-        }
-
-        InputStreamReader isReader;
         try
         {
-
-            // FileReader reads text files in the default encoding.
-            FileReader fileReader
-                    = new FileReader(CSV_File_Location);
-
-            // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader
-                    = new BufferedReader(fileReader);
-
-           
-            while ((line = bufferedReader.readLine()) != null)
+            // laver en bufferedReader med den file vi skal read
+            br = new BufferedReader(new FileReader(csvFile));
+            // Læser alle liner i file
+            while ((line = br.readLine()) != null)
             {
-                bufferedReader.close();
-                return line;
+
+                // bruger komma som separator 
+                // 
+                String[] worker = line.split(cvsSplitBy);
+                
+                // løber vores workers array igemmen
+                for (String workers : worker)
+                {
+                    // tilføjer alle resulter til vores arrayList 
+                    resultFromCsvFile.add(workers);
+                    
+                }
+
             }
-
-            // Always close files.
-            bufferedReader.close();
-        }
-        catch (FileNotFoundException ex)
+            
+            // håntere fejl hvis der er nogle
+        } catch (FileNotFoundException e)
         {
-            System.out.println(
-                    "Unable to open file '"
-                    + CSV_File_Location + "'");
+            e.printStackTrace();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
         }
-        return line;
-
+        // retuner vores ArrayList med alle resulter i
+        return resultFromCsvFile;
     }
 }

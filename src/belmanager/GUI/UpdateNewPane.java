@@ -67,12 +67,13 @@ public class UpdateNewPane implements Runnable
                                     && task.getEpochStartDate() <= Instant.now().toEpochMilli() + fiveSecInMili)
                             {
                                 TitledPane temp = oopc.createTitledPane(order);
-                                if (vboxOne.getChildren().size() < vboxTwo.getChildren().size())
+                                int indexInVBox = Orderlist.indexOf(order)/2;
+                                if (Orderlist.indexOf(order) % 2 < 1)
                                 {
-                                    vboxOne.getChildren().add(temp);
+                                    vboxOne.getChildren().add(indexInVBox, temp);
                                 } else
                                 {
-                                    vboxTwo.getChildren().add(temp);
+                                    vboxTwo.getChildren().add(indexInVBox, temp);
                                 }
 
                             }

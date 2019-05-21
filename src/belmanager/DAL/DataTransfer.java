@@ -21,9 +21,14 @@ public class DataTransfer
 {
 
     /**
+
      * This methord takes a JSON file given to us by Belman, converts it and
      * sendt it to our database
      *
+
+     * This methord takes a JSON file made by Belman, converts it 
+     * and sendt it to our database
+
      * @param fileLocation the location of the file
      * @throws IOException
      * @throws ParseException

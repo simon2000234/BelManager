@@ -10,7 +10,9 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 
 /**
- * we use this to log into the database server where we can add/delete from and more
+ * we use this to log into the database server where we can add/delete from and
+ * more
+ *
  * @author andre
  */
 public class DBConnectionProvider

@@ -16,12 +16,12 @@ import java.util.ArrayList;
 /**
  *
  * @author Melchertsen
- * 
- * 
- * en departmentTask er at de forskellig afdellinger skal lavet noget på den samme order 
- * f.esk: bælg->male->montage2
- * bælg ville være en departmentTask osv..
-
+ *
+ *
+ * en departmentTask er at de forskellig afdellinger skal lavet noget på den
+ * samme order f.esk: bælg->male->montage2 bælg ville være en departmentTask
+ * osv..
+ *
  */
 public class DepartmentTaskDAO
 {
@@ -37,9 +37,9 @@ public class DepartmentTaskDAO
     
     create a DepartTask to the database
     
-    */
+     */
     protected void createDeparmentTask(String departmentName, long endDate, long startDate, boolean finishedOrder, String orderID) throws SQLException
-    {   
+    {
         String SQL = "INSERT INTO DepartmentTask(departmentName, endDate, startDate, finishedOrder, orderID)"
                 + "VALUES(?,?,?,?,?);";
         try (Connection con = DB.getConnection())
@@ -58,7 +58,7 @@ public class DepartmentTaskDAO
     /*
     creat a order on to the database
     
-    */
+     */
     protected void createOrder(String orderNumber, String customerName, long deliveryTime) throws SQLException
     {
         String SQL = "INSERT INTO [Order](orderNumber, customerName, deliveryTime) VALUES(?,?,?);";
@@ -73,14 +73,15 @@ public class DepartmentTaskDAO
             st.close();
         }
     }
-/**
- * select en bestemt order med et bestemt orderNumber 
- * det bestemmet ordernumber er  @param orderNumber
- * 
- * @param orderNumber
- * @return Order
- * @throws SQLException 
- */
+
+    /**
+     * select en bestemt order med et bestemt orderNumber det bestemmet
+     * ordernumber er @param orderNumber
+     *
+     * @param orderNumber
+     * @return Order
+     * @throws SQLException
+     */
     protected Order getOrder(String orderNumber) throws SQLException
     {
         String SQL = "SELECT * FROM [Order] WHERE orderNumber = ?";
@@ -103,12 +104,11 @@ public class DepartmentTaskDAO
         return order;
     }
 
-    
     /**
      * returner alle orders
-     * 
-     * @return ArrayList<Order> 
-     * @throws SQLException 
+     *
+     * @return ArrayList<Order>
+     * @throws SQLException
      */
     protected ArrayList<Order> getAllOrders() throws SQLException
     {
@@ -135,10 +135,11 @@ public class DepartmentTaskDAO
     }
 
     /**
-     *  returner alle departmentTask
+     * returner alle departmentTask
+     *
      * @param orderNumber
      * @return ArrayList<DepartmentTask>
-     * @throws SQLException 
+     * @throws SQLException
      */
     protected ArrayList<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
@@ -169,9 +170,9 @@ public class DepartmentTaskDAO
 
     /**
      * henter alle departmentTask fra DataBasen
-     * 
-     * @return ArrayList<DepartmentTask> 
-     * @throws SQLException 
+     *
+     * @return ArrayList<DepartmentTask>
+     * @throws SQLException
      */
     protected ArrayList<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
@@ -198,18 +199,18 @@ public class DepartmentTaskDAO
         }
         return allTasks;
     }
-    
-    
+
     /**
      * update en task til at være færdig i databasen
+     *
      * @param taskID
-     * @throws SQLException 
+     * @throws SQLException
      */
     protected void updateTaskIsFinished(int taskID) throws SQLException
     {
         String SQL = "UPDATE DepartmentTask SET finishedOrder = ? WHERE taskID = ?;";
-        
-        try(Connection con = DB.getConnection())
+
+        try (Connection con = DB.getConnection())
         {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setBoolean(1, true);
@@ -218,16 +219,16 @@ public class DepartmentTaskDAO
             st.close();
         }
     }
-    
+
     /**
      * sletter en order med det givet @parameter orderID
+     *
      * @param orderID
-     * @throws SQLException 
+     * @throws SQLException
      */
-     protected void deleteOrder (int orderID) throws SQLException
+    protected void deleteOrder(int orderID) throws SQLException
     {
         String SQL = "delete * from [Order] where orderNumber= ? ";
-       
 
         try (Connection con = DB.getConnection())
         {
@@ -236,6 +237,6 @@ public class DepartmentTaskDAO
             st.executeUpdate();
             st.close();
         }
-        
+
     }
 }

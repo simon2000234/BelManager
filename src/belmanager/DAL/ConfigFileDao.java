@@ -46,8 +46,7 @@ public class ConfigFileDao
                     directory.mkdirs();
                 }
                 file.createNewFile();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
 
             }
@@ -64,8 +63,7 @@ public class ConfigFileDao
             bufferWriter.write(myData);
             bufferWriter.close();
             writer.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
 
         }
@@ -103,8 +101,7 @@ public class ConfigFileDao
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch (FileNotFoundException ex)
+        } catch (FileNotFoundException ex)
         {
             System.out.println(
                     "Unable to open file '"

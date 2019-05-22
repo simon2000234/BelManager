@@ -131,6 +131,11 @@ public class BelModel
         bmm.moveJsonToDB(fileLocation);
     }
 
+    /**
+     * Updates the given task to being completed
+     * @param taskID
+     * @throws SQLException 
+     */
     public void updateTaskIsFinished(int taskID) throws SQLException
     {
         shownOrders.remove(selectedOrder.getOrderNumber());
@@ -139,16 +144,31 @@ public class BelModel
 
     }
 
+    /**
+     * 
+     * @return a HashMap containing the currently shown orders 
+     */
     public HashMap<String, Order> getShownOrders()
     {
         return shownOrders;
     }
 
+    /**
+     * Sets the HashMap of the orders to the parameter.
+     * @param ShownOrders 
+     */
     public void setShownOrders(HashMap<String, Order> ShownOrders)
     {
         this.shownOrders = ShownOrders;
     }
 
+    /**
+     * Creates a HashMap containing a string(the order number) as the key, and
+     * the corresponding order as the value.
+     * 
+     * @param orderlist
+     * @return a HashMap for easy access to all orders
+     */
     public HashMap<String, Order> createTheHashmap(List<Order> orderlist)
     {
         HashMap<String, Order> temp = new HashMap();

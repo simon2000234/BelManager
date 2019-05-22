@@ -86,6 +86,7 @@ public class UpdateInfo implements Runnable
                                     }
                                     progress = progressTime / endTime;
                                     updatableInformation.getEstimatedBar().setProgress(progress);
+                                    updatableInformation.getProgressLabel().setText(String.format("%.2f", progress*100) + " %");
                                 }
                                 Paint color = circles.get(i).getFill();
                                 if (tasks.get(i).isFinishedOrder() == true)

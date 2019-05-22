@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author andre
+ * @author Andreas
  */
 public class CSV_Reader
 {
@@ -26,31 +26,29 @@ public class CSV_Reader
     private String cvsSplitBy = ",";
     private ArrayList<String> resultFromCsvFile = new ArrayList<>();
 
-    protected ArrayList<String> readFormCSVFile(){
-    
+    public ArrayList<String> readFormCSVFile()
+    {
+
         try
         {
-            // laver en bufferedReader med den file vi skal read
+            // we are making a bufferedReader with the file 
             br = new BufferedReader(new FileReader(csvFile));
-            // Læser alle liner i file
+            // reading all lines from the file
             while ((line = br.readLine()) != null)
             {
 
-                // bruger komma som separator 
-                // 
-                String[] worker = line.split(cvsSplitBy);
-                
-                // løber vores workers array igemmen
-                for (String workers : worker)
-                {
-                    // tilføjer alle resulter til vores arrayList 
-                    resultFromCsvFile.add(workers);
-                    
-                }
+                    // use comma as separator 
+                    String[] worker = line.split(cvsSplitBy);
 
+                    // løber vores workers array igemmen
+                    for (String workers : worker)
+                    {
+                        // add all result to your arrayList 
+                        resultFromCsvFile.add(workers);
+                    }
+                
             }
-            
-            // håntere fejl hvis der er nogle
+            // handler error if they occurs
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
@@ -58,7 +56,7 @@ public class CSV_Reader
         {
             e.printStackTrace();
         }
-        // retuner vores ArrayList med alle resulter i
+        // retuner you'r ArrayList with all result in
         return resultFromCsvFile;
     }
 }

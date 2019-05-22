@@ -27,7 +27,11 @@ public class WorkerDAO
     }
 
     /**
+
+     * opretter en worker
+
      * Creates a worker
+
      *
      * @param initials
      * @param name
@@ -49,8 +53,11 @@ public class WorkerDAO
     }
 
     /**
-     * Gets a worker from the database
+     * henter en worker fra databasen
      *
+     * @param salaryNumber
+     * @return
+     * Gets a worker from the database
      * @param salaryNumber
      * @return the wokrer who matches the salary number
      * @throws SQLException
@@ -83,8 +90,8 @@ public class WorkerDAO
     }
 
     /**
+     * sletter en worker fra databasen
      * Deletes a worker from the database
-     *
      * @param salaryNumber
      * @throws SQLException
      */
@@ -102,8 +109,9 @@ public class WorkerDAO
     }
 
     /**
+     * henter alle worker fra db
+     * @return
      * Gets all the workers from the database
-     *
      * @return an arrayList of all the wokrers in the database
      * @throws SQLException
      */

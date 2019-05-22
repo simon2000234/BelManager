@@ -40,7 +40,7 @@ public class CSV_Reader
                     // use comma as separator 
                     String[] worker = line.split(cvsSplitBy);
 
-                    // løber vores workers array igemmen
+                    // runing  through worker array'et
                     for (String workers : worker)
                     {
                         // add all result to your arrayList 

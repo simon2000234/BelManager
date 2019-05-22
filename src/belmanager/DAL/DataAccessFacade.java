@@ -27,14 +27,12 @@ public class DataAccessFacade
     ConfigFileDao cfdao = new ConfigFileDao();
     LogDAO ldao = new LogDAO();
 
-
     /**
      * Get all order in the database
      *
      * @return an arrayList of all orders in the database
      * @throws SQLException
      */
-
     public List<Order> getAllOrders() throws SQLException
     {
         return dtdao.getAllOrders();
@@ -47,12 +45,10 @@ public class DataAccessFacade
      * @return the order that matches with the ordernumber
      * @throws SQLException
      */
-
     public Order getOrder(String orderNumber) throws SQLException
     {
         return dtdao.getOrder(orderNumber);
     }
-
 
     /**
      * Deletes an order in the database
@@ -60,13 +56,11 @@ public class DataAccessFacade
      * @param orderID
      * @throws SQLException
      */
-
-    public void deleteOrder(int OrderID) throws SQLException
+    public void deleteOrder(int orderID) throws SQLException
     {
-        dtdao.deleteOrder(OrderID);
+        dtdao.deleteOrder(orderID);
 
     }
-
 
     /**
      * Gets all depmartment tasks in the database that match with a specific
@@ -78,12 +72,10 @@ public class DataAccessFacade
      * order
      * @throws SQLException
      */
-
     public List<DepartmentTask> getAllDepartmentTasks(String orderNumber) throws SQLException
     {
         return dtdao.getAllDepartmentTasks(orderNumber);
     }
-
 
     /**
      * Gets all deparment tasks in the database
@@ -91,12 +83,10 @@ public class DataAccessFacade
      * @return an arrayList of all department task in the database
      * @throws SQLException
      */
-
     public List<DepartmentTask> getAllDepartmentTasks() throws SQLException
     {
         return dtdao.getAllDepartmentTasks();
     }
-
 
     /**
      * Gets a worker from the database
@@ -105,12 +95,10 @@ public class DataAccessFacade
      * @return the wokrer who matches the salary number
      * @throws SQLException
      */
-
     public Worker getWorker(int salaryNumber) throws SQLException
     {
         return wdao.getWorker(salaryNumber);
     }
-
 
     /**
      * Deletes a worker from the database
@@ -123,19 +111,16 @@ public class DataAccessFacade
         wdao.deleteWorker(salaryNumber);
     }
 
-
     /**
      * Gets all the workers from the database
      *
      * @return an arrayList of all the wokrers in the database
      * @throws SQLException
      */
-
     public ArrayList<Worker> getAllWorkers() throws SQLException
     {
         return wdao.getAllWorkers();
     }
-
 
     /**
      * This methord takes a JSON file made by Belman, converts it and sendt it
@@ -145,12 +130,10 @@ public class DataAccessFacade
      * @throws IOException
      * @throws ParseException
      */
-
     public void moveJsonToDB(String fileLocation) throws IOException, ParseException
     {
         dt.moveJsonToDB(fileLocation);
     }
-
 
     /**
      * Sets an deparment task to be fininshed by changeing its boolean value in
@@ -159,7 +142,6 @@ public class DataAccessFacade
      * @param taskID
      * @throws SQLException
      */
-
     public void updateTaskIsFinished(int taskID) throws SQLException
     {
         dtdao.updateTaskIsFinished(taskID);
@@ -174,9 +156,10 @@ public class DataAccessFacade
     {
         return cfdao.readFromFile();
     }
-    
+
     /**
      * Creates a log the the time a task was completed
+     *
      * @param compleTimeEpocMilli the time of completion in epoc milli
      * @param deparment the department the task belonged to
      * @param orderNumber the order the task was a part of
@@ -186,9 +169,10 @@ public class DataAccessFacade
     {
         ldao.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
-    
+
     /**
      * Creates a log for the time a deparment login to the program
+     *
      * @param loginTimeEpocMilli the time of completion in epoc milli
      * @param depLogin the department that login
      * @throws SQLException

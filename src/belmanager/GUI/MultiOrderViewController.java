@@ -12,6 +12,8 @@ import belmanager.BE.Worker;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +51,7 @@ import javafx.scene.shape.Circle;
  */
 public class MultiOrderViewController implements Initializable
 {
-
+    
     @FXML
     private ScrollPane mainScrollPane;
     private List<Worker> workerList;
@@ -72,7 +74,6 @@ public class MultiOrderViewController implements Initializable
     private ImageView imgView;
     @FXML
     private AnchorPane mainPane;
-   
 
     /**
      * Initializes the controller class.
@@ -83,6 +84,7 @@ public class MultiOrderViewController implements Initializable
         initialHeight = mainScrollPane.getHeight();
         initialWidth = mainScrollPane.getWidth();
         updateList = new ArrayList<>();
+
         try
         {
             bm = new BelModel();
@@ -91,30 +93,24 @@ public class MultiOrderViewController implements Initializable
             Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Image bellLogo = new Image("belman_logo.png");
+
         imgView.setImage(bellLogo);
         
     }
-
+    
     public TitledPane createTitledPane(Order order)
     {
         double X = 15.00;
         double Y = 20.00;
-
+        
         List<DepartmentTask> tempDTlist;
         tempDTlist = order.getDepartmentTasks();
         AnchorPane tempAnch = new AnchorPane();
 
-        // Creates the title of each TitlePane based on the Order's variables
+        // Creates a TitledPane using the order number and end date, as the title.
         String titleString = "Order: " + order.getOrderNumber()
-        + " " + "\t\t" + "End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate();
+                + " " + "\t\t" + "End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate();
         TitledPane temp = new TitledPane(titleString, tempAnch);
-//        temp.setOnMouseClicked((MouseEvent event) ->
-//        {
-//            TitledPane tempPane = (TitledPane) event.getSource();
-//            String[] thisTpane = tempPane.getText().split(" ");
-//            String theOrderNumber = thisTpane[1];
-//            bm.setSelectedOrder(bm.getShownOrders().get(theOrderNumber));
-//        });
 
         //Creates labels for all the Order's variables and required information
         List<Label> labels = new ArrayList<>();
@@ -131,6 +127,7 @@ public class MultiOrderViewController implements Initializable
         Label EndDateLBL = new Label("End Date: " + order.getDepartment(bm.getCurrentDepartment()).getEndDate());
         labels.add(EndDateLBL);
 
+        //Adds a label for workers to be shown on the order.
         Random r = new Random();
         Label WorkerLBL = new Label("Worker: " + workerList.get(r.nextInt(workerList.size() - 1)).getName());
         labels.add(WorkerLBL);
@@ -142,27 +139,31 @@ public class MultiOrderViewController implements Initializable
         AnchorPane.setLeftAnchor(btnFinishOrder, X);
         btnFinishOrder.setOnAction((ActionEvent event) ->
         {
-
             try
             {
                 Label tempLabel = (Label) tempAnch.getChildren().get(0);
                 String[] tempOrderNumber = tempLabel.getText().split(" ");
                 bm.updateTaskIsFinished(bm.getShownOrders().get(tempOrderNumber[2]).getSelectedDepartmentTask().getTaskID());
                 removeTPane(tempOrderNumber[2]);
+                
+                DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime timeNow = LocalDateTime.now();
             } catch (SQLException ex)
             {
                 System.out.println("Something went wrong at the complete button,"
                         + " are you connected to the internet?");
             }
-
         });
 
-        //Creates ProgressBar's in order to show realized vs planned progress.
-        ProgressBar estimated = new ProgressBar(0.65F);
+        //Creates a ProgressBar to show the estimated progress of an order
+        ProgressBar estimated = new ProgressBar(0.00);
         AnchorPane.setTopAnchor(estimated, Y * (labels.size() + 3));
         AnchorPane.setLeftAnchor(estimated, X);
         AnchorPane.setRightAnchor(estimated, X);
         estimated.setPrefSize((initialWidth / 4), 25.00);
+        Label progressLabel = new Label();
+        AnchorPane.setTopAnchor(progressLabel, Y * (labels.size() + 2));
+        AnchorPane.setRightAnchor(progressLabel, X * 2);
 
         //Creates a label for each department an order has to go through
         //Creates a corresponding circle with a color RED/YELLOW/GREEN showing
@@ -206,7 +207,7 @@ public class MultiOrderViewController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
-        updateList.add(new UpdatableInformation(departmentStatus, order, estimated));
+        updateList.add(new UpdatableInformation(departmentStatus, order, estimated, progressLabel));
         bm.getShownOrders().put(order.getOrderNumber(), order);
 
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
@@ -224,7 +225,6 @@ public class MultiOrderViewController implements Initializable
                 double heightChanger = heightNew / 100;
                 double fontChanger = (heightNew - initialHeight) / 100;
                 btnFinishOrder.setPrefHeight(btnFinishOrder.getMinHeight() + heightChanger);
-//                imageLogo.setLayoutX((mainScrollPane.getWidth()/2)-(imageLogo.getFitWidth()/2));
                 if ((fontsize + fontChanger) >= fontsize)
                 {
                     btnFinishOrder.styleProperty().bind(Bindings.concat("-fx-font-size: ", Double.toString(fontsize + fontChanger)));
@@ -259,20 +259,20 @@ public class MultiOrderViewController implements Initializable
                         departmentStatu.setRadius(defaultRadius + (fontChanger / 4));
                     }
                     AnchorPane.setTopAnchor(departmentStatu, (defaultAnchor + (fontChanger)));
-
+                    
                 }
-
+                
             }
         });
 
         //adds everything to the pane
         tempAnch.getChildren().addAll(labels);
         tempAnch.getChildren().addAll(labelsRightSide);
-        tempAnch.getChildren().addAll(btnFinishOrder, estimated);
+        tempAnch.getChildren().addAll(btnFinishOrder, estimated, progressLabel);
         tempAnch.getChildren().addAll(departmentStatus);
-
+        
         return temp;
-
+        
     }
 
     /**
@@ -327,7 +327,7 @@ public class MultiOrderViewController implements Initializable
                 break;
             }
         }
-
+        
         for (Node node : vboxTwo.getChildren())
         {
             TitledPane temp = (TitledPane) node;
@@ -337,7 +337,7 @@ public class MultiOrderViewController implements Initializable
                 break;
             }
         }
-
+        
     }
 
     /**
@@ -354,14 +354,14 @@ public class MultiOrderViewController implements Initializable
         String theOrderNumber = thisTpane[1];
         return theOrderNumber;
     }
-
+    
     public void setModel(BelModel model)
     {
         this.bm = model;
-
+        
         vboxOne = new VBox();
         vboxTwo = new VBox();
-
+        
         mainScrollPane.setFitToHeight(true);
         mainScrollPane.setFitToWidth(true);
 
@@ -406,24 +406,23 @@ public class MultiOrderViewController implements Initializable
         HBox.setHgrow(vboxTwo, Priority.ALWAYS);
         mainHBox.setFillHeight(true);
         mainHBox.getChildren().addAll(vboxOne, vboxTwo);
-
+        
         try
         {
             newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
                     vboxOne, vboxTwo, model.getCurrentDepartment(), this);
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
-
+            
             infoTask = new UpdateInfo(updateList, bm);
-
+            
             infoUpdater = Executors.newSingleThreadExecutor();
             infoUpdater.submit(infoTask);
         } catch (SQLException ex)
         {
 //            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
     
 }
-    

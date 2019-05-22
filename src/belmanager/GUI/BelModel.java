@@ -158,4 +158,27 @@ public class BelModel
         }
         return temp;
     }
+    
+    /**
+     * Creates a log for the time a deparment login to the program
+     * @param loginTimeEpocMilli the time of completion in epoc milli
+     * @param depLogin the department that login
+     * @throws SQLException
+     */
+    public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
+    {
+        bmm.createLoginLog(loginTimeEpocMilli, depLogin);
+    }
+    
+    /**
+     * Creates a log the the time a task was completed
+     * @param compleTimeEpocMilli the time of completion in epoc milli
+     * @param deparment the department the task belonged to
+     * @param orderNumber the order the task was a part of
+     * @throws SQLException
+     */
+    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber) throws SQLException
+    {
+        bmm.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
+    }
 }

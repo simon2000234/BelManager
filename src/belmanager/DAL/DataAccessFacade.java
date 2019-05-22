@@ -25,6 +25,7 @@ public class DataAccessFacade
     DepartmentTaskDAO dtdao = new DepartmentTaskDAO();
     DataTransfer dt = new DataTransfer();
     ConfigFileDao cfdao = new ConfigFileDao();
+    LogDAO ldao = new LogDAO();
 
     /**
      * Get all order in the database
@@ -154,5 +155,28 @@ public class DataAccessFacade
     public String readFromFile() throws IOException
     {
         return cfdao.readFromFile();
+    }
+    
+    /**
+     * Creates a log the the time a task was completed
+     * @param compleTimeEpocMilli the time of completion in epoc milli
+     * @param deparment the department the task belonged to
+     * @param orderNumber the order the task was a part of
+     * @throws SQLException
+     */
+    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber) throws SQLException
+    {
+        ldao.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
+    }
+    
+    /**
+     * Creates a log for the time a deparment login to the program
+     * @param loginTimeEpocMilli the time of completion in epoc milli
+     * @param depLogin the department that login
+     * @throws SQLException
+     */
+    public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
+    {
+        ldao.createLoginLog(loginTimeEpocMilli, depLogin);
     }
 }

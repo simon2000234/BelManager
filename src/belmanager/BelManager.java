@@ -5,9 +5,9 @@
  */
 package belmanager;
 
-
 import belmanager.GUI.BelModel;
 import belmanager.GUI.MultiOrderViewController;
+import java.time.Instant;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -41,6 +41,7 @@ public class BelManager extends Application
         else
         {
             model.setCurrentDepartment(model.readFromFile());
+            model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
 
             Parent root;
             FXMLLoader loader = new FXMLLoader();
@@ -57,7 +58,7 @@ public class BelManager extends Application
                 {
                     Platform.exit();
                     System.exit(0);
-                    
+
                 }
             });
             MultiOrderViewController mopController = loader.getController();
@@ -70,7 +71,7 @@ public class BelManager extends Application
      * @param args the command line arguments
      */
     public static void main(String[] args)
-    {       
+    {
         launch(args);
     }
 

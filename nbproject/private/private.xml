@@ -11,19 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/OrderOverviewPageController.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/UpdateNewPane.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/BelModel.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/DAL/DepartmentTaskDAO.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/UpdateInfo.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/BE/Order.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/DepartmentOverviewController.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/BelManager.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/test/belmanager/DAL/WorkerDAOTest.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/GUI/MultiOrderViewController.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/BE/DepartmentTask.java</file>
-            <file>file:/C:/Users/Melchertsen/Documents/GitHub/BelManager/src/belmanager/DAL/DataTransfer.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

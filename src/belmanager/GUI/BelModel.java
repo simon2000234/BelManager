@@ -31,7 +31,6 @@ public class BelModel
 
     public BelModel() throws SQLException
     {
-        //this.currentDepartment = "Bælg"; //Need to get department from a config file on login
         this.currentOrders = new ArrayList<>();
         currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
         this.shownOrders = new HashMap();
@@ -136,10 +135,10 @@ public class BelModel
      * @param taskID
      * @throws SQLException 
      */
-    public void updateTaskIsFinished(int taskID) throws SQLException
+    public void updateTaskIsFinished(int taskID, Order order) throws SQLException
     {
-        shownOrders.remove(selectedOrder.getOrderNumber());
-        currentOrders.remove(selectedOrder);
+        shownOrders.remove(order.getOrderNumber());
+        currentOrders.remove(order);
         bmm.updateTaskIsFinished(taskID);
 
     }

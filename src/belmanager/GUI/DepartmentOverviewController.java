@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import belmanager.BelManager;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -131,17 +132,20 @@ public class DepartmentOverviewController implements Initializable {
 
     private void openDepartments(String departmentName) throws IOException {
 
-        model.setCurrentDepartment(departmentName);
-
-        Parent root;
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
-        root = loader.load();
-        Stage stage = new Stage();
-        stage.setTitle(departmentName);
-        stage.setScene(new Scene(root, 1000, 750));
-        stage.show();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+        try
+        {
+            model.setCurrentDepartment(departmentName);
+            model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
+            
+            Parent root;
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(departmentName);
+            stage.setScene(new Scene(root, 1000, 750));
+            stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {
                 public void handle(WindowEvent we)
                 {
@@ -149,11 +153,16 @@ public class DepartmentOverviewController implements Initializable {
                     System.exit(0);
                 }
             });
-        MultiOrderViewController mopController = loader.getController();
-        mopController.setModel(model);
-
-        Stage current = (Stage) PickAFile.getScene().getWindow();
-        current.close();
+            MultiOrderViewController mopController = loader.getController();
+            mopController.setModel(model);
+            
+            Stage current = (Stage) PickAFile.getScene().getWindow();
+            current.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Something went wrong with SQL, are you connected to the right wifi?");
+        }
 
     }
 

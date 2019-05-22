@@ -93,7 +93,6 @@ public class MultiOrderViewController implements Initializable
             Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Image bellLogo = new Image("belman_logo.png");
-
         imgView.setImage(bellLogo);
         
     }

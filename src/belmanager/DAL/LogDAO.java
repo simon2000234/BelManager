@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
@@ -35,12 +36,12 @@ public class LogDAO
     protected void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
     {
         String SQL = "INSERT INTO LogLogin(loginTime, depLogin) VALUES(?,?);";
-        Date loginTimeInDate = new Date(loginTimeEpocMilli);
+        Timestamp loginTimeInDate = new Timestamp(loginTimeEpocMilli);
         
         try(Connection con = DB.getConnection())
         {
             PreparedStatement st = con.prepareStatement(SQL);
-            st.setDate(1, loginTimeInDate);
+            st.setTimestamp(1, loginTimeInDate);
             st.setString(2, depLogin);
             st.executeUpdate();
             st.close();
@@ -59,12 +60,12 @@ public class LogDAO
         String SQL = "INSERT INTO LogCompleteTask"
                 + "(compleTime, deparment, orderNumberComplete) VALUES(?,?,?);";
         
-        Date compleTimeInDate = new Date(compleTimeEpocMilli);
+        Timestamp compleTimeInDate = new Timestamp(compleTimeEpocMilli);
         
         try(Connection con = DB.getConnection())
         {
             PreparedStatement st = con.prepareCall(SQL);
-            st.setDate(1, compleTimeInDate);
+            st.setTimestamp(1, compleTimeInDate);
             st.setString(2, deparment);
             st.setString(3, orderNumber);
             st.executeUpdate();

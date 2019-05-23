@@ -216,10 +216,10 @@ public class BelModel
      * @param taskID
      * @throws SQLException
      */
-    public void updateTaskIsFinished(int taskID) throws SQLException
+    public void updateTaskIsFinished(int taskID, Order order) throws SQLException
     {
-        shownOrders.remove(selectedOrder.getOrderNumber());
-        currentOrders.remove(selectedOrder);
+        shownOrders.remove(order.getOrderNumber());
+        currentOrders.remove(order);
         bmm.updateTaskIsFinished(taskID);
 
     }

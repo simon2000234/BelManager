@@ -93,7 +93,6 @@ public class MultiOrderViewController implements Initializable
             Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Image bellLogo = new Image("belman_logo.png");
-
         imgView.setImage(bellLogo);
         
     }
@@ -143,11 +142,10 @@ public class MultiOrderViewController implements Initializable
             {
                 Label tempLabel = (Label) tempAnch.getChildren().get(0);
                 String[] tempOrderNumber = tempLabel.getText().split(" ");
-                bm.updateTaskIsFinished(bm.getShownOrders().get(tempOrderNumber[2]).getSelectedDepartmentTask().getTaskID());
+                bm.updateTaskIsFinished(bm.getShownOrders().get(tempOrderNumber[2]).getSelectedDepartmentTask().getTaskID(), order);
                 removeTPane(tempOrderNumber[2]);
                 
-                DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                LocalDateTime timeNow = LocalDateTime.now();
+                bm.createCompleteLog(Instant.now().toEpochMilli(), bm.getCurrentDepartment(), order.getOrderNumber());
             } catch (SQLException ex)
             {
                 System.out.println("Something went wrong at the complete button,"
@@ -370,6 +368,7 @@ public class MultiOrderViewController implements Initializable
         {
             workerList = bm.getAllWorkers();
             int col = 0;
+//            bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment()));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {
                 if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 0)

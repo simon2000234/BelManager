@@ -12,6 +12,6 @@
             <HBox fx:id="mainHBox" prefHeight="478.0" prefWidth="708.0" />
          </content>
       </ScrollPane>
-      <ImageView fx:id="imgView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ImageView fx:id="imgView" fitHeight="95.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

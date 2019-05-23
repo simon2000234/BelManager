@@ -51,7 +51,7 @@ import javafx.scene.shape.Circle;
  */
 public class MultiOrderViewController implements Initializable
 {
-    
+
     @FXML
     private ScrollPane mainScrollPane;
     private List<Worker> workerList;
@@ -94,14 +94,14 @@ public class MultiOrderViewController implements Initializable
         }
         Image bellLogo = new Image("belman_logo.png");
         imgView.setImage(bellLogo);
-        
+
     }
-    
+
     public TitledPane createTitledPane(Order order)
     {
         double X = 15.00;
         double Y = 20.00;
-        
+
         List<DepartmentTask> tempDTlist;
         tempDTlist = order.getDepartmentTasks();
         AnchorPane tempAnch = new AnchorPane();
@@ -144,7 +144,7 @@ public class MultiOrderViewController implements Initializable
                 String[] tempOrderNumber = tempLabel.getText().split(" ");
                 bm.updateTaskIsFinished(bm.getShownOrders().get(tempOrderNumber[2]).getSelectedDepartmentTask().getTaskID(), order);
                 removeTPane(tempOrderNumber[2]);
-                
+
                 bm.createCompleteLog(Instant.now().toEpochMilli(), bm.getCurrentDepartment(), order.getOrderNumber());
             } catch (SQLException ex)
             {
@@ -152,7 +152,10 @@ public class MultiOrderViewController implements Initializable
                         + " are you connected to the internet?");
             }
         });
-
+        if (!order.getCurrentDepartment().getDepartmentName().equals(order.getSelectedDepartmentTask().getDepartmentName()))
+        {
+            btnFinishOrder.setDisable(true);
+        }
         //Creates a ProgressBar to show the estimated progress of an order
         ProgressBar estimated = new ProgressBar(0.00);
         AnchorPane.setTopAnchor(estimated, Y * (labels.size() + 3));
@@ -205,7 +208,7 @@ public class MultiOrderViewController implements Initializable
                 departmentStatus.add(tempCircle);
             }
         }
-        updateList.add(new UpdatableInformation(departmentStatus, order, estimated, progressLabel));
+        updateList.add(new UpdatableInformation(departmentStatus, order, estimated, progressLabel, btnFinishOrder));
         bm.getShownOrders().put(order.getOrderNumber(), order);
 
         //Fixes the labels constraints for the AnchorPane in the TitledPane. 
@@ -257,9 +260,9 @@ public class MultiOrderViewController implements Initializable
                         departmentStatu.setRadius(defaultRadius + (fontChanger / 4));
                     }
                     AnchorPane.setTopAnchor(departmentStatu, (defaultAnchor + (fontChanger)));
-                    
+
                 }
-                
+
             }
         });
 
@@ -268,9 +271,9 @@ public class MultiOrderViewController implements Initializable
         tempAnch.getChildren().addAll(labelsRightSide);
         tempAnch.getChildren().addAll(btnFinishOrder, estimated, progressLabel);
         tempAnch.getChildren().addAll(departmentStatus);
-        
+
         return temp;
-        
+
     }
 
     /**
@@ -325,7 +328,7 @@ public class MultiOrderViewController implements Initializable
                 break;
             }
         }
-        
+
         for (Node node : vboxTwo.getChildren())
         {
             TitledPane temp = (TitledPane) node;
@@ -335,7 +338,7 @@ public class MultiOrderViewController implements Initializable
                 break;
             }
         }
-        
+
     }
 
     /**
@@ -352,14 +355,14 @@ public class MultiOrderViewController implements Initializable
         String theOrderNumber = thisTpane[1];
         return theOrderNumber;
     }
-    
+
     public void setModel(BelModel model)
     {
         this.bm = model;
-        
+
         vboxOne = new VBox();
         vboxTwo = new VBox();
-        
+
         mainScrollPane.setFitToHeight(true);
         mainScrollPane.setFitToWidth(true);
 
@@ -405,23 +408,23 @@ public class MultiOrderViewController implements Initializable
         HBox.setHgrow(vboxTwo, Priority.ALWAYS);
         mainHBox.setFillHeight(true);
         mainHBox.getChildren().addAll(vboxOne, vboxTwo);
-        
+
         try
         {
             newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
                     vboxOne, vboxTwo, model.getCurrentDepartment(), this);
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
-            
+
             infoTask = new UpdateInfo(updateList, bm);
-            
+
             infoUpdater = Executors.newSingleThreadExecutor();
             infoUpdater.submit(infoTask);
         } catch (SQLException ex)
         {
 //            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
 }

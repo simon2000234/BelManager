@@ -211,7 +211,7 @@ public class BelModel
 
     /**
      * Sets an deparment task to be fininshed by changeing its boolean value in
-     * // * the database, from false to true
+     * the database, from false to true
      *
      * @param taskID
      * @throws SQLException

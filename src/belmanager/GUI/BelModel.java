@@ -11,9 +11,12 @@ import belmanager.BE.Worker;
 import belmanager.BLL.BMManager;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -30,11 +33,18 @@ public class BelModel
     private HashMap<String, Order> shownOrders;
     private Long timeOffset;
 
-    public BelModel() throws SQLException
+    public BelModel()
     {
-        this.currentOrders = new ArrayList<>();
-        currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
-        this.shownOrders = new HashMap();
+        try
+        {
+            this.currentOrders = new ArrayList<>();
+            currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
+            this.shownOrders = new HashMap();
+        }
+        catch (SQLException ex)
+        {
+            createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+        }
     }
 
     /**
@@ -160,6 +170,7 @@ public class BelModel
      * @throws SQLException
      */
     public void deleteOrder(int OrderID)
+
     {
         try
         {
@@ -168,6 +179,7 @@ public class BelModel
         catch (SQLException ex)
         {
             System.out.println("the order could not be deleted");
+            createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 
@@ -267,20 +279,20 @@ public class BelModel
      * @param depLogin the department that login
      * @throws SQLException
      */
-    public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
+    public void createLoginLog(long loginTimeEpocMilli, String depLogin)
     {
         bmm.createLoginLog(loginTimeEpocMilli, depLogin);
     }
 
     /**
-     * Creates a log the the time a task was completed
+     * Creates a log of the time a task was completed
      *
      * @param compleTimeEpocMilli the time of completion in epoc milli
      * @param deparment the department the task belonged to
      * @param orderNumber the order the task was a part of
      * @throws SQLException
      */
-    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber) throws SQLException
+    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber)
     {
         bmm.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
@@ -297,6 +309,15 @@ public class BelModel
         Long Offset = (long)(days*oneDayInEpochMilli);
         this.timeOffset = Offset;
     }
-    
-    
+        
+    /**
+     * Creates a log for when an error occurs
+     * @param errorTimeEpochMilli the time of error
+     * @param errorType the type error
+     * @throws SQLException
+     */
+    public void createErrorLog(long errorTimeEpochMilli, String errorType)
+    {
+        bmm.createErrorLog(errorTimeEpochMilli, errorType);
+    }
 }

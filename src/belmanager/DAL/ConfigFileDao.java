@@ -34,11 +34,7 @@ public class ConfigFileDao
     }
 
 // Save to file Utility
-<<<<<<< HEAD
     protected void writeToFile(String myData, String myOffset) throws IOException
-=======
-    protected void writeToFile(String myData) throws IOException
->>>>>>> parent of d25c5f0... Confeck Fix
     {
         fileInit();
         File file = new File(file_location);
@@ -67,11 +63,8 @@ public class ConfigFileDao
             // Writes text to a character-output stream
             BufferedWriter bufferWriter = new BufferedWriter(writer);
             bufferWriter.write(myData);
-<<<<<<< HEAD
             bufferWriter.newLine();
             bufferWriter.write(myOffset);
-=======
->>>>>>> parent of d25c5f0... Confeck Fix
             bufferWriter.close();
             writer.close();
         } catch (IOException e)
@@ -81,21 +74,13 @@ public class ConfigFileDao
     }
 
     // Read From File Utility
-<<<<<<< HEAD
     protected List<String> readFromFile() throws IOException
-=======
-    protected String readFromFile() throws IOException
->>>>>>> parent of d25c5f0... Confeck Fix
     {
         fileInit();
 
         File file = new File(file_location);
-<<<<<<< HEAD
         String line;
         List<String> configInfo = new ArrayList<>();
-=======
-        String line = null;
->>>>>>> parent of d25c5f0... Confeck Fix
         if (!file.exists())
         {
             System.out.println("File doesn't exist");
@@ -104,7 +89,6 @@ public class ConfigFileDao
         InputStreamReader isReader;
         try
         {
-<<<<<<< HEAD
 
             // FileReader reads text files in the default encoding.
             FileReader fileReader
@@ -119,23 +103,6 @@ public class ConfigFileDao
                 configInfo.add(line);
             }
 
-=======
-
-            // FileReader reads text files in the default encoding.
-            FileReader fileReader
-                    = new FileReader(file_location);
-
-            // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader
-                    = new BufferedReader(fileReader);
-
-            while ((line = bufferedReader.readLine()) != null)
-            {
-                bufferedReader.close();
-                return line;
-            }
-
->>>>>>> parent of d25c5f0... Confeck Fix
             // Always close files.
             bufferedReader.close();
         } catch (FileNotFoundException ex)
@@ -144,11 +111,7 @@ public class ConfigFileDao
                     "Unable to open file '"
                     + file_location + "'");
         }
-<<<<<<< HEAD
         return configInfo;
-=======
-        return line;
->>>>>>> parent of d25c5f0... Confeck Fix
 
     }
 

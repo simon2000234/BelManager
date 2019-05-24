@@ -178,16 +178,15 @@ public class BMManager {
     public List<String> readFromFile() throws IOException {
         return daFacade.readFromFile();
     }
-   
+    
     /**
-     * Creates a log of the time a task was completed
+     * Creates a log the the time a task was completed
      * @param compleTimeEpocMilli the time of completion in epoc milli
      * @param deparment the department the task belonged to
      * @param orderNumber the order the task was a part of
      * @throws SQLException
      */
-    
-    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber)
+    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber) throws SQLException
     {
         daFacade.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
@@ -198,11 +197,10 @@ public class BMManager {
      * @param depLogin the department that login
      * @throws SQLException
      */
-    public void createLoginLog(long loginTimeEpocMilli, String depLogin)
+    public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
     {
         daFacade.createLoginLog(loginTimeEpocMilli, depLogin);
     }
-<<<<<<< HEAD
 =======
     public void writeToFile(String myData) throws IOException {
         daFacade.writeToFile(myData);
@@ -213,18 +211,4 @@ public class BMManager {
         return daFacade.readFromFile();
     }
 >>>>>>> parent of d25c5f0... Confeck Fix
-=======
-    
-    /**
-     * Creates a log for when an error occurs
-     * @param errorTimeEpochMilli the time of error
-     * @param errorType the type error
-     * @throws SQLException
-     */
-    public void createErrorLog(long errorTimeEpochMilli, String errorType)
-    {
-        daFacade.createErrorLog(errorTimeEpochMilli, errorType);
-    }
-
->>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 }

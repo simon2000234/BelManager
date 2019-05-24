@@ -20,11 +20,15 @@ import java.util.List;
  *
  * @author Christian Occhionero
  */
-public class ConfigFileDao {
+public class ConfigFileDao
+{
 
+    // filen vi skriver til
     private static String file_location = "Config.txt";
 
-    protected void fileInit() throws IOException {
+    // vi laver filen
+    protected void fileInit() throws IOException
+    {
         File f = new File(file_location);
         f.createNewFile();
     }
@@ -38,21 +42,27 @@ public class ConfigFileDao {
     {
         fileInit();
         File file = new File(file_location);
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 File directory = new File(file.getParent());
-                if (!directory.exists()) {
+                if (!directory.exists())
+                {
                     directory.mkdirs();
                 }
                 file.createNewFile();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
 
             }
         }
 
-        // Convenience class for writing character files
-        FileWriter writer;
-        writer = new FileWriter(file.getAbsoluteFile(), true);
+        try
+        {
+            // Convenience class for writing character files
+            FileWriter writer;
+            writer = new FileWriter(file.getAbsoluteFile(), true);
 
             // Writes text to a character-output stream
             BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -63,7 +73,11 @@ public class ConfigFileDao {
 =======
 >>>>>>> parent of d25c5f0... Confeck Fix
             bufferWriter.close();
-            writer.close();        
+            writer.close();
+        } catch (IOException e)
+        {
+
+        }
     }
 
     // Read From File Utility
@@ -88,7 +102,6 @@ public class ConfigFileDao {
         }
 
         InputStreamReader isReader;
-<<<<<<< HEAD
         try
         {
 <<<<<<< HEAD
@@ -96,19 +109,15 @@ public class ConfigFileDao {
             // FileReader reads text files in the default encoding.
             FileReader fileReader
                     = new FileReader(file_location);
-=======
->>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 
-        // FileReader reads text files in the default encoding.
-        FileReader fileReader
-                = new FileReader(file_location);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader
+                    = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null)
             {
                 configInfo.add(line);
             }
-<<<<<<< HEAD
 
 =======
 
@@ -136,8 +145,6 @@ public class ConfigFileDao {
                     + file_location + "'");
         }
 <<<<<<< HEAD
-=======
->>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
         return configInfo;
 =======
         return line;
@@ -145,30 +152,4 @@ public class ConfigFileDao {
 
     }
 
-//    // reads second line in the config file containing the time
-//    public String readTimeOfSet() throws IOException {
-//        fileInit();
-//
-//        File file = new File(file_location);
-//        String line = null;
-//        if (!file.exists()) {
-//            System.out.println("File doesn't exist");
-//        }
-//
-//        InputStreamReader isReader;
-//
-//        FileReader fileReader
-//                = new FileReader(file_location);
-//
-//        // Always wrap FileReader in BufferedReader.
-//        BufferedReader bufferedReader
-//                = new BufferedReader(fileReader);
-//
-//        bufferedReader.readLine();
-//        line = bufferedReader.readLine();
-//
-//        bufferedReader.close();
-//        return line;
-//
-//    }
 }

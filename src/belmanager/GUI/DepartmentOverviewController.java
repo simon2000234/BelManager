@@ -62,7 +62,15 @@ public class DepartmentOverviewController implements Initializable
 
     public void initialize(URL url, ResourceBundle rb)
     {
+        try
+        {
             model = new BelModel();
+
+        } catch (SQLException ex)
+        {
+
+            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /*
@@ -80,15 +88,12 @@ public class DepartmentOverviewController implements Initializable
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".JSON", "*.JSON"));
             file = fileChooser.showOpenDialog(null).getAbsoluteFile().getPath();
             model.moveJsonToDB(file.trim());
-
-        }
-        catch (IOException ex)
+        } catch (IOException ex)
         {
-            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
-        }
-        catch (ParseException ex)
+            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex)
         {
-            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -161,6 +166,7 @@ public class DepartmentOverviewController implements Initializable
         {
             AlertNoOffset(btnDep1.getText());
         }
+
     }
 
     @FXML
@@ -193,6 +199,9 @@ public class DepartmentOverviewController implements Initializable
 
     private void openDepartments(String departmentName) throws IOException
     {
+
+        try
+        {
             model.setCurrentDepartment(departmentName);
             if (isInputValid(txtOffset.getText()) == true)
             {
@@ -225,6 +234,11 @@ public class DepartmentOverviewController implements Initializable
 
             Stage current = (Stage) PickAFile.getScene().getWindow();
             current.close();
+        } catch (SQLException ex)
+        {
+            System.out.println("Something went wrong with SQL, are you connected to the right wifi?");
+        }
+
     }
 
     public boolean isInputValid(String s)

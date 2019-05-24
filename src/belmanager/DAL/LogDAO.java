@@ -65,7 +65,7 @@ public class LogDAO
 
                 BufferedWriter bufferWriter = new BufferedWriter(writer);
                 bufferWriter.newLine();
-                bufferWriter.write(loginTimeInDate.toString() + " " + depLogin);
+                bufferWriter.write(loginTimeInDate.toString() + " login: " + depLogin);
                 bufferWriter.close();
                 writer.close();
             }
@@ -113,7 +113,8 @@ public class LogDAO
 
                 BufferedWriter bufferWriter = new BufferedWriter(writer);
                 bufferWriter.newLine();
-                bufferWriter.write(compleTimeInDate.toString() + " " + deparment + " " + orderNumber);
+                bufferWriter.write(compleTimeInDate.toString() + " Complete: " +
+                        deparment + " Order: " + orderNumber);
                 bufferWriter.close();
                 writer.close();
             }

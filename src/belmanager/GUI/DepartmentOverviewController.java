@@ -57,16 +57,7 @@ public class DepartmentOverviewController implements Initializable
 
     public void initialize(URL url, ResourceBundle rb)
     {
-        try
-        {
-            model = new BelModel();
-
-        }
-        catch (SQLException ex)
-        {
-
-            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
-        }
+        model = new BelModel();
     }
 
     /*

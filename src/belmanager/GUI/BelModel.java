@@ -11,9 +11,12 @@ import belmanager.BE.Worker;
 import belmanager.BLL.BMManager;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -29,11 +32,18 @@ public class BelModel
     private Order selectedOrder;
     private HashMap<String, Order> shownOrders;
 
-    public BelModel() throws SQLException
+    public BelModel()
     {
-        this.currentOrders = new ArrayList<>();
-        currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
-        this.shownOrders = new HashMap();
+        try
+        {
+            this.currentOrders = new ArrayList<>();
+            currentOrders.addAll(bmm.filterOrdersByDepartment(currentDepartment));
+            this.shownOrders = new HashMap();
+        }
+        catch (SQLException ex)
+        {
+            createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+        }
     }
 
     /**
@@ -168,6 +178,7 @@ public class BelModel
         catch (SQLException ex)
         {
             System.out.println("the order could not be deleted");
+            createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 

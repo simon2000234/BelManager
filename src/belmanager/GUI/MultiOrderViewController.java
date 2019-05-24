@@ -85,14 +85,7 @@ public class MultiOrderViewController implements Initializable
         initialWidth = mainScrollPane.getWidth();
         updateList = new ArrayList<>();
 
-        try
-        {
-            bm = new BelModel();
-        }
-        catch (SQLException ex)
-        {
-            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
-        }
+        bm = new BelModel();
         Image bellLogo = new Image("belman_logo.png");
         imgView.setImage(bellLogo);
 

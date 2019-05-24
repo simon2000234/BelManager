@@ -87,10 +87,9 @@ public class UpdateNewPane implements Runnable
         } catch (InterruptedException ex)
         {
             System.out.println("Thred Stopped");
-            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         } catch (SQLException ex)
         {
-            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+            Logger.getLogger(UpdateNewPane.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

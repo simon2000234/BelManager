@@ -74,9 +74,14 @@ public class UpdateInfo implements Runnable
 
                             for (int i = 0; i < tasks.size(); i++)
                             {
+                                if (updatableInformation.getOrder().getSelectedDepartmentTask().getDepartmentName().equals(order.getCurrentDepartment().getDepartmentName()))
+                                {
+                                updatableInformation.getBtnComplete().setDisable(false);
+                                }
+                                
                                 if (tasks.get(i).getDepartmentName().equals(bm.getCurrentDepartment()))
                                 {
-                                    endTime = (double)tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
+                                    endTime = (double) tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
                                     if (Instant.now().toEpochMilli() > tasks.get(i).getEpochEndDate())
                                     {
                                         progressTime = endTime;
@@ -86,6 +91,7 @@ public class UpdateInfo implements Runnable
                                     }
                                     progress = progressTime / endTime;
                                     updatableInformation.getEstimatedBar().setProgress(progress);
+                                    updatableInformation.getProgressLabel().setText(String.format("%.2f", progress * 100) + " %");
                                 }
                                 Paint color = circles.get(i).getFill();
                                 if (tasks.get(i).isFinishedOrder() == true)
@@ -138,9 +144,10 @@ public class UpdateInfo implements Runnable
         } catch (InterruptedException ex)
         {
             System.out.println("Thred Stopped");
+            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         } catch (SQLException ex)
         {
-            Logger.getLogger(UpdateInfo.class.getName()).log(Level.SEVERE, null, ex);
+            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 

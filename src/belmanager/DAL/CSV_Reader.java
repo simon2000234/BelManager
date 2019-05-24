@@ -37,16 +37,25 @@ public class CSV_Reader
             while ((line = br.readLine()) != null)
             {
 
-                    // use comma as separator 
-                    String[] worker = line.split(cvsSplitBy);
+                // use comma as separator 
+                String[] worker = line.split(cvsSplitBy);
 
-                    // løber vores workers array igemmen
-                    for (String workers : worker)
+                // runing  through worker array'et
+                for (String workers : worker)
+                {
+                    // removed all empty rows from the csv file
+                    if (workers.equals("\"\""))
                     {
+
+                    } else
+                    {
+                        System.out.println(workers);
+
                         // add all result to your arrayList 
                         resultFromCsvFile.add(workers);
                     }
-                
+                }
+
             }
             // handler error if they occurs
         } catch (FileNotFoundException e)

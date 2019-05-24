@@ -148,9 +148,10 @@ public class UpdateInfo implements Runnable
         } catch (InterruptedException ex)
         {
             System.out.println("Thred Stopped");
+            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         } catch (SQLException ex)
         {
-            Logger.getLogger(UpdateInfo.class.getName()).log(Level.SEVERE, null, ex);
+            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 

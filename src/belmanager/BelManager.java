@@ -5,6 +5,7 @@
  */
 package belmanager;
 
+import belmanager.DAL.CSV_Reader;
 import belmanager.GUI.BelModel;
 import belmanager.GUI.MultiOrderViewController;
 import java.time.Instant;
@@ -64,6 +65,8 @@ public class BelManager extends Application
 >>>>>>> parent of d25c5f0... Confeck Fix
             stage.setScene(new Scene(root, 1000, 750));
             stage.setMaximized(true);
+          
+            
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {
@@ -85,6 +88,10 @@ public class BelManager extends Application
      */
     public static void main(String[] args)
     {
+        CSV_Reader csvr = new CSV_Reader();
+        
+        csvr.readFormCSVFile();
+        
         launch(args);
     }
 

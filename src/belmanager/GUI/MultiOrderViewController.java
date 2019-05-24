@@ -85,13 +85,7 @@ public class MultiOrderViewController implements Initializable
         initialWidth = mainScrollPane.getWidth();
         updateList = new ArrayList<>();
 
-        try
-        {
-            bm = new BelModel();
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(MultiOrderViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        bm = new BelModel();
         Image bellLogo = new Image("belman_logo.png");
         imgView.setImage(bellLogo);
 
@@ -146,10 +140,12 @@ public class MultiOrderViewController implements Initializable
                 removeTPane(tempOrderNumber[2]);
 
                 bm.createCompleteLog(Instant.now().toEpochMilli(), bm.getCurrentDepartment(), order.getOrderNumber());
-            } catch (SQLException ex)
+            }
+            catch (SQLException ex)
             {
                 System.out.println("Something went wrong at the complete button,"
                         + " are you connected to the internet?");
+                bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
             }
         });
         if (!order.getCurrentDepartment().getDepartmentName().equals(order.getSelectedDepartmentTask().getDepartmentName()))
@@ -181,26 +177,30 @@ public class MultiOrderViewController implements Initializable
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
+            }
+            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.RED);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
+            }
+            else if (departmentTask.getEpochEndDate() <= Instant.now().toEpochMilli() + oneDayInEpochMilli)
             {
                 Circle tempCircle = new Circle(X / 2, Color.ORANGE);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
+            }
+            else if (departmentTask.getEpochEndDate() > Instant.now().toEpochMilli() + oneDayInEpochMilli
                     && departmentTask.getEpochStartDate() <= Instant.now().toEpochMilli())
             {
                 Circle tempCircle = new Circle(X / 2, Color.YELLOW);
                 AnchorPane.setRightAnchor(tempCircle, X);
                 AnchorPane.setTopAnchor(tempCircle, Y * tempDTlist.indexOf(departmentTask));
                 departmentStatus.add(tempCircle);
-            } else
+            }
+            else
             {
                 Circle tempCircle = new Circle(X / 2, Color.GREY);
                 AnchorPane.setRightAnchor(tempCircle, X);
@@ -299,7 +299,8 @@ public class MultiOrderViewController implements Initializable
                 AnchorPane.setLeftAnchor(label1, X);
                 space++;
             }
-        } else if (leftORright == true)
+        }
+        else if (leftORright == true)
         {
             for (Label label1 : labels)
             {
@@ -371,7 +372,6 @@ public class MultiOrderViewController implements Initializable
         {
             workerList = bm.getAllWorkers();
             int col = 0;
-//            bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment()));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {
                 if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli()+bm.getTimeOffset() && col % 2 == 0)
@@ -384,6 +384,7 @@ public class MultiOrderViewController implements Initializable
                     boxOneList.add(temp);
                     col++;
                 } else if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli()+bm.getTimeOffset() && col % 2 == 1)
+
                 {
                     TitledPane temp = createTitledPane(order);
                     if (col > 5)
@@ -394,9 +395,10 @@ public class MultiOrderViewController implements Initializable
                     col++;
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
-//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
         vboxOne.getChildren().addAll(boxOneList);
         vboxTwo.getChildren().addAll(boxTwoList);
@@ -420,9 +422,10 @@ public class MultiOrderViewController implements Initializable
 
             infoUpdater = Executors.newSingleThreadExecutor();
             infoUpdater.submit(infoTask);
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
-//            Logger.getLogger(OrderOverviewPageController.class.getName()).log(Level.SEVERE, null, ex);
+            bm.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
 
     }

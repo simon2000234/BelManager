@@ -158,7 +158,7 @@ public class DataAccessFacade
     }
 
     /**
-     * Creates a log the the time a task was completed
+     * Creates a log of the time a task was completed
      *
      * @param compleTimeEpocMilli the time of completion in epoc milli
      * @param deparment the department the task belonged to
@@ -180,5 +180,16 @@ public class DataAccessFacade
     public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
     {
         ldao.createLoginLog(loginTimeEpocMilli, depLogin);
+    }
+    
+    /**
+     * Creates a log for when an error occurs
+     * @param errorTimeEpochMilli the time of error
+     * @param errorType the type error
+     * @throws SQLException
+     */
+    public void createErrorLog(long errorTimeEpochMilli, String errorType) throws SQLException
+    {
+        ldao.createErrorLog(errorTimeEpochMilli, errorType);
     }
 }

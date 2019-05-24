@@ -49,7 +49,7 @@ public class LogDAO
     }
     
     /**
-     * Creates a log the the time a task was completed
+     * Creates a log of the time a task was completed
      * @param compleTimeEpocMilli the time of completion in epoc milli
      * @param deparment the department the task belonged to
      * @param orderNumber the order the task was a part of
@@ -68,6 +68,28 @@ public class LogDAO
             st.setTimestamp(1, compleTimeInDate);
             st.setString(2, deparment);
             st.setString(3, orderNumber);
+            st.executeUpdate();
+            st.close();
+        }
+    }
+    
+    /**
+     * Creates a log for when an error occurs
+     * @param errorTimeEpochMilli the time of error
+     * @param errorType the type error
+     * @throws SQLException
+     */
+    protected void createErrorLog(long errorTimeEpochMilli, String errorType) throws SQLException
+    {
+        String SQL = "INSERT INTO ErrorLog(errorTime, errorType) VALUES(?,?);";
+        
+        Timestamp errorTimeDate = new Timestamp(errorTimeEpochMilli);
+        
+        try(Connection con = DB.getConnection())
+        {
+            PreparedStatement st = con.prepareCall(SQL);
+            st.setTimestamp(1, errorTimeDate);
+            st.setString(2, errorType);
             st.executeUpdate();
             st.close();
         }

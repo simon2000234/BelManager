@@ -142,6 +142,7 @@ public class BelModel
     {
         return currentOrders;
     }
+<<<<<<< HEAD
 
     public List<String> readFromFile() throws IOException
     {
@@ -160,6 +161,18 @@ public class BelModel
      * @throws SQLException
      */
     public void deleteOrder(int OrderID)
+=======
+     public String readFromFile() throws IOException {
+            return bmm.readFromFile();
+        
+     }
+    
+     public void writeToFile(String myData) throws IOException {
+        bmm.writeToFile(currentDepartment);
+     }
+    
+    public void deleteOrder (int OrderID)
+>>>>>>> parent of d25c5f0... Confeck Fix
     {
         try
         {

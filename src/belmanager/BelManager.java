@@ -29,7 +29,11 @@ public class BelManager extends Application
     {
         BelModel model = new BelModel();
 
+<<<<<<< HEAD
         if (model.readFromFile().isEmpty())
+=======
+        if (model.readFromFile() == null)
+>>>>>>> parent of d25c5f0... Confeck Fix
         {
             Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
 
@@ -40,16 +44,24 @@ public class BelManager extends Application
         }
         else
         {
+<<<<<<< HEAD
             model.setCurrentDepartment(model.readFromFile().get(0));
             model.setTimeOffset(model.readFromFile().get(1));
             model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
+=======
+            model.setCurrentDepartment(model.readFromFile());
+>>>>>>> parent of d25c5f0... Confeck Fix
 
             Parent root;
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
             root = loader.load();
 
+<<<<<<< HEAD
             stage.setTitle(model.readFromFile().get(0));
+=======
+            stage.setTitle(model.readFromFile());
+>>>>>>> parent of d25c5f0... Confeck Fix
             stage.setScene(new Scene(root, 1000, 750));
             stage.setMaximized(true);
             stage.show();

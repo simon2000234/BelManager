@@ -169,6 +169,7 @@ public class BMManager {
         daFacade.updateTaskIsFinished(taskID);
     }
 
+<<<<<<< HEAD
     public void writeToFile(String myData, String myOffset) throws IOException {
         daFacade.writeToFile(myData,myOffset);
 
@@ -200,4 +201,14 @@ public class BMManager {
     {
         daFacade.createLoginLog(loginTimeEpocMilli, depLogin);
     }
+=======
+    public void writeToFile(String myData) throws IOException {
+        daFacade.writeToFile(myData);
+
+    }
+
+    public String readFromFile() throws IOException {
+        return daFacade.readFromFile();
+    }
+>>>>>>> parent of d25c5f0... Confeck Fix
 }

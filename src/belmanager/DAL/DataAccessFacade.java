@@ -147,6 +147,7 @@ public class DataAccessFacade
         dtdao.updateTaskIsFinished(taskID);
     }
 
+<<<<<<< HEAD
     public void writeToFile(String myData, String myOffset) throws IOException
     {
         cfdao.writeToFile(myData,myOffset);
@@ -181,4 +182,15 @@ public class DataAccessFacade
     {
         ldao.createLoginLog(loginTimeEpocMilli, depLogin);
     }
+=======
+    public void writeToFile(String myData) throws IOException
+    {
+        cfdao.writeToFile(myData);
+    }
+
+    public String readFromFile() throws IOException
+    {
+        return cfdao.readFromFile();
+    }
+>>>>>>> parent of d25c5f0... Confeck Fix
 }

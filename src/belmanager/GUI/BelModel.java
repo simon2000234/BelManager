@@ -81,13 +81,19 @@ public class BelModel
     {
         return currentOrders;
     }
-     public String readFromFile() throws IOException {
-            return bmm.readFromFile();
+     public String readDepartmentFromFile() throws IOException {
+            return bmm.readDepartmentFromFile();
         
      }
+     
+     public String readTimeOfSet() throws IOException {
+         return bmm.readTimeOfSet(); 
+     }
     
+     
+     // add Of Set here ???
      public void writeToFile(String myData) throws IOException {
-        bmm.writeToFile(currentDepartment);
+        bmm.writeToFile(currentDepartment,"");
      }
     
     public void deleteOrder (int OrderID)

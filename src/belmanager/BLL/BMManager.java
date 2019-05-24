@@ -95,12 +95,17 @@ public class BMManager {
         daFacade.updateTaskIsFinished(taskID);
     }
 
-    public void writeToFile(String myData) throws IOException {
-        daFacade.writeToFile(myData);
+    public void writeToFile(String department, String myOfSet) throws IOException {
+        daFacade.writeToFile(department,myOfSet);
 
     }
 
-    public String readFromFile() throws IOException {
-        return daFacade.readFromFile();
+    public String readDepartmentFromFile() throws IOException {
+        return daFacade.readDepartmentFromFile();
     }
+
+    public String readTimeOfSet() throws IOException {
+        return daFacade.readTimeOfSet();
+    }
+
 }

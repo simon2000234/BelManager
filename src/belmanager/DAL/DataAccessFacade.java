@@ -164,13 +164,21 @@ public class DataAccessFacade
         dtdao.updateTaskIsFinished(taskID);
     }
 
-    public void writeToFile(String myData) throws IOException
+    public void writeToFile(String department, String myOfSet) throws IOException
     {
-        cfdao.writeToFile(myData);
+        cfdao.writeToFile(department, myOfSet);
     }
 
-    public String readFromFile() throws IOException
+    public String readDepartmentFromFile() throws IOException
     {
-        return cfdao.readFromFile();
+        return cfdao.readDepartmentFromFile();
     }
+
+    public String readTimeOfSet() throws IOException 
+    {
+        return cfdao.readTimeOfSet(); 
+    }
+
+
+
 }

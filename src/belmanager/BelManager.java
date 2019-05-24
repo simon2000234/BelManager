@@ -29,7 +29,7 @@ public class BelManager extends Application
     {
         BelModel model = new BelModel();
 
-        if (model.readFromFile() == null)
+        if (model.readDepartmentFromFile()== null)
         {
             Parent root = FXMLLoader.load(getClass().getResource("GUI/DepartmentOverview.fxml"));
 
@@ -40,16 +40,18 @@ public class BelManager extends Application
         }
         else
         {
-            model.setCurrentDepartment(model.readFromFile());
+            model.setCurrentDepartment(model.readDepartmentFromFile());
 
             Parent root;
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
             root = loader.load();
 
-            stage.setTitle(model.readFromFile());
+            stage.setTitle(model.readDepartmentFromFile());
             stage.setScene(new Scene(root, 1000, 750));
             stage.setMaximized(true);
+          
+            
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {

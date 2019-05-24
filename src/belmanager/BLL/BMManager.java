@@ -203,7 +203,6 @@ public class BMManager {
         daFacade.createLoginLog(loginTimeEpocMilli, depLogin);
     }
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
     public void writeToFile(String myData) throws IOException {
         daFacade.writeToFile(myData);
@@ -215,8 +214,6 @@ public class BMManager {
     }
 >>>>>>> parent of d25c5f0... Confeck Fix
 =======
-=======
->>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
     
     /**
      * Creates a log for when an error occurs
@@ -229,8 +226,5 @@ public class BMManager {
         daFacade.createErrorLog(errorTimeEpochMilli, errorType);
     }
 
-<<<<<<< HEAD
->>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
-=======
 >>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 }

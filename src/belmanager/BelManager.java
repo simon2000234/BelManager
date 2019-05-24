@@ -78,7 +78,7 @@ public class BelManager extends Application
     {
         CSV_Reader csvr = new CSV_Reader();
         
-        csvr.readFormCSVFile();
+//        csvr.readFormCSVFile();
         
         launch(args);
     }

@@ -191,8 +191,10 @@ public class DepartmentOverviewController implements Initializable
         }
     }
 
-    private void openDepartments(String departmentName) throws IOException
+    private void openDepartments(String departmentName)
     {
+        try
+        {
             model.setCurrentDepartment(departmentName);
             if (isInputValid(txtOffset.getText()) == true)
             {
@@ -225,6 +227,10 @@ public class DepartmentOverviewController implements Initializable
 
             Stage current = (Stage) PickAFile.getScene().getWindow();
             current.close();
+        } catch (IOException ex)
+        {
+            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+        }
     }
 
     public boolean isInputValid(String s)

@@ -374,7 +374,7 @@ public class MultiOrderViewController implements Initializable
 //            bm.createTheHashmap(bm.filterOrdersByDepartment(bm.getCurrentDepartment()));
             for (Order order : bm.filterOrdersByDepartment(bm.getCurrentDepartment()))
             {
-                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 0)
+                if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli()+bm.getTimeOffset() && col % 2 == 0)
                 {
                     TitledPane temp = createTitledPane(order);
                     if (col > 5)
@@ -383,7 +383,7 @@ public class MultiOrderViewController implements Initializable
                     }
                     boxOneList.add(temp);
                     col++;
-                } else if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli() && col % 2 == 1)
+                } else if (order.getDepartment(bm.getCurrentDepartment()).getEpochStartDate() < Instant.now().toEpochMilli()+bm.getTimeOffset() && col % 2 == 1)
                 {
                     TitledPane temp = createTitledPane(order);
                     if (col > 5)
@@ -412,7 +412,7 @@ public class MultiOrderViewController implements Initializable
         try
         {
             newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
-                    vboxOne, vboxTwo, model.getCurrentDepartment(), this);
+                    vboxOne, vboxTwo, model.getCurrentDepartment(), this, bm);
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
 

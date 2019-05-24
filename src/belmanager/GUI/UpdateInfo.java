@@ -76,9 +76,9 @@ public class UpdateInfo implements Runnable
                             {
                                 if (updatableInformation.getOrder().getSelectedDepartmentTask().getDepartmentName().equals(order.getCurrentDepartment().getDepartmentName()))
                                 {
-                                updatableInformation.getBtnComplete().setDisable(false);
+                                    updatableInformation.getBtnComplete().setDisable(false);
                                 }
-                                
+
                                 if (tasks.get(i).getDepartmentName().equals(bm.getCurrentDepartment()))
                                 {
                                     endTime = (double) tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
@@ -90,6 +90,10 @@ public class UpdateInfo implements Runnable
                                         progressTime = (double) Instant.now().toEpochMilli() - tasks.get(i).getEpochStartDate();
                                     }
                                     progress = progressTime / endTime;
+                                    if (Instant.now().toEpochMilli() < tasks.get(i).getEpochStartDate())
+                                    {
+                                        progress = 0.00;
+                                    }
                                     updatableInformation.getEstimatedBar().setProgress(progress);
                                     updatableInformation.getProgressLabel().setText(String.format("%.2f", progress * 100) + " %");
                                 }

@@ -169,12 +169,12 @@ public class BMManager {
         daFacade.updateTaskIsFinished(taskID);
     }
 
-    public void writeToFile(String myData) throws IOException {
-        daFacade.writeToFile(myData);
+    public void writeToFile(String myData, String myOffset) throws IOException {
+        daFacade.writeToFile(myData,myOffset);
 
     }
 
-    public String readFromFile() throws IOException {
+    public List<String> readFromFile() throws IOException {
         return daFacade.readFromFile();
     }
     

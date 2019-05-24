@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,7 +34,7 @@ public class ConfigFileDao
     }
 
 // Save to file Utility
-    protected void writeToFile(String myData) throws IOException
+    protected void writeToFile(String myData, String myOffset) throws IOException
     {
         fileInit();
         File file = new File(file_location);
@@ -61,6 +63,8 @@ public class ConfigFileDao
             // Writes text to a character-output stream
             BufferedWriter bufferWriter = new BufferedWriter(writer);
             bufferWriter.write(myData);
+            bufferWriter.newLine();
+            bufferWriter.write(myOffset);
             bufferWriter.close();
             writer.close();
         } catch (IOException e)
@@ -70,12 +74,13 @@ public class ConfigFileDao
     }
 
     // Read From File Utility
-    protected String readFromFile() throws IOException
+    protected List<String> readFromFile() throws IOException
     {
         fileInit();
 
         File file = new File(file_location);
-        String line = null;
+        String line;
+        List<String> configInfo = new ArrayList<>();
         if (!file.exists())
         {
             System.out.println("File doesn't exist");
@@ -95,8 +100,7 @@ public class ConfigFileDao
 
             while ((line = bufferedReader.readLine()) != null)
             {
-                bufferedReader.close();
-                return line;
+                configInfo.add(line);
             }
 
             // Always close files.
@@ -107,7 +111,7 @@ public class ConfigFileDao
                     "Unable to open file '"
                     + file_location + "'");
         }
-        return line;
+        return configInfo;
 
     }
 

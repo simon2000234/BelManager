@@ -28,6 +28,7 @@ public class BelModel
     private String currentDepartment;
     private Order selectedOrder;
     private HashMap<String, Order> shownOrders;
+    private Long timeOffset;
 
     public BelModel() throws SQLException
     {
@@ -142,15 +143,14 @@ public class BelModel
         return currentOrders;
     }
 
-    public String readFromFile() throws IOException
+    public List<String> readFromFile() throws IOException
     {
         return bmm.readFromFile();
-
     }
 
-    public void writeToFile(String myData) throws IOException
+    public void writeToFile(String myData, String myOffset) throws IOException
     {
-        bmm.writeToFile(currentDepartment);
+        bmm.writeToFile(myData, myOffset);
     }
 
     /**
@@ -284,4 +284,19 @@ public class BelModel
     {
         bmm.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
+
+    public Long getTimeOffset()
+    {
+        return timeOffset;
+    }
+
+    public void setTimeOffset(String timeOffset)
+    {
+        int oneDayInEpochMilli = 86400000;
+        int days = Integer.parseInt(timeOffset);
+        Long Offset = (long)(days*oneDayInEpochMilli);
+        this.timeOffset = Offset;
+    }
+    
+    
 }

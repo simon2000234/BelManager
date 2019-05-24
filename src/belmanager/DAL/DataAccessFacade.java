@@ -147,12 +147,12 @@ public class DataAccessFacade
         dtdao.updateTaskIsFinished(taskID);
     }
 
-    public void writeToFile(String myData) throws IOException
+    public void writeToFile(String myData, String myOffset) throws IOException
     {
-        cfdao.writeToFile(myData);
+        cfdao.writeToFile(myData,myOffset);
     }
 
-    public String readFromFile() throws IOException
+    public List<String> readFromFile() throws IOException
     {
         return cfdao.readFromFile();
     }

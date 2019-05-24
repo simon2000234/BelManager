@@ -149,6 +149,10 @@ public class DataAccessFacade
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 =======
 
 >>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
@@ -187,6 +191,7 @@ public class DataAccessFacade
         ldao.createLoginLog(loginTimeEpocMilli, depLogin);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     public void writeToFile(String myData) throws IOException
     {
@@ -199,6 +204,8 @@ public class DataAccessFacade
     }
 >>>>>>> parent of d25c5f0... Confeck Fix
 =======
+=======
+>>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 
     /**
      * Creates a log for when an error occurs
@@ -212,5 +219,8 @@ public class DataAccessFacade
         ldao.createErrorLog(errorTimeEpochMilli, errorType);
     }
 
+<<<<<<< HEAD
+>>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
+=======
 >>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 }

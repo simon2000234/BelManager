@@ -89,6 +89,7 @@ public class ConfigFileDao {
 
         InputStreamReader isReader;
 <<<<<<< HEAD
+<<<<<<< HEAD
         try
         {
 <<<<<<< HEAD
@@ -115,16 +116,20 @@ public class ConfigFileDao {
             // FileReader reads text files in the default encoding.
             FileReader fileReader
                     = new FileReader(file_location);
+=======
+>>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 
-            // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader
-                    = new BufferedReader(fileReader);
+        // FileReader reads text files in the default encoding.
+        FileReader fileReader
+                = new FileReader(file_location);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null)
             {
                 bufferedReader.close();
                 return line;
             }
+<<<<<<< HEAD
 
 >>>>>>> parent of d25c5f0... Confeck Fix
             // Always close files.
@@ -136,6 +141,8 @@ public class ConfigFileDao {
                     + file_location + "'");
         }
 <<<<<<< HEAD
+=======
+>>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
 =======
 >>>>>>> parent of 006c2fc... Revert "Merge branch 'master' of https://github.com/simon2000234/BelManager"
         return configInfo;

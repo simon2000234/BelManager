@@ -165,7 +165,7 @@ public class DataAccessFacade
      * @param orderNumber the order the task was a part of
      * @throws SQLException
      */
-    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber) throws SQLException
+    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber)
     {
         ldao.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
@@ -177,7 +177,7 @@ public class DataAccessFacade
      * @param depLogin the department that login
      * @throws SQLException
      */
-    public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
+    public void createLoginLog(long loginTimeEpocMilli, String depLogin)
     {
         ldao.createLoginLog(loginTimeEpocMilli, depLogin);
     }
@@ -188,7 +188,7 @@ public class DataAccessFacade
      * @param errorType the type error
      * @throws SQLException
      */
-    public void createErrorLog(long errorTimeEpochMilli, String errorType) throws SQLException
+    public void createErrorLog(long errorTimeEpochMilli, String errorType)
     {
         ldao.createErrorLog(errorTimeEpochMilli, errorType);
     }

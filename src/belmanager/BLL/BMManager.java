@@ -185,7 +185,7 @@ public class BMManager {
      * @param orderNumber the order the task was a part of
      * @throws SQLException
      */
-    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber) throws SQLException
+    public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber)
     {
         daFacade.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
@@ -196,7 +196,7 @@ public class BMManager {
      * @param depLogin the department that login
      * @throws SQLException
      */
-    public void createLoginLog(long loginTimeEpocMilli, String depLogin) throws SQLException
+    public void createLoginLog(long loginTimeEpocMilli, String depLogin)
     {
         daFacade.createLoginLog(loginTimeEpocMilli, depLogin);
     }
@@ -207,7 +207,7 @@ public class BMManager {
      * @param errorType the type error
      * @throws SQLException
      */
-    public void createErrorLog(long errorTimeEpochMilli, String errorType) throws SQLException
+    public void createErrorLog(long errorTimeEpochMilli, String errorType)
     {
         daFacade.createErrorLog(errorTimeEpochMilli, errorType);
     }

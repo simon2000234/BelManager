@@ -31,7 +31,8 @@ import org.json.simple.parser.ParseException;
  *
  * @author Melchertsen
  */
-public class DepartmentOverviewController implements Initializable {
+public class DepartmentOverviewController implements Initializable
+{
 
     @FXML
     private Button PickAFile;
@@ -54,13 +55,17 @@ public class DepartmentOverviewController implements Initializable {
 
     @Override
 
-    public void initialize(URL url, ResourceBundle rb) {
-        try {
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        try
+        {
             model = new BelModel();
 
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
 
-            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 
@@ -70,54 +75,66 @@ public class DepartmentOverviewController implements Initializable {
     .trim() fjerne whiteSpace " "
      */
     @FXML
-    private void pickAFile(ActionEvent event) {
-        try {
+    private void pickAFile(ActionEvent event)
+    {
+        try
+        {
             FileChooser fileChooser;
             fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".JSON", "*.JSON"));
             file = fileChooser.showOpenDialog(null).getAbsoluteFile().getPath();
             model.moveJsonToDB(file.trim());
-        } catch (IOException ex) {
-            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+        }
+        catch (ParseException ex)
+        {
+            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
 
     }
 
     @FXML
-    private void handleButtonActionDep5(ActionEvent event) throws IOException {
+    private void handleButtonActionDep5(ActionEvent event) throws IOException
+    {
         openDepartments(btnDep5.getText());
         model.writeToFile(btnDep5.getText());
     }
 
     @FXML
-    private void handleButtonActionDep4(ActionEvent event) throws IOException {
+    private void handleButtonActionDep4(ActionEvent event) throws IOException
+    {
         openDepartments(btnDep4.getText());
         model.writeToFile(btnDep4.getText());
     }
 
     @FXML
-    private void handleButtonActionDep3(ActionEvent event) throws IOException {
+    private void handleButtonActionDep3(ActionEvent event) throws IOException
+    {
         openDepartments(btnDep3.getText());
         model.writeToFile(btnDep3.getText());
     }
 
     @FXML
-    private void handleButtonActionDep2(ActionEvent event) throws IOException {
+    private void handleButtonActionDep2(ActionEvent event) throws IOException
+    {
         openDepartments(btnDep2.getText());
         model.writeToFile(btnDep2.getText());
     }
 
     @FXML
-    private void handleButtonActionDep1(ActionEvent event) throws Exception {
+    private void handleButtonActionDep1(ActionEvent event) throws Exception
+    {
         openDepartments(btnDep1.getText());
         model.writeToFile(btnDep1.getText());
 
     }
 
     @FXML
-    private void handleButtonActionDep6(ActionEvent event) throws IOException {
+    private void handleButtonActionDep6(ActionEvent event) throws IOException
+    {
         openDepartments(btnDep6.getText());
 
         model.writeToFile(btnDep6.getText());
@@ -125,44 +142,39 @@ public class DepartmentOverviewController implements Initializable {
     }
 
     @FXML
-    private void handleButtonActionDep7(ActionEvent event) throws IOException {
+    private void handleButtonActionDep7(ActionEvent event) throws IOException
+    {
         openDepartments(btnDep7.getText());
         model.writeToFile(btnDep7.getText());
     }
 
-    private void openDepartments(String departmentName) throws IOException {
+    private void openDepartments(String departmentName) throws IOException
+    {
 
-        try
+        model.setCurrentDepartment(departmentName);
+        model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
+
+        Parent root;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
+        root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle(departmentName);
+        stage.setScene(new Scene(root, 1000, 750));
+        stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>()
         {
-            model.setCurrentDepartment(departmentName);
-            model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
-            
-            Parent root;
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
-            root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle(departmentName);
-            stage.setScene(new Scene(root, 1000, 750));
-            stage.show();
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+            public void handle(WindowEvent we)
             {
-                public void handle(WindowEvent we)
-                {
-                    Platform.exit();
-                    System.exit(0);
-                }
-            });
-            MultiOrderViewController mopController = loader.getController();
-            mopController.setModel(model);
-            
-            Stage current = (Stage) PickAFile.getScene().getWindow();
-            current.close();
-        }
-        catch (SQLException ex)
-        {
-            System.out.println("Something went wrong with SQL, are you connected to the right wifi?");
-        }
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        MultiOrderViewController mopController = loader.getController();
+        mopController.setModel(model);
+
+        Stage current = (Stage) PickAFile.getScene().getWindow();
+        current.close();
 
     }
 

@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,7 +30,8 @@ public class ConfigFileDao {
     }
 
 // Save to file Utility
-    protected void writeToFile(String department, String myOfSet) throws IOException {
+    protected void writeToFile(String myData, String myOffset) throws IOException
+    {
         fileInit();
         File file = new File(file_location);
         if (!file.exists()) {
@@ -47,23 +50,25 @@ public class ConfigFileDao {
         FileWriter writer;
         writer = new FileWriter(file.getAbsoluteFile(), true);
 
-        // Writes text to a character-output stream
-        BufferedWriter bufferWriter = new BufferedWriter(writer);
-        bufferWriter.write(department);
-        bufferWriter.newLine();
-        bufferWriter.write(myOfSet);
-        bufferWriter.close();
-        writer.close();
-
+            // Writes text to a character-output stream
+            BufferedWriter bufferWriter = new BufferedWriter(writer);
+            bufferWriter.write(myData);
+            bufferWriter.newLine();
+            bufferWriter.write(myOffset);
+            bufferWriter.close();
+            writer.close();        
     }
 
     // Read From File Utility
-    protected String readDepartmentFromFile() throws IOException {
+    protected List<String> readFromFile() throws IOException
+    {
         fileInit();
 
         File file = new File(file_location);
-        String line = null;
-        if (!file.exists()) {
+        String line;
+        List<String> configInfo = new ArrayList<>();
+        if (!file.exists())
+        {
             System.out.println("File doesn't exist");
         }
 
@@ -72,46 +77,40 @@ public class ConfigFileDao {
         // FileReader reads text files in the default encoding.
         FileReader fileReader
                 = new FileReader(file_location);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-        // Always wrap FileReader in BufferedReader.
-        BufferedReader bufferedReader
-                = new BufferedReader(fileReader);
-
-        while ((line = bufferedReader.readLine()) != null) {
-            bufferedReader.close();
-            return line;
-        }
-
-        // Always close files.
-        bufferedReader.close();
-        return line;
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                configInfo.add(line);
+            }
+        return configInfo;
 
     }
 
-    // reads second line in the config file containing the time
-    public String readTimeOfSet() throws IOException {
-        fileInit();
-
-        File file = new File(file_location);
-        String line = null;
-        if (!file.exists()) {
-            System.out.println("File doesn't exist");
-        }
-
-        InputStreamReader isReader;
-
-        FileReader fileReader
-                = new FileReader(file_location);
-
-        // Always wrap FileReader in BufferedReader.
-        BufferedReader bufferedReader
-                = new BufferedReader(fileReader);
-
-        bufferedReader.readLine();
-        line = bufferedReader.readLine();
-
-        bufferedReader.close();
-        return line;
-
-    }
+//    // reads second line in the config file containing the time
+//    public String readTimeOfSet() throws IOException {
+//        fileInit();
+//
+//        File file = new File(file_location);
+//        String line = null;
+//        if (!file.exists()) {
+//            System.out.println("File doesn't exist");
+//        }
+//
+//        InputStreamReader isReader;
+//
+//        FileReader fileReader
+//                = new FileReader(file_location);
+//
+//        // Always wrap FileReader in BufferedReader.
+//        BufferedReader bufferedReader
+//                = new BufferedReader(fileReader);
+//
+//        bufferedReader.readLine();
+//        line = bufferedReader.readLine();
+//
+//        bufferedReader.close();
+//        return line;
+//
+//    }
 }

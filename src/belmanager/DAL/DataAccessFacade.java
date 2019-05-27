@@ -147,19 +147,15 @@ public class DataAccessFacade
         dtdao.updateTaskIsFinished(taskID);
     }
 
-    public void writeToFile(String department, String myOfSet) throws IOException
+
+    public void writeToFile(String myData, String myOffset) throws IOException
     {
-        cfdao.writeToFile(department, myOfSet);
+        cfdao.writeToFile(myData, myOffset);
     }
 
-    public String readDepartmentFromFile() throws IOException
+    public List<String> readFromFile() throws IOException
     {
-        return cfdao.readDepartmentFromFile();
-    }
-
-    public String readTimeOfSet() throws IOException 
-    {
-        return cfdao.readTimeOfSet(); 
+        return cfdao.readFromFile();
     }
 
     /**
@@ -186,9 +182,10 @@ public class DataAccessFacade
     {
         ldao.createLoginLog(loginTimeEpocMilli, depLogin);
     }
-    
+
     /**
      * Creates a log for when an error occurs
+     *
      * @param errorTimeEpochMilli the time of error
      * @param errorType the type error
      * @throws SQLException

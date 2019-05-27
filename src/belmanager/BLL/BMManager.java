@@ -169,22 +169,15 @@ public class BMManager {
         daFacade.updateTaskIsFinished(taskID);
     }
 
-    public void writeToFile(String department, String myOfSet) throws IOException {
-        daFacade.writeToFile(department,myOfSet);
+    public void writeToFile(String myData, String myOffset) throws IOException {
+        daFacade.writeToFile(myData,myOffset);
 
     }
 
-    public String readDepartmentFromFile() throws IOException {
-        return daFacade.readDepartmentFromFile();
+    public List<String> readFromFile() throws IOException {
+        return daFacade.readFromFile();
     }
-
-
-    public String readTimeOfSet() throws IOException {
-        return daFacade.readTimeOfSet();
-    }
-
-
-    
+   
     /**
      * Creates a log of the time a task was completed
      * @param compleTimeEpocMilli the time of completion in epoc milli
@@ -192,6 +185,7 @@ public class BMManager {
      * @param orderNumber the order the task was a part of
      * @throws SQLException
      */
+    
     public void createCompleteLog(long compleTimeEpocMilli, String deparment, String orderNumber)
     {
         daFacade.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);

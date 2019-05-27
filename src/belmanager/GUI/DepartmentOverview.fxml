@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="202.0" prefWidth="131.0" stylesheets="@BelStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="belmanager.GUI.DepartmentOverviewController">
+<AnchorPane id="AnchorPane" prefHeight="262.0" prefWidth="364.0" stylesheets="@BelStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="belmanager.GUI.DepartmentOverviewController">
    <children>
-      <Button fx:id="btnDep5" layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonActionDep5" prefHeight="25.0" prefWidth="132.0" text="Maler" />
-      <Button fx:id="btnDep4" layoutY="75.0" mnemonicParsing="false" onAction="#handleButtonActionDep4" prefHeight="25.0" prefWidth="132.0" text="Halvfab" />
-      <Button fx:id="btnDep3" layoutY="50.0" mnemonicParsing="false" onAction="#handleButtonActionDep3" prefHeight="25.0" prefWidth="132.0" text="Forsendelse" />
-      <Button fx:id="btnDep2" layoutY="25.0" mnemonicParsing="false" onAction="#handleButtonActionDep2" prefHeight="25.0" prefWidth="132.0" text="Bælg" />
-      <Button fx:id="btnDep1" mnemonicParsing="false" onAction="#handleButtonActionDep1" prefHeight="25.0" prefWidth="132.0" text="Bertel" />
-      <Button fx:id="btnDep6" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonActionDep6" prefHeight="25.0" prefWidth="132.0" text="Montage 1" />
-      <Button fx:id="PickAFile" layoutY="177.0" mnemonicParsing="false" onAction="#pickAFile" prefHeight="0.0" prefWidth="132.0" text="JSON Loader" />
-      <Button fx:id="btnDep7" layoutY="152.0" mnemonicParsing="false" onAction="#handleButtonActionDep7" prefHeight="25.0" prefWidth="132.0" text="Montage 2" />
+      <Button fx:id="btnDep5" layoutX="232.0" layoutY="129.0" mnemonicParsing="false" onAction="#handleButtonActionDep5" prefHeight="25.0" prefWidth="132.0" text="Maler" />
+      <Button fx:id="btnDep4" layoutX="232.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleButtonActionDep4" prefHeight="25.0" prefWidth="132.0" text="Halvfab" />
+      <Button fx:id="btnDep3" layoutX="232.0" layoutY="63.0" mnemonicParsing="false" onAction="#handleButtonActionDep3" prefHeight="25.0" prefWidth="132.0" text="Forsendelse" />
+      <Button fx:id="btnDep2" layoutX="232.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleButtonActionDep2" prefHeight="25.0" prefWidth="132.0" text="Bælg" />
+      <Button fx:id="btnDep1" layoutX="232.0" layoutY="-3.0" mnemonicParsing="false" onAction="#handleButtonActionDep1" prefHeight="25.0" prefWidth="132.0" text="Bertel" />
+      <Button fx:id="btnDep6" layoutX="232.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleButtonActionDep6" prefHeight="25.0" prefWidth="132.0" text="Montage 1" />
+      <Button fx:id="PickAFile" layoutX="232.0" layoutY="228.0" mnemonicParsing="false" onAction="#pickAFile" prefHeight="0.0" prefWidth="132.0" text="JSON Loader" />
+      <Button fx:id="btnDep7" layoutX="232.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleButtonActionDep7" prefHeight="25.0" prefWidth="132.0" text="Montage 2" />
+      <TextField fx:id="txtOffset" layoutX="41.0" layoutY="104.0" promptText="Time-Offset in Days" />
+      <Label layoutX="58.0" layoutY="84.0" text="Time-Offset(days)" />
+      <Label layoutX="14.0" layoutY="7.0" prefHeight="48.0" prefWidth="218.0" text="Make sure to pick a Time-Offset before choosing a department" wrapText="true" />
    </children>
 </AnchorPane>

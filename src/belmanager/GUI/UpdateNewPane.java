@@ -32,12 +32,12 @@ public class UpdateNewPane implements Runnable
     private String currentDepartment;
     private MultiOrderViewController oopc;
 
-    public UpdateNewPane(long lastUpdateTime, VBox vboxOne, VBox vboxTwo, String currentDepartment, MultiOrderViewController oopc) throws SQLException
+    public UpdateNewPane(long lastUpdateTime, VBox vboxOne, VBox vboxTwo, String currentDepartment, MultiOrderViewController oopc, BelModel model) throws SQLException
     {
         this.lastUpdateTime = lastUpdateTime;
         this.vboxOne = vboxOne;
         this.vboxTwo = vboxTwo;
-        this.bm = new BelModel();
+        this.bm = model;
         this.currentDepartment = currentDepartment;
         this.oopc = oopc;
     }
@@ -63,8 +63,8 @@ public class UpdateNewPane implements Runnable
                         for (DepartmentTask task : tasks)
                         {
                             //Adds new order to the panes, on certain conditions
-                            if (task.getEpochStartDate() >= lastUpdateTime
-                                    && task.getEpochStartDate() <= Instant.now().toEpochMilli() + fiveSecInMili)
+                            if (task.getEpochStartDate() >= lastUpdateTime+bm.getTimeOffset()
+                                    && task.getEpochStartDate() <= Instant.now().toEpochMilli() + fiveSecInMili+bm.getTimeOffset())
                             {
                                 TitledPane temp = oopc.createTitledPane(order);
                                 int indexInVBox = Orderlist.indexOf(order)/2;

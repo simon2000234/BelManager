@@ -31,6 +31,7 @@ public class BelModel
     private String currentDepartment;
     private Order selectedOrder;
     private HashMap<String, Order> shownOrders;
+    private Long timeOffset;
 
     public BelModel()
     {
@@ -152,23 +153,15 @@ public class BelModel
         return currentOrders;
     }
 
-     public String readDepartmentFromFile() throws IOException {
-            return bmm.readDepartmentFromFile();
-        
-     }
-     
-     public String readTimeOfSet() throws IOException {
-         return bmm.readTimeOfSet(); 
-     }
-    
-     
-     // add Of Set here ???
-     public void writeToFile(String myData) throws IOException {
-        bmm.writeToFile(currentDepartment,"");
-     }
-    
-   
+    public List<String> readFromFile() throws IOException
+    {
+        return bmm.readFromFile();
+    }
 
+    public void writeToFile(String myData, String myOffset) throws IOException
+    {
+        bmm.writeToFile(myData, myOffset);
+    }
 
     /**
      * Deletes an order in the database
@@ -303,7 +296,20 @@ public class BelModel
     {
         bmm.createCompleteLog(compleTimeEpocMilli, deparment, orderNumber);
     }
-    
+
+    public Long getTimeOffset()
+    {
+        return timeOffset;
+    }
+
+    public void setTimeOffset(String timeOffset)
+    {
+        int oneDayInEpochMilli = 86400000;
+        int days = Integer.parseInt(timeOffset);
+        Long Offset = (long)(days*oneDayInEpochMilli);
+        this.timeOffset = Offset;
+    }
+        
     /**
      * Creates a log for when an error occurs
      * @param errorTimeEpochMilli the time of error

@@ -24,6 +24,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import org.json.simple.parser.ParseException;
 
@@ -52,12 +55,14 @@ public class DepartmentOverviewController implements Initializable
     @FXML
     private Button btnDep7;
     private BelModel model;
+    @FXML
+    private TextField txtOffset;
 
     @Override
 
     public void initialize(URL url, ResourceBundle rb)
     {
-        model = new BelModel();
+            model = new BelModel();
     }
 
     /*
@@ -75,6 +80,7 @@ public class DepartmentOverviewController implements Initializable
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".JSON", "*.JSON"));
             file = fileChooser.showOpenDialog(null).getAbsoluteFile().getPath();
             model.moveJsonToDB(file.trim());
+
         }
         catch (IOException ex)
         {
@@ -90,82 +96,181 @@ public class DepartmentOverviewController implements Initializable
     @FXML
     private void handleButtonActionDep5(ActionEvent event) throws IOException
     {
-        openDepartments(btnDep5.getText());
-        model.writeToFile(btnDep5.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep5.getText(), txtOffset.getText());
+            openDepartments(btnDep5.getText());
+
+        } else
+        {
+            AlertNoOffset(btnDep5.getText());
+        }
     }
 
     @FXML
     private void handleButtonActionDep4(ActionEvent event) throws IOException
     {
-        openDepartments(btnDep4.getText());
-        model.writeToFile(btnDep4.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep4.getText(), txtOffset.getText());
+            openDepartments(btnDep4.getText());
+
+        } else
+        {
+            AlertNoOffset(btnDep4.getText());
+        }
     }
 
     @FXML
     private void handleButtonActionDep3(ActionEvent event) throws IOException
     {
-        openDepartments(btnDep3.getText());
-        model.writeToFile(btnDep3.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep3.getText(), txtOffset.getText());
+            openDepartments(btnDep3.getText());
+
+        } else
+        {
+            AlertNoOffset(btnDep3.getText());
+        }
     }
 
     @FXML
     private void handleButtonActionDep2(ActionEvent event) throws IOException
     {
-        openDepartments(btnDep2.getText());
-        model.writeToFile(btnDep2.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep2.getText(), txtOffset.getText());
+            openDepartments(btnDep2.getText());
+
+        } else
+        {
+            AlertNoOffset(btnDep2.getText());
+        }
     }
 
     @FXML
     private void handleButtonActionDep1(ActionEvent event) throws Exception
     {
-        openDepartments(btnDep1.getText());
-        model.writeToFile(btnDep1.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep1.getText(), txtOffset.getText());
+            openDepartments(btnDep1.getText());
 
+        } else
+        {
+            AlertNoOffset(btnDep1.getText());
+        }
     }
 
     @FXML
     private void handleButtonActionDep6(ActionEvent event) throws IOException
     {
-        openDepartments(btnDep6.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep6.getText(), txtOffset.getText());
+            openDepartments(btnDep6.getText());
 
-        model.writeToFile(btnDep6.getText());
+        } else
+        {
+            AlertNoOffset(btnDep6.getText());
+        }
 
     }
 
     @FXML
     private void handleButtonActionDep7(ActionEvent event) throws IOException
     {
-        openDepartments(btnDep7.getText());
-        model.writeToFile(btnDep7.getText());
+        if (isInputValid(txtOffset.getText()) == true)
+        {
+            model.writeToFile(btnDep7.getText(), txtOffset.getText());
+            openDepartments(btnDep7.getText());
+        } else
+        {
+            AlertNoOffset(btnDep7.getText());
+        }
     }
 
-    private void openDepartments(String departmentName) throws IOException
+    private void openDepartments(String departmentName)
     {
-
-        model.setCurrentDepartment(departmentName);
-        model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
-
-        Parent root;
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
-        root = loader.load();
-        Stage stage = new Stage();
-        stage.setTitle(departmentName);
-        stage.setScene(new Scene(root, 1000, 750));
-        stage.show();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+        try
         {
-            public void handle(WindowEvent we)
+            model.setCurrentDepartment(departmentName);
+            if (isInputValid(txtOffset.getText()) == true)
             {
-                Platform.exit();
-                System.exit(0);
+                model.setTimeOffset(txtOffset.getText());
+            } else
+            {
+                model.setTimeOffset("0");
             }
-        });
-        MultiOrderViewController mopController = loader.getController();
-        mopController.setModel(model);
 
-        Stage current = (Stage) PickAFile.getScene().getWindow();
-        current.close();
+            model.createLoginLog(Instant.now().toEpochMilli(), model.getCurrentDepartment());
+
+            Parent root;
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(BelManager.class.getResource("GUI/MultiOrderView.fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(departmentName);
+            stage.setScene(new Scene(root, 1000, 750));
+            stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+            {
+                public void handle(WindowEvent we)
+                {
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
+            MultiOrderViewController mopController = loader.getController();
+            mopController.setModel(model);
+
+            Stage current = (Stage) PickAFile.getScene().getWindow();
+            current.close();
+        } catch (IOException ex)
+        {
+            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
+        }
+    }
+
+    public boolean isInputValid(String s)
+    {
+        int valid;
+        try
+        {
+            valid = Integer.parseInt(s);
+            if (valid >= 0)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        } catch (NumberFormatException ex)
+        {
+            return false;
+        }
+    }
+
+    public void AlertNoOffset(String department)
+    {
+        Alert offsetAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        offsetAlert.setContentText("No Time-Offset has been set, if you continue the offset will be defaulted to 0");
+        offsetAlert.showAndWait();
+        if (offsetAlert.getResult() == ButtonType.OK)
+        {
+            try
+            {
+                openDepartments(department);
+                model.writeToFile(department, "0");
+            } catch (IOException ex)
+            {
+                Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (offsetAlert.getResult() == ButtonType.CANCEL)
+        {
+            offsetAlert.close();
+        }
 
     }
 

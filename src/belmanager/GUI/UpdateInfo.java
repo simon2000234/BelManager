@@ -82,13 +82,7 @@ public class UpdateInfo implements Runnable
                                 if (tasks.get(i).getDepartmentName().equals(bm.getCurrentDepartment()))
                                 {
                                     endTime = (double) tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
-                                    if (Instant.now().toEpochMilli() > tasks.get(i).getEpochEndDate())
-                                    {
-                                        progressTime = endTime;
-                                    } else
-                                    {
-                                        progressTime = (double) Instant.now().toEpochMilli() - tasks.get(i).getEpochStartDate();
-                                    }
+                                    progressTime = (double) Instant.now().toEpochMilli() - tasks.get(i).getEpochStartDate();
                                     progress = progressTime / endTime;
                                     if (Instant.now().toEpochMilli() < tasks.get(i).getEpochStartDate())
                                     {

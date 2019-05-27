@@ -38,6 +38,7 @@ and open the template in the editor.
 .titled-pane > .title 
 {
     -fx-background-color: #004884;
+    -fx-font-size: 12pt;
 }
 .titled-pane > *.content 
 {

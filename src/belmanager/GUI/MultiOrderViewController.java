@@ -122,7 +122,10 @@ public class MultiOrderViewController implements Initializable
 
         //Adds a label for workers to be shown on the order.
         Random r = new Random();
-        Label WorkerLBL = new Label("Worker: " + workerList.get(r.nextInt(workerList.size() - 1)).getName());
+        String Worker1 = ""+workerList.get(r.nextInt(workerList.size() - 1)).getSalaryNumber();
+        String Worker2 = ""+workerList.get(r.nextInt(workerList.size() - 1)).getSalaryNumber();
+        String Worker3 = ""+workerList.get(r.nextInt(workerList.size() - 1)).getSalaryNumber();
+        Label WorkerLBL = new Label("Workers: "+Worker1+", "+Worker2+", "+Worker3);
         labels.add(WorkerLBL);
 
         //Creates Button for marking an order as complete

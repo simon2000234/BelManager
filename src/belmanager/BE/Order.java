@@ -42,7 +42,7 @@ public class Order implements Comparable<Order>
     {
         long DateEpoch = dateToConvert;
         Date date = new Date(DateEpoch);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy (ww:u)");
+        DateFormat format = new SimpleDateFormat("ww:u");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         String formatted = format.format(date);
         return formatted;

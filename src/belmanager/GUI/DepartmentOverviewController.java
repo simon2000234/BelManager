@@ -213,6 +213,7 @@ public class DepartmentOverviewController implements Initializable
             Stage stage = new Stage();
             stage.setTitle(departmentName);
             stage.setScene(new Scene(root, 1000, 750));
+            stage.setMaximized(true);
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>()
             {

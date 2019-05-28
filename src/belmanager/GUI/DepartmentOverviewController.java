@@ -61,7 +61,7 @@ public class DepartmentOverviewController implements Initializable
 
     public void initialize(URL url, ResourceBundle rb)
     {
-            model = new BelModel();
+        model = new BelModel();
     }
 
     /*
@@ -100,7 +100,8 @@ public class DepartmentOverviewController implements Initializable
             model.writeToFile(btnDep5.getText(), txtOffset.getText());
             openDepartments(btnDep5.getText());
 
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep5.getText());
         }
@@ -114,7 +115,8 @@ public class DepartmentOverviewController implements Initializable
             model.writeToFile(btnDep4.getText(), txtOffset.getText());
             openDepartments(btnDep4.getText());
 
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep4.getText());
         }
@@ -128,7 +130,8 @@ public class DepartmentOverviewController implements Initializable
             model.writeToFile(btnDep3.getText(), txtOffset.getText());
             openDepartments(btnDep3.getText());
 
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep3.getText());
         }
@@ -142,7 +145,8 @@ public class DepartmentOverviewController implements Initializable
             model.writeToFile(btnDep2.getText(), txtOffset.getText());
             openDepartments(btnDep2.getText());
 
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep2.getText());
         }
@@ -156,7 +160,8 @@ public class DepartmentOverviewController implements Initializable
             model.writeToFile(btnDep1.getText(), txtOffset.getText());
             openDepartments(btnDep1.getText());
 
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep1.getText());
         }
@@ -170,7 +175,8 @@ public class DepartmentOverviewController implements Initializable
             model.writeToFile(btnDep6.getText(), txtOffset.getText());
             openDepartments(btnDep6.getText());
 
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep6.getText());
         }
@@ -184,7 +190,8 @@ public class DepartmentOverviewController implements Initializable
         {
             model.writeToFile(btnDep7.getText(), txtOffset.getText());
             openDepartments(btnDep7.getText());
-        } else
+        }
+        else
         {
             AlertNoOffset(btnDep7.getText());
         }
@@ -198,7 +205,8 @@ public class DepartmentOverviewController implements Initializable
             if (isInputValid(txtOffset.getText()) == true)
             {
                 model.setTimeOffset(txtOffset.getText());
-            } else
+            }
+            else
             {
                 model.setTimeOffset("0");
             }
@@ -227,7 +235,8 @@ public class DepartmentOverviewController implements Initializable
 
             Stage current = (Stage) PickAFile.getScene().getWindow();
             current.close();
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
@@ -242,12 +251,15 @@ public class DepartmentOverviewController implements Initializable
             if (valid >= 0)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
-        } catch (NumberFormatException ex)
+        }
+        catch (NumberFormatException ex)
         {
+            model.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
             return false;
         }
     }
@@ -263,11 +275,13 @@ public class DepartmentOverviewController implements Initializable
             {
                 openDepartments(department);
                 model.writeToFile(department, "0");
-            } catch (IOException ex)
+            }
+            catch (IOException ex)
             {
                 Logger.getLogger(DepartmentOverviewController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (offsetAlert.getResult() == ButtonType.CANCEL)
+        }
+        else if (offsetAlert.getResult() == ButtonType.CANCEL)
         {
             offsetAlert.close();
         }

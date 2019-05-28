@@ -12,8 +12,6 @@ import belmanager.BE.Worker;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,8 +19,6 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -418,9 +414,11 @@ public class MultiOrderViewController implements Initializable
         {
             newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
                     vboxOne, vboxTwo, model.getCurrentDepartment(), this, bm);
+            
             newPanesUpdater = Executors.newSingleThreadExecutor();
             newPanesUpdater.submit(newPanestask);
 
+            
             infoTask = new UpdateInfo(updateList, bm);
 
             infoUpdater = Executors.newSingleThreadExecutor();

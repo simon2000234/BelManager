@@ -18,7 +18,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import belmanager.BelManager;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;

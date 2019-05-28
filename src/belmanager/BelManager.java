@@ -35,6 +35,7 @@ public class BelManager extends Application
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("GUI/BelStyle.css").toExternalForm());
+            stage.setTitle("Setup");
             stage.setScene(scene);
             stage.show();
         }

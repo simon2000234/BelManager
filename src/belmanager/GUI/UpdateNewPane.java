@@ -11,8 +11,6 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;

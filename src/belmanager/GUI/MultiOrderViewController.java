@@ -63,7 +63,7 @@ public class MultiOrderViewController implements Initializable
     private Collection<TitledPane> boxOneList = new ArrayList<>();
     private Collection<TitledPane> boxTwoList = new ArrayList<>();
     private ExecutorService newPanesUpdater;
-    private Runnable newPanestask;
+    private Runnable newPanesTask;
     private ExecutorService infoUpdater;
     private Runnable infoTask;
     @FXML
@@ -412,11 +412,11 @@ public class MultiOrderViewController implements Initializable
 
         try
         {
-            newPanestask = new UpdateNewPane(Instant.now().toEpochMilli(),
+            newPanesTask = new UpdateNewPane(Instant.now().toEpochMilli(),
                     vboxOne, vboxTwo, model.getCurrentDepartment(), this, bm);
             
             newPanesUpdater = Executors.newSingleThreadExecutor();
-            newPanesUpdater.submit(newPanestask);
+            newPanesUpdater.submit(newPanesTask);
 
             
             infoTask = new UpdateInfo(updateList, bm);

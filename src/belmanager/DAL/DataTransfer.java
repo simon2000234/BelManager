@@ -8,6 +8,7 @@ package belmanager.DAL;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Instant;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,15 +21,17 @@ import org.json.simple.parser.ParseException;
 public class DataTransfer
 {
 
-    /**
+    private LogDAO ld = new LogDAO();
 
+    /**
+     *
      * This methord takes a JSON file given to us by Belman, converts it and
      * sendt it to our database
      *
-
-     * This methord takes a JSON file made by Belman, converts it 
-     * and sendt it to our database
-
+     *
+     * This methord takes a JSON file made by Belman, converts it and sendt it
+     * to our database
+     *
      * @param fileLocation the location of the file
      * @throws IOException
      * @throws ParseException
@@ -71,9 +74,11 @@ public class DataTransfer
             int salaryNumber = (int) stringSalaryNumber;
             WorkerDAO wd = new WorkerDAO();
             wd.createWorker(initials, name, salaryNumber);
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             System.out.println("SQL Fail, are you connected to the school internet?");
+            ld.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 
@@ -105,9 +110,11 @@ public class DataTransfer
             //Each order can have multiple tasks in it, 
             //therefore we go through each and send it to our database
             taskList.forEach(task -> transferTasksToDB((JSONObject) task, orderNumber));
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             System.out.println("SQL Fail, are you connected to the school internet?");
+            ld.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 
@@ -138,9 +145,11 @@ public class DataTransfer
             boolean finishedOrder = (boolean) task.get("FinishedOrder");
 
             dt.createDeparmentTask(departmentName, endDate, startDate, finishedOrder, currentOrderNumber);
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             System.out.println("SQL Fail, are you connected to the school internet?");
+            ld.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
         }
     }
 

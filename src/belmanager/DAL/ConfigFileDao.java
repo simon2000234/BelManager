@@ -80,8 +80,6 @@ public class ConfigFileDao
             System.out.println("File doesn't exist");
         }
 
-        InputStreamReader isReader;
-
         // FileReader reads text files in the default encoding.
         FileReader fileReader
                 = new FileReader(file_location);

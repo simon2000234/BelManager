@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,13 @@ public class ConfigFileDao
 {
 
     private static String file_location = "Config.txt";
+    private LogDAO ld;
 
     protected void fileInit() throws IOException
     {
         File f = new File(file_location);
         f.createNewFile();
+        ld = new LogDAO();
     }
 
     // Save to file Utility
@@ -46,9 +49,9 @@ public class ConfigFileDao
                 }
                 file.createNewFile();
             }
-            catch (IOException e)
+            catch (IOException ex)
             {
-
+                ld.createErrorLog(Instant.now().toEpochMilli(), ex.getLocalizedMessage());
             }
         }
 
@@ -69,7 +72,6 @@ public class ConfigFileDao
     protected List<String> readFromFile() throws IOException
     {
         fileInit();
-
         File file = new File(file_location);
         String line;
         List<String> configInfo = new ArrayList<>();

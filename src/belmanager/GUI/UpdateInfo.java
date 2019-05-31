@@ -71,22 +71,27 @@ public class UpdateInfo implements Runnable
 
                             for (int i = 0; i < tasks.size(); i++)
                             {
-                                if (updatableInformation.getOrder().getSelectedDepartmentTask().getDepartmentName().equals(order.getCurrentDepartment().getDepartmentName()))
+                                if (updatableInformation.getOrder().getSelectedDepartmentTask().
+                                        getDepartmentName().equals(order.getCurrentDepartment().
+                                                getDepartmentName()))
                                 {
                                     updatableInformation.getBtnComplete().setDisable(false);
                                 }
 
                                 if (tasks.get(i).getDepartmentName().equals(bm.getCurrentDepartment()))
                                 {
-                                    endTime = (double) tasks.get(i).getEpochEndDate() - tasks.get(i).getEpochStartDate();
-                                    progressTime = (double) Instant.now().toEpochMilli() - tasks.get(i).getEpochStartDate();
+                                    endTime = (double) tasks.get(i).getEpochEndDate() 
+                                            - tasks.get(i).getEpochStartDate();
+                                    progressTime = (double) Instant.now().toEpochMilli() 
+                                            - tasks.get(i).getEpochStartDate();
                                     progress = progressTime / endTime;
                                     if (Instant.now().toEpochMilli() < tasks.get(i).getEpochStartDate())
                                     {
                                         progress = 0.00;
                                     }
                                     updatableInformation.getEstimatedBar().setProgress(progress);
-                                    updatableInformation.getProgressLabel().setText(String.format("%.2f", progress * 100) + " %");
+                                    updatableInformation.getProgressLabel().setText(
+                                            String.format("%.2f", progress * 100) + " %");
                                 }
                                 Paint color = circles.get(i).getFill();
                                 if (tasks.get(i).isFinishedOrder() == true)

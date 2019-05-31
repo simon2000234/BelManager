@@ -19,28 +19,35 @@ import java.util.List;
  *
  * @author Christian Occhionero
  */
-public class ConfigFileDao {
+public class ConfigFileDao
+{
 
     private static String file_location = "Config.txt";
 
-    protected void fileInit() throws IOException {
+    protected void fileInit() throws IOException
+    {
         File f = new File(file_location);
         f.createNewFile();
     }
 
-// Save to file Utility
+    // Save to file Utility
     protected void writeToFile(String myData, String myOffset) throws IOException
     {
         fileInit();
         File file = new File(file_location);
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 File directory = new File(file.getParent());
-                if (!directory.exists()) {
+                if (!directory.exists())
+                {
                     directory.mkdirs();
                 }
                 file.createNewFile();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
 
             }
         }
@@ -49,13 +56,13 @@ public class ConfigFileDao {
         FileWriter writer;
         writer = new FileWriter(file.getAbsoluteFile(), true);
 
-            // Writes text to a character-output stream
-            BufferedWriter bufferWriter = new BufferedWriter(writer);
-            bufferWriter.write(myData);
-            bufferWriter.newLine();
-            bufferWriter.write(myOffset);
-            bufferWriter.close();
-            writer.close();        
+        // Writes text to a character-output stream
+        BufferedWriter bufferWriter = new BufferedWriter(writer);
+        bufferWriter.write(myData);
+        bufferWriter.newLine();
+        bufferWriter.write(myOffset);
+        bufferWriter.close();
+        writer.close();
     }
 
     // Read From File Utility
@@ -78,38 +85,10 @@ public class ConfigFileDao {
                 = new FileReader(file_location);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            while ((line = bufferedReader.readLine()) != null)
-            {
-                configInfo.add(line);
-            }
+        while ((line = bufferedReader.readLine()) != null)
+        {
+            configInfo.add(line);
+        }
         return configInfo;
-
     }
-
-//    // reads second line in the config file containing the time
-//    public String readTimeOfSet() throws IOException {
-//        fileInit();
-//
-//        File file = new File(file_location);
-//        String line = null;
-//        if (!file.exists()) {
-//            System.out.println("File doesn't exist");
-//        }
-//
-//        InputStreamReader isReader;
-//
-//        FileReader fileReader
-//                = new FileReader(file_location);
-//
-//        // Always wrap FileReader in BufferedReader.
-//        BufferedReader bufferedReader
-//                = new BufferedReader(fileReader);
-//
-//        bufferedReader.readLine();
-//        line = bufferedReader.readLine();
-//
-//        bufferedReader.close();
-//        return line;
-//
-//    }
 }

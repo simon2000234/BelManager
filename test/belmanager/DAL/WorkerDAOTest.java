@@ -7,8 +7,6 @@ package belmanager.DAL;
 
 import belmanager.BE.Worker;
 import java.util.ArrayList;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -26,20 +24,6 @@ public class WorkerDAOTest
     private Worker expectedWorker;
     private Worker actualWorker;
     private WorkerDAO wd;
-
-    public WorkerDAOTest()
-    {
-    }
-
-    @BeforeClass
-    public static void setUpClass()
-    {
-    }
-
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
 
     @Before
     public void setUp() throws Exception
